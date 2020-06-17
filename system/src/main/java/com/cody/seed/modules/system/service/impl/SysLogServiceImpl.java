@@ -14,10 +14,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @Description: 系统日志表 服务实现类
- * @date: 2020年06月17日 14:08
- */
 @Service
 public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> implements ISysLogService {
 

@@ -2,21 +2,23 @@ package com.cody.seed.modules.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
 /**
- * @Description: TODO
+ * @Description: 菜单表
  * @date: 2020年06月16日 18:12
  */
-@Getter
-@Setter
-@ToString
-public class SysMenu {
+@Data
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+public class SysMenu implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     /**
      * 菜单ID

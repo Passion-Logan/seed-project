@@ -9,60 +9,51 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @Description: 系统登录日志表
- * @date: 2020年06月16日 18:13
+ * @Description: 角色信息表
+ * @date: 2020年06月17日 14:37
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class SysLoginLog implements Serializable {
+public class SysRole implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 访问ID
+     * 角色ID
      */
     @TableId(type = IdType.ID_WORKER_STR)
-    private String id;
-
+    private Integer id;
     /**
-     * 登录账号
+     * 角色编码
      */
-    private String loginName;
-
+    private String roleCode;
     /**
-     * 登录IP地址
+     * 角色名称
      */
-    private String ip;
-
+    private String roleName;
     /**
-     * 登录地
+     * 角色权限字符串
      */
-    private String loginLocation;
-
+    private String permission;
     /**
-     * 浏览器类型
+     * 角色级别
      */
-    private String browser;
-
+    private Integer level;
     /**
-     * 操作系统
+     * 数据权限
      */
-    private String os;
-
+    private String dataScope;
     /**
-     * 登录状态 0成功 1失败
+     * 创建者
      */
-    private Integer status;
-
+    private String createBy;
     /**
-     * 提示消息
+     * 创建时间
      */
-    private String msg;
-
+    private Date createTime;
     /**
-     * 访问时间
+     * 备注
      */
-    private Date loginTime;
-
+    private String remark;
 }

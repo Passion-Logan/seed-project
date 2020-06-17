@@ -13,7 +13,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @Description: TODO
+ * @Description: 系统操作日志表
  * @date: 2020年06月17日 14:04
  */
 @Data

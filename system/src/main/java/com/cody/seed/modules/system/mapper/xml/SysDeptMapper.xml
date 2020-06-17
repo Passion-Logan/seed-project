@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cody.seed.modules.system.mapper.SysDeptMapper">
+    <resultMap id="BaseResultMap" type="com.cody.seed.modules.system.entity.SysDept">
+        <result property="id" column="id"/>
+        <result property="pid" column="pid"/>
+        <result property="deptName" column="dept_name"/>
+        <result property="sort" column="sort"/>
+        <result property="enabled" column="enabled"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+</mapper>
