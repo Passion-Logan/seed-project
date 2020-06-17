@@ -16,7 +16,6 @@
 
     <modules>
         <module>common</module>
-        <module>modules</module>
         <module>restful</module>
         <module>system</module>
     </modules>
