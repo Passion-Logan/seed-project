@@ -53,7 +53,7 @@ public interface CommonConstant {
     public static final int OPERATE_TYPE_4 = 4;
 
     /**
-     * 操作日志类型： 倒入
+     * 操作日志类型： 导入
      */
     public static final int OPERATE_TYPE_5 = 5;
 

@@ -10,4 +10,12 @@
         <groupId>com.cody.seed</groupId>
         <version>0.0.1</version>
     </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.cody.seed</groupId>
+            <artifactId>system</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+    </dependencies>
 </project>
