@@ -1,6 +1,8 @@
 package com.cody.common.util;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +40,7 @@ public class oConvertUtils {
     }
 
     public static boolean isNotEmpty(Object object) {
-        if (object != null && !object.equals("") && !object.equals("null")) {
+        if (StringUtils.isNotBlank(ObjectUtils.toString(object, ""))) {
             return (true);
         }
         return (false);
@@ -63,7 +65,7 @@ public class oConvertUtils {
 
     private static String code2code(String strIn, String sourceCode, String targetCode) {
         String strOut = null;
-        if (strIn == null || (strIn.trim()).equals("")) {
+        if (StringUtils.isBlank(strIn)) {
             return strIn;
         }
         try {
@@ -318,6 +320,8 @@ public class oConvertUtils {
         }
     }
 
+    private static final String PATTERN_STR = "\\s*|\t|\r|\n";
+
     /**
      * java去除字符串中的空格、回车、换行符、制表符
      *
@@ -327,7 +331,7 @@ public class oConvertUtils {
     public static String replaceBlank(String str) {
         String dest = "";
         if (str != null) {
-            Pattern p = Pattern.compile("\\s*|\t|\r|\n");
+            Pattern p = Pattern.compile(PATTERN_STR);
             Matcher m = p.matcher(str);
             dest = m.replaceAll("");
         }
@@ -458,7 +462,7 @@ public class oConvertUtils {
      * @return 转换后的驼峰式命名的字符串
      */
     public static String camelNames(String names) {
-        if (names == null || names.equals("")) {
+        if (StringUtils.isBlank(names)) {
             return null;
         }
         StringBuffer sf = new StringBuffer();

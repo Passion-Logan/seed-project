@@ -110,7 +110,8 @@ public class DictAspect {
                             item.put(field.getName() + CommonConstant.DICT_TEXT_SUFFIX, textValue);
                         }
                         //date类型默认转换string格式化日期
-                        if (field.getType().getName().equals("java.util.Date") && field.getAnnotation(JsonFormat.class) == null && item.get(field.getName()) != null) {
+                        String DateStr = "java.util.Date";
+                        if (DateStr.equals(field.getType().getName()) && field.getAnnotation(JsonFormat.class) == null && item.get(field.getName()) != null) {
                             SimpleDateFormat aDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                             item.put(field.getName(), aDate.format(new Date((Long) item.get(field.getName()))));
                         }

@@ -3,6 +3,8 @@ package com.cody.seed.config.mybatis;
 import com.cody.common.system.vo.LoginUser;
 import com.cody.common.util.oConvertUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.binding.MapperMethod;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -47,7 +49,7 @@ public class MybatisInterceptor implements Interceptor {
                         field.setAccessible(true);
                         Object local_createBy = field.get(parameter);
                         field.setAccessible(false);
-                        if (local_createBy == null || local_createBy.equals("")) {
+                        if (StringUtils.isBlank(ObjectUtils.toString(local_createBy, ""))) {
                             if (sysUser != null) {
                                 // 登录人账号
                                 field.setAccessible(true);
@@ -61,7 +63,7 @@ public class MybatisInterceptor implements Interceptor {
                         field.setAccessible(true);
                         Object local_createDate = field.get(parameter);
                         field.setAccessible(false);
-                        if (local_createDate == null || local_createDate.equals("")) {
+                        if (StringUtils.isBlank(ObjectUtils.toString(local_createDate, ""))) {
                             field.setAccessible(true);
                             field.set(parameter, new Date());
                             field.setAccessible(false);
