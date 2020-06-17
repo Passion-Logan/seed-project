@@ -11,7 +11,7 @@
  Target Server Version : 50720
  File Encoding         : 65001
 
- Date: 17/06/2020 17:01:23
+ Date: 17/06/2020 19:03:01
 */
 
 SET NAMES utf8mb4;
@@ -196,20 +196,6 @@ INSERT INTO `sys_role` VALUES ('6', 'test', '测试角色', NULL, NULL, NULL, 'a
 INSERT INTO `sys_role` VALUES ('7', '1', 'test', NULL, NULL, NULL, 'guest', '2020-04-06 17:52:57', '1');
 
 -- ----------------------------
--- Table structure for sys_user_role
--- ----------------------------
-DROP TABLE IF EXISTS `sys_user_role`;
-CREATE TABLE `sys_user_role` (
-  `user_id` VARCHAR(32) NOT NULL COMMENT '用户ID',
-  `role_id` VARCHAR(32) NOT NULL COMMENT '角色ID',
-  PRIMARY KEY (`user_id`,`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户和角色关联表';
-
--- ----------------------------
--- Records of sys_user_role
--- ----------------------------
-
--- ----------------------------
 -- Table structure for sys_role_dept
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role_dept`;
@@ -265,6 +251,20 @@ CREATE TABLE `sys_user`  (
 
 -- ----------------------------
 -- Records of sys_user
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for sys_user_role
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_user_role`;
+CREATE TABLE `sys_user_role`  (
+  `user_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户ID',
+  `role_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色ID',
+  PRIMARY KEY (`user_id`, `role_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户和角色关联表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_user_role
 -- ----------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;
