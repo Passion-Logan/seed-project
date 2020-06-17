@@ -1,4 +1,4 @@
-package com.cody.common.util;
+package com.cody.seed.modules.util;
 
 import com.cody.seed.modules.security.JwtAuthenticatioToken;
 import org.springframework.security.authentication.AuthenticationManager;

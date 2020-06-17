@@ -1,4 +1,4 @@
-package com.cody.common.util;
+package com.cody.seed.modules.util;
 
 import com.cody.common.exception.GlobleException;
 import com.cody.seed.modules.security.GrantedAuthorityImpl;

@@ -1,4 +1,4 @@
-package com.cody.common.system.base.entity;
+package com.cody.seed.modules.system.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +14,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-public class SysMenuDO {
+public class SysMenu {
 
     /**
      * 菜单ID
@@ -92,7 +92,7 @@ public class SysMenuDO {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        final SysMenuDO menuDO = (SysMenuDO) o;
+        final SysMenu menuDO = (SysMenu) o;
         return menu.equals(menuDO.menu);
     }
 

@@ -1,6 +1,6 @@
 package com.cody.seed.modules.security;
 
-import com.cody.common.util.SecurityUtils;
+import com.cody.seed.modules.util.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;

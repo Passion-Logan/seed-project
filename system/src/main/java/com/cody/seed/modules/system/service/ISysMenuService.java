@@ -1,28 +1,31 @@
 package com.cody.seed.modules.system.service;
 
-import com.cody.common.system.service.BaseService;
-import com.cody.seed.modules.system.entity.SysMenuDTO;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.cody.seed.modules.system.entity.SysMenu;
 
 import java.util.List;
 
-public interface ISysMenuService extends BaseService<SysMenuDTO> {
+public interface ISysMenuService extends IService<SysMenu> {
 
     /**
      * 新增菜单
-     * @param menuDTO
+     *
+     * @param menu
      * @return
      */
-    boolean insertMenu(SysMenuDTO menuDTO);
+    boolean insertMenu(SysMenu menu);
 
     /**
      * 编辑菜单
-     * @param menuDTO
+     *
+     * @param menu
      * @return
      */
-    boolean updateMenu(SysMenuDTO menuDTO);
+    boolean updateMenu(SysMenu menu);
 
     /**
      * 批量删除菜单
+     *
      * @param ids
      * @return
      */
@@ -30,6 +33,7 @@ public interface ISysMenuService extends BaseService<SysMenuDTO> {
 
     /**
      * 删除单条
+     *
      * @param id
      * @return
      */
@@ -37,13 +41,15 @@ public interface ISysMenuService extends BaseService<SysMenuDTO> {
 
     /**
      * 查询用户菜单
+     *
      * @param userId
      * @return
      */
-    List<SysMenuDTO> findMenuByUserId(Integer userId);
+    List<SysMenu> findMenuByUserId(Integer userId);
 
     /**
      * 查询用户权限
+     *
      * @param userId
      * @return
      */

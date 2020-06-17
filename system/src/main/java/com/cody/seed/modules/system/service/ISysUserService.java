@@ -1,31 +1,34 @@
 package com.cody.seed.modules.system.service;
 
-import com.cody.common.system.service.BaseService;
-import com.cody.seed.modules.system.entity.SysMenuDTO;
-import com.cody.seed.modules.system.entity.SysUserDTO;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.cody.seed.modules.system.entity.SysMenu;
+import com.cody.seed.modules.system.entity.SysUser;
 
 import java.util.List;
 
-public interface ISysUserService extends BaseService<SysUserDTO> {
+public interface ISysUserService extends IService<SysUser> {
 
     /**
      * 新增用户
-     * @param userDTO
+     *
+     * @param user
      * @param selectedRoles
      * @return
      */
-    boolean insertUser(SysUserDTO userDTO, String selectedRoles);
+    boolean insertUser(SysUser user, String selectedRoles);
 
     /**
      * 更新用户
-     * @param userDTO
+     *
+     * @param user
      * @param selectedRoles
      * @return
      */
-    boolean updateUser(SysUserDTO userDTO, String selectedRoles);
+    boolean updateUser(SysUser user, String selectedRoles);
 
     /**
      * 批量更新用户部门id
+     *
      * @param deptId
      * @param userIdList
      * @return
@@ -34,6 +37,7 @@ public interface ISysUserService extends BaseService<SysUserDTO> {
 
     /**
      * 批量 更新用户状态
+     *
      * @param status
      * @param ids
      * @return
@@ -42,6 +46,7 @@ public interface ISysUserService extends BaseService<SysUserDTO> {
 
     /**
      * 删除用户部门关系
+     *
      * @param userId
      * @return
      */
@@ -49,6 +54,7 @@ public interface ISysUserService extends BaseService<SysUserDTO> {
 
     /**
      * 批量删除用户部门关系
+     *
      * @param userIds
      * @return
      */
@@ -56,19 +62,22 @@ public interface ISysUserService extends BaseService<SysUserDTO> {
 
     /**
      * 查询用户权限
+     *
      * @return
      */
-    List<SysMenuDTO> getUserNav(String userName);
+    List<SysMenu> getUserNav(String userName);
 
     /**
      * 查询用户信息
+     *
      * @param username
      * @return
      */
-    SysUserDTO findByUsername(String username);
+    SysUser findByUsername(String username);
 
     /**
      * 修改密码
+     *
      * @param userName
      * @param password
      * @return

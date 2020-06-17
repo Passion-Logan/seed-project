@@ -80,6 +80,10 @@ spring:
   autoconfigure:
     exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
   datasource:
+    url: jdbc:mysql://127.0.0.1:3306/seed_project?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
     druid:
       stat-view-servlet:
         enabled: true
@@ -112,12 +116,6 @@ spring:
         filters: stat,wall,slf4j
         # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
         connectionProperties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
-      datasource:
-        master:
-          url: jdbc:mysql://127.0.0.1:3306/seed_project?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false
-          username: root
-          password: root
-          driver-class-name: com.mysql.jdbc.Driver
   #redis 配置
   redis:
     database: 0

@@ -3,7 +3,7 @@ package com.cody.seed.modules.security;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cody.common.api.vo.Result;
-import com.cody.common.util.JwtTokenUtils;
+import com.cody.seed.modules.util.JwtTokenUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.event.InteractiveAuthenticationSuccessEvent;
 import org.springframework.security.core.Authentication;

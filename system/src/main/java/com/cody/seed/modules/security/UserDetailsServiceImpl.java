@@ -1,6 +1,6 @@
 package com.cody.seed.modules.security;
 
-import com.cody.seed.modules.system.entity.SysUserDTO;
+import com.cody.seed.modules.system.entity.SysUser;
 import com.cody.seed.modules.system.service.ISysMenuService;
 import com.cody.seed.modules.system.service.ISysUserService;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +40,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        SysUserDTO user = sysUserService.findByUsername(username);
+        SysUser user = sysUserService.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("该用户不存在");
         }

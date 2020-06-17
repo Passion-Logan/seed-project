@@ -1,4 +1,4 @@
-package com.cody.common.system.base.entity;
+package com.cody.seed.modules.system.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +13,7 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public class SysLoginLogDO {
+public class SysLoginLog {
 
     /**
      * 访问ID

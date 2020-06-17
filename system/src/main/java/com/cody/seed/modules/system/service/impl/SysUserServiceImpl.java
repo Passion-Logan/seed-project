@@ -1,19 +1,14 @@
 package com.cody.seed.modules.system.service.impl;
 
-import com.cody.common.system.service.impl.BaseServiceImpl;
-import com.cody.seed.modules.system.entity.SysMenuDTO;
-import com.cody.seed.modules.system.entity.SysUserDTO;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cody.seed.modules.system.entity.SysMenu;
+import com.cody.seed.modules.system.entity.SysUser;
+import com.cody.seed.modules.system.mapper.SysUserMapper;
 import com.cody.seed.modules.system.service.ISysUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -21,17 +16,17 @@ import java.util.List;
  * @date: 2020年06月16日 18:21
  */
 @Service
-public class SysUserServiceImpl extends BaseServiceImpl<SysUserDTO> implements ISysUserService {
+public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SysUserServiceImpl.class);
 
     @Override
-    public boolean insertUser(SysUserDTO userDTO, String selectedRoles) {
+    public boolean insertUser(SysUser user, String selectedRoles) {
         return false;
     }
 
     @Override
-    public boolean updateUser(SysUserDTO userDTO, String selectedRoles) {
+    public boolean updateUser(SysUser user, String selectedRoles) {
         return false;
     }
 
@@ -56,12 +51,12 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUserDTO> implements I
     }
 
     @Override
-    public List<SysMenuDTO> getUserNav(String userName) {
+    public List<SysMenu> getUserNav(String userName) {
         return null;
     }
 
     @Override
-    public SysUserDTO findByUsername(String username) {
+    public SysUser findByUsername(String username) {
         return null;
     }
 
