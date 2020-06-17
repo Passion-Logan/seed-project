@@ -1,5 +1,7 @@
 package com.cody.seed.modules.system.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,7 +20,8 @@ public class SysLoginLog {
     /**
      * 访问ID
      */
-    private Integer id;
+    @TableId(type = IdType.ID_WORKER_STR)
+    private String id;
 
     /**
      * 登录账号
