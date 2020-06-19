@@ -167,3 +167,13 @@ logging:
 #enable swagger
 swagger:
   enable: true
+#单Redis节点模式
+redisson:
+#  password: ''
+  #      集群模式:SINGLE(单例),SENTINEL(哨兵),MASTERSLAVE(主从),CLUSTER(集群),REPLICATED(云托管)
+  model: SINGLE
+  #       单例模式参数
+  singleServerConfig:
+    address: 127.0.0.1:6379
+    database: 1
+

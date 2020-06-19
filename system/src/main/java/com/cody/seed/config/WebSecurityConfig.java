@@ -160,7 +160,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 开启登录认证流程过滤器，目前使用LoginController的login接口, 需要注释掉此过滤器，根据使用习惯二选一即可
 //        http.addFilterBefore(new JwtLoginFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class);
         // 访问控制时登录状态检查过滤器
-        http.addFilterBefore(new JwtAuthenticationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class);
+//        http.addFilterBefore(new JwtAuthenticationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class);
         // session 策略配置：谨慎选择非默认配置，会导致用户信息获取不到之类问题 使用前了解清楚
         //  默认配置 ： SessionCreationPolicy.IF_REQUIRED
 //        security.sessions策略如下：
