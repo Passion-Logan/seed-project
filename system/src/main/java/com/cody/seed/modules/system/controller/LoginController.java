@@ -78,7 +78,6 @@ public class LoginController {
     @NoRepeatSubmit
     @PostMapping(value = "/login")
     public JwtAuthenticatioToken login(@RequestBody LoginRequestVO loginRequestVO, HttpServletRequest request) throws IOException {
-
         // 查询验证码
         String code = redissonObject.getValue(loginRequestVO.getUuid());
         // 清除验证码

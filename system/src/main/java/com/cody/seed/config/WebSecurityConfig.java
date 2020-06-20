@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.cody.common.api.vo.Result;
 import com.cody.seed.modules.security.JwtAuthenticationFilter;
 import com.cody.seed.modules.security.JwtAuthenticationProvider;
+import com.cody.seed.modules.security.JwtLoginFilter;
 import com.cody.seed.modules.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
