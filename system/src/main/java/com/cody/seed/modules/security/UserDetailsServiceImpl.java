@@ -19,11 +19,9 @@ import java.util.stream.Collectors;
  * 一般而言，定制 UserDetailsService 就可以满足大部分需求了，在 UserDetailsService 满足不了
  * 我们的需求的时候考虑定制 AuthenticationProvider。
  * 如果直接定制UserDetailsService ，而不自定义 AuthenticationProvider，可以直接在配置文件 WebSecurityConfig 中这样配置。
- *
- * @Override
- * public void configure(AuthenticationManagerBuilder auth) throws Exception {
- *     // 指定自定义的获取信息获取服务
- *     auth.userDetailsService(userDetailsService)
+ * @Override public void configure(AuthenticationManagerBuilder auth) throws Exception {
+ * // 指定自定义的获取信息获取服务
+ * auth.userDetailsService(userDetailsService)
  * }
  * @date: 2020年06月16日 17:59
  */
@@ -47,8 +45,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         // 用户权限列表，根据用户拥有的权限标识与如 @PreAuthorize("hasAuthority('sys:menu:view')") 标注的接口对比，决定是否可以调用接口
         List<String> permissions = sysMenuService.getPermissionsByUserId(user.getId());
-        log.info("用户权限标识 permissions = {}",permissions);
+        log.info("用户权限标识 permissions = {}", permissions);
         List<GrantedAuthority> grantedAuthorities = permissions.stream().map(GrantedAuthorityImpl::new).collect(Collectors.toList());
-        return new JwtUserDetails(username, user.getPassword(),user.getEnabled(), grantedAuthorities);
+        return new JwtUserDetails(username, user.getPassword(), user.getEnabled(), grantedAuthorities);
     }
 }
