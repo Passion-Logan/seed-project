@@ -50,7 +50,6 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
      */
     @Override
     public boolean insertUser(SysUser user, String selectedRoles) {
-
         //加密用户密码
         String encrypt = new BCryptPasswordEncoder().encode(MD5.md5(user.getPassword()));
         user.setPassword(encrypt);
