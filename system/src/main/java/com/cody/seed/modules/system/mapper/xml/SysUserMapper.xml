@@ -2,4 +2,130 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cody.seed.modules.system.mapper.SysUserMapper">
 
+    <resultMap id="BaseResultMap" type="com.cody.seed.modules.system.entity.SysUser">
+        <result property="id" column="id"/>
+        <result property="userName" column="user_name"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="email" column="email"/>
+        <result property="phone" column="phone"/>
+        <result property="birthday" column="birthday"/>
+        <result property="sex" column="sex"/>
+        <result property="avatar" column="avatar"/>
+        <result property="password" column="password"/>
+        <result property="enabled" column="enabled"/>
+        <result property="deptId" column="dept_id"/>
+        <result property="jobId" column="job_id"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="loginIp" column="login_ip"/>
+        <result property="loginTime" column="login_time"/>
+        <result property="remark" column="remark"/>
+    </resultMap>
+
+    <sql id="columns">
+		id,
+		user_name,
+		nick_name,
+		email,
+		phone,
+		birthday,
+		sex,
+		avatar,
+		password,
+		enabled,
+		dept_id,
+		job_id,
+		create_by,
+		create_time,
+		login_ip,
+		login_time,
+		remark
+	</sql>
+
+    <sql id="where_condition">
+        <where>
+            <if test="id != null">
+                and id=#{id}
+            </if>
+            <if test="userName != null and userName != ''">
+                and user_name=#{userName}
+            </if>
+            <if test="nickName != null and nickName != ''">
+                and nick_name=#{nickName}
+            </if>
+            <if test="email != null and email != ''">
+                and email=#{email}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone=#{phone}
+            </if>
+            <if test="birthday != null and birthday != ''">
+                and birthday=#{birthday}
+            </if>
+            <if test="sex != null">
+                and sex=#{sex}
+            </if>
+            <if test="avatar != null and avatar != ''">
+                and avatar=#{avatar}
+            </if>
+            <if test="password != null and password != ''">
+                and password=#{password}
+            </if>
+            <if test="enabled != null">
+                and enabled=#{enabled}
+            </if>
+            <if test="deptId != null">
+                and dept_id=#{deptId}
+            </if>
+            <if test="jobId != null">
+                and job_id=#{jobId}
+            </if>
+            <if test="createBy != null and createBy != ''">
+                and create_by=#{createBy}
+            </if>
+            <if test="createTime != null">
+                and create_time=#{createTime}
+            </if>
+            <if test="loginIp != null and loginIp != ''">
+                and login_ip=#{loginIp}
+            </if>
+            <if test="loginTime != null">
+                and login_time=#{loginTime}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark=#{remark}
+            </if>
+        </where>
+    </sql>
+
+    <update id="updateDeptIdByUserIds">
+        update sys_user
+        set dept_id = #{deptId}
+        where id in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+
+    </update>
+
+    <update id="frozenBatch">
+
+        update sys_user
+        set enabled = #{status}
+        where id in
+        <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+
+    </update>
+
+    <select id="findByName" resultMap="BaseResultMap">
+
+        select
+        <include refid="columns"></include>
+        from sys_user
+        where user_name = #{userName}
+
+    </select>
+
 </mapper>

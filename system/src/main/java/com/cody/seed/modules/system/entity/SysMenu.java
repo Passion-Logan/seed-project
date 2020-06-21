@@ -52,7 +52,7 @@ public class SysMenu implements Serializable {
     /**
      * 父级id
      */
-    private Integer pid;
+    private String pid;
     /**
      * 类型:1目录,2菜单,3按钮
      */

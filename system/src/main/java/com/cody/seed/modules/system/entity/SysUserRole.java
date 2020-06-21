@@ -20,9 +20,9 @@ public class SysUserRole implements Serializable {
     /**
      * 角色ID
      */
-    private Integer roleId;
+    private String roleId;
     /**
      * 用户ID
      */
-    private Integer userId;
+    private String userId;
 }

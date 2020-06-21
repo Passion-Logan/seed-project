@@ -19,9 +19,9 @@ public class SysRoleDept implements Serializable {
     /**
      * 岗位ID
      */
-    private Integer deptId;
+    private String deptId;
     /**
      * 角色ID
      */
-    private Integer roleId;
+    private String roleId;
 }

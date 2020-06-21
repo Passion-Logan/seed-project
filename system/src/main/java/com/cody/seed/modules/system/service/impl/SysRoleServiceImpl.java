@@ -28,7 +28,6 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
      */
     @Override
     public List<SysRole> getRolesByUserId(String userId) {
-
         List<SysRole> list = roleMapper.getRolesByUserId(userId);
         return BeanUtil.convert(list, SysRole.class);
     }

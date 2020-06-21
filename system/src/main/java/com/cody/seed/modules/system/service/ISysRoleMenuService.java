@@ -7,10 +7,11 @@ public interface ISysRoleMenuService extends IService<SysRoleMenu> {
 
 
     /**
-     * 保存用户角色收取南
+     * 保存用户角色权限
      *
      * @param roleId
      * @param permissionIds
      */
     void saveRolePermission(String roleId, String permissionIds);
+
 }

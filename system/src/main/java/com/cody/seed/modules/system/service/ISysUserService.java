@@ -33,7 +33,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @param userIdList
      * @return
      */
-    boolean updateDeptIdByUserIds(Integer deptId, List<String> userIdList);
+    boolean updateDeptIdByUserIds(String deptId, List<String> userIdList);
 
     /**
      * 批量 更新用户状态
@@ -50,7 +50,7 @@ public interface ISysUserService extends IService<SysUser> {
      * @param userId
      * @return
      */
-    boolean deleteUserDept(Integer userId);
+    boolean deleteUserDept(String userId);
 
     /**
      * 批量删除用户部门关系

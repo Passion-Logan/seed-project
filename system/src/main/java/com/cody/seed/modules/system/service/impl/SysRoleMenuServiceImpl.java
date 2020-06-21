@@ -1,12 +1,12 @@
 package com.cody.seed.modules.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cody.seed.modules.system.entity.SysRoleMenu;
 import com.cody.seed.modules.system.mapper.SysRoleMenuMapper;
 import com.cody.seed.modules.system.service.ISysRoleMenuService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,11 +18,8 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SysRoleMenuServiceImpl.class);
 
-    @Autowired
-    private SysRoleMenuMapper sysRoleMenuMapper;
-
     /**
-     * 保存用户角色收取南
+     * 保存用户角色权限
      *
      * @param roleId
      * @param permissionIds
@@ -34,9 +31,11 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
         //先删除角色菜单
         SysRoleMenu roleMenu = new SysRoleMenu();
         roleMenu.setRoleId(roleId);
-//		sysRoleMenuMapper.delete(roleMenuDO);
 
-//		sysRoleMenuMapper.delete()
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("role_id", roleId);
+        this.remove(wrapper);
+
 
         //批量添加角色菜单
         String[] menuIds = permissionIds.split(",");
@@ -48,6 +47,6 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
             list.add(sysRoleMenuDO);
         }
 
-//		sysRoleMenuMapper.insertInBatch(list);
+        this.saveBatch(list);
     }
 }

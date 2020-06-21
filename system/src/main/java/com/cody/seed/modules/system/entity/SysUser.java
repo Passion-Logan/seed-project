@@ -73,12 +73,12 @@ public class SysUser implements Serializable {
     /**
      * 部门id
      */
-    private Integer deptId;
+    private String deptId;
 
     /**
      * 岗位id
      */
-    private Integer jobId;
+    private String jobId;
 
     /**
      * 创建者

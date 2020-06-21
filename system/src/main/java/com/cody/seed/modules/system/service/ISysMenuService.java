@@ -29,7 +29,7 @@ public interface ISysMenuService extends IService<SysMenu> {
      * @param ids
      * @return
      */
-    boolean deleteBatch(List<Integer> ids);
+    boolean deleteBatch(List<String> ids);
 
     /**
      * 删除单条
@@ -37,7 +37,7 @@ public interface ISysMenuService extends IService<SysMenu> {
      * @param id
      * @return
      */
-    boolean deleteById(Integer id);
+    boolean deleteById(String id);
 
     /**
      * 查询用户菜单
@@ -45,7 +45,7 @@ public interface ISysMenuService extends IService<SysMenu> {
      * @param userId
      * @return
      */
-    List<SysMenu> findMenuByUserId(Integer userId);
+    List<SysMenu> findMenuByUserId(String userId);
 
     /**
      * 查询用户权限
@@ -53,6 +53,6 @@ public interface ISysMenuService extends IService<SysMenu> {
      * @param userId
      * @return
      */
-    List<String> getPermissionsByUserId(Integer userId);
+    List<String> getPermissionsByUserId(String userId);
 
 }

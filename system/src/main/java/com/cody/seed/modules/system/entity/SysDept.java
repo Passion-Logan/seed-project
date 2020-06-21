@@ -22,11 +22,11 @@ public class SysDept {
      * 部门id
      */
     @TableId(type = IdType.ID_WORKER_STR)
-    private Integer id;
+    private String id;
     /**
      * 父部门id
      */
-    private Integer pid;
+    private String pid;
     /**
      * 部门名称
      */
