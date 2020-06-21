@@ -8,6 +8,7 @@ import com.cody.common.util.IPUtilsPro;
 import com.cody.seed.modules.security.JwtAuthenticatioToken;
 import com.cody.seed.modules.system.entity.SysLoginLog;
 import com.cody.seed.modules.system.entity.SysMenu;
+import com.cody.seed.modules.system.entity.SysRole;
 import com.cody.seed.modules.system.entity.SysUser;
 import com.cody.seed.modules.system.service.ISysLoginLogService;
 import com.cody.seed.modules.system.service.ISysMenuService;
@@ -15,6 +16,7 @@ import com.cody.seed.modules.system.service.ISysRoleService;
 import com.cody.seed.modules.system.service.ISysUserService;
 import com.cody.seed.modules.util.SecurityUtils;
 import com.cody.seed.modules.vo.LoginRequestVO;
+import com.cody.seed.modules.vo.response.SysRoleResponseVO;
 import com.cody.seed.modules.vo.response.SysUserInfoResponseVO;
 import com.cody.seed.modules.vo.response.SysUserMenuResponseVO;
 import com.wf.captcha.ArithmeticCaptcha;
@@ -26,7 +28,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -119,7 +120,8 @@ public class LoginController {
         loginLog.setOs(IPUtilsPro.getOperatingSystem(request));
         loginLog.setStatus(0);
         loginLog.setLoginTime(new Date());
-//        loginLogService.insert(loginLog);
+
+        loginLogService.save(loginLog);
     }
 
 
@@ -161,20 +163,19 @@ public class LoginController {
         //查询用户信息
         SysUser userDTO = new SysUser();
         userDTO.setUserName(SecurityUtils.getUsername());
-//        SysUser user = sysUserService.get(userDTO);
-//        SysUserInfoResponseVO responseVo = BeanUtil.convert(user, SysUserInfoResponseVO.class);
+        SysUser user = sysUserService.findByUsername(SecurityUtils.getUsername());
+        SysUserInfoResponseVO responseVo = BeanUtil.convert(user, SysUserInfoResponseVO.class);
 
         //查询角色信息
-//        List<SysRole> roles = sysRoleService.getRolesByUserId(user.getId());
-//        List<SysRoleResponseVO> roleList = BeanUtil.convert(roles, SysRoleResponseVO.class);
-//        responseVo.setRoles(roleList);
+        List<SysRole> roles = roleService.getRolesByUserId(user.getId());
+        List<SysRoleResponseVO> roleList = BeanUtil.convert(roles, SysRoleResponseVO.class);
+        responseVo.setRoles(roleList);
 
         //查询角色权限信息
-//        List<String> permissions = sysMenuService.getPermissionsByUserId(user.getId());
-//        responseVo.setPermissions(permissions);
+        List<String> permissions = sysMenuService.getPermissionsByUserId(user.getId());
+        responseVo.setPermissions(permissions);
 
-//        return responseVo;
-        return null;
+        return responseVo;
     }
 
     /**
