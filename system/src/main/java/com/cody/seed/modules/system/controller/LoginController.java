@@ -115,7 +115,7 @@ public class LoginController {
         loginLog.setLoginName(loginRequestVO.getUsername());
         String ip = IPUtilsPro.getIpAddr(request);
         loginLog.setIp(ip);
-        loginLog.setLoginLocation(IPUtilsPro.getCityInfo(ip));
+//        loginLog.setLoginLocation(IPUtilsPro.getCityInfo(ip));
         loginLog.setBrowser(IPUtilsPro.getBrowser(request));
         loginLog.setOs(IPUtilsPro.getOperatingSystem(request));
         loginLog.setStatus(0);
@@ -159,7 +159,6 @@ public class LoginController {
     @ApiOperation("登录用户信息")
     @GetMapping(value = "/user/info")
     public SysUserInfoResponseVO getUserInfo() {
-
         //查询用户信息
         SysUser userDTO = new SysUser();
         userDTO.setUserName(SecurityUtils.getUsername());
@@ -186,7 +185,6 @@ public class LoginController {
     @ApiOperation("登录查询用户菜单")
     @GetMapping(value = "/user/nav")
     public List<SysUserMenuResponseVO> getUserNav() {
-
         List<SysMenu> list = sysUserService.getUserNav(SecurityUtils.getUsername());
         //处理数据
         return BeanUtil.convert(list, SysUserMenuResponseVO.class);

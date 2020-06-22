@@ -133,27 +133,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         //对于前后分离项目 不推荐使用 原生formLogin()
 //                .and().formLogin().loginProcessingUrl("/login")
         //各类错误异常处理 以下针对于访问资源路径 认证异常捕获 和 无权限处理
-        http.exceptionHandling().authenticationEntryPoint(new AuthenticationEntryPoint() {
-            @Override
-            public void commence(HttpServletRequest req, HttpServletResponse resp, AuthenticationException exception) throws IOException, ServletException {
-                resp.setContentType("application/json;charset=utf-8");
-                PrintWriter out = resp.getWriter();
-                //封装异常描述信息
-                String json = JSONObject.toJSONString(Result.error("认证异常：" + exception.getMessage()));
-                out.write(json);
-                out.flush();
-                out.close();
-            }
-        }).accessDeniedHandler(new AccessDeniedHandler() {
-            @Override
-            public void handle(HttpServletRequest resq, HttpServletResponse resp, AccessDeniedException exception) throws IOException, ServletException {
-                resp.setContentType("application/json;charset=utf-8");
-                PrintWriter out = resp.getWriter();
-                String json = JSONObject.toJSONString(Result.error("无权限：" + exception.getMessage()));
-                out.write(json);
-                out.flush();
-                out.close();
-            }
+        http.exceptionHandling().authenticationEntryPoint((req, resp, exception) -> {
+            resp.setContentType("application/json;charset=utf-8");
+            PrintWriter out = resp.getWriter();
+            //封装异常描述信息
+            String json = JSONObject.toJSONString(Result.error("认证异常：" + exception.getMessage()));
+            out.write(json);
+            out.flush();
+            out.close();
+        }).accessDeniedHandler((resq, resp, exception) -> {
+            resp.setContentType("application/json;charset=utf-8");
+            PrintWriter out = resp.getWriter();
+            String json = JSONObject.toJSONString(Result.error("无权限：" + exception.getMessage()));
+            out.write(json);
+            out.flush();
+            out.close();
         });
         // 其他所有请求需要身份认证
         // 退出登录处理器
@@ -161,7 +155,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // 开启登录认证流程过滤器，目前使用LoginController的login接口, 需要注释掉此过滤器，根据使用习惯二选一即可
 //        http.addFilterBefore(new JwtLoginFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class);
         // 访问控制时登录状态检查过滤器
-//        http.addFilterBefore(new JwtAuthenticationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new JwtAuthenticationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class);
         // session 策略配置：谨慎选择非默认配置，会导致用户信息获取不到之类问题 使用前了解清楚
         //  默认配置 ： SessionCreationPolicy.IF_REQUIRED
 //        security.sessions策略如下：
