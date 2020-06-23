@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @date: 2020年06月16日 16:16
  */
 @Data
-@ApiModel(value="接口返回对象", description="接口返回对象")
+@ApiModel(value = "接口返回对象", description = "接口返回对象")
 public class Result<T> implements Serializable {
 
     private static final long serialVersion = 1L;
@@ -60,7 +60,7 @@ public class Result<T> implements Serializable {
 
 
     public static Result<Object> ok() {
-        Result<Object> r = new Result<Object>();
+        Result<Object> r = new Result<>();
         r.setSuccess(true);
         r.setCode(CommonConstant.SC_OK_200);
         r.setMessage("成功");
@@ -68,7 +68,7 @@ public class Result<T> implements Serializable {
     }
 
     public static Result<Object> ok(String msg) {
-        Result<Object> r = new Result<Object>();
+        Result<Object> r = new Result<>();
         r.setSuccess(true);
         r.setCode(CommonConstant.SC_OK_200);
         r.setMessage(msg);
@@ -76,7 +76,7 @@ public class Result<T> implements Serializable {
     }
 
     public static Result<Object> ok(Object data) {
-        Result<Object> r = new Result<Object>();
+        Result<Object> r = new Result<>();
         r.setSuccess(true);
         r.setCode(CommonConstant.SC_OK_200);
         r.setResult(data);
@@ -88,7 +88,7 @@ public class Result<T> implements Serializable {
     }
 
     public static Result<Object> error(int code, String msg) {
-        Result<Object> r = new Result<Object>();
+        Result<Object> r = new Result<>();
         r.setCode(code);
         r.setMessage(msg);
         r.setSuccess(false);
@@ -101,6 +101,7 @@ public class Result<T> implements Serializable {
         this.success = false;
         return this;
     }
+
     /**
      * 无权限访问返回结果
      */

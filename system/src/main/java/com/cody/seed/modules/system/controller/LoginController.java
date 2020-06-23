@@ -2,8 +2,8 @@ package com.cody.seed.modules.system.controller;
 
 import com.cody.common.api.vo.Result;
 import com.cody.common.aspect.annotation.NoRepeatSubmit;
-import com.cody.common.exception.GlobleException;
-import com.cody.common.util.BeanUtil;
+import com.cody.seed.modules.system.execption.CustomExecption;
+import com.cody.seed.modules.util.BeanUtil;
 import com.cody.common.util.IPUtilsPro;
 import com.cody.seed.modules.security.JwtAuthenticatioToken;
 import com.cody.seed.modules.system.entity.SysLoginLog;
@@ -32,7 +32,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -79,18 +78,18 @@ public class LoginController {
      */
     @NoRepeatSubmit
     @PostMapping(value = "/login")
-    public JwtAuthenticatioToken login(@RequestBody LoginRequestVO loginRequestVO, HttpServletRequest request) throws IOException {
+    public JwtAuthenticatioToken login(@RequestBody LoginRequestVO loginRequestVO, HttpServletRequest request) {
         // 查询验证码
         String code = redissonObject.getValue(loginRequestVO.getUuid());
         // 清除验证码
         redissonObject.delete(loginRequestVO.getUuid());
         if (StringUtils.isBlank(code)) {
             logger.error("验证码不存在或已过期");
-            throw new GlobleException("验证码不存在或已过期");
+            throw new CustomExecption("验证码不存在或已过期");
         }
         if (StringUtils.isBlank(loginRequestVO.getImgCode()) || !loginRequestVO.getImgCode().equalsIgnoreCase(code)) {
             logger.error("验证码错误");
-            throw new GlobleException("验证码错误");
+            throw new CustomExecption("验证码错误");
         }
         String username = loginRequestVO.getUsername();
         String password = loginRequestVO.getPassword();

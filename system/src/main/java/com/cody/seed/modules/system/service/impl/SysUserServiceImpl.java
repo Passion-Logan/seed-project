@@ -2,8 +2,8 @@ package com.cody.seed.modules.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cody.common.exception.GlobleException;
-import com.cody.common.util.BeanUtil;
+import com.cody.seed.modules.system.execption.CustomExecption;
+import com.cody.seed.modules.util.BeanUtil;
 import com.cody.common.util.MD5;
 import com.cody.seed.modules.system.entity.SysMenu;
 import com.cody.seed.modules.system.entity.SysUser;
@@ -185,7 +185,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         //查询用户信息
         SysUser userDO = sysUserMapper.findByName(userName);
         if (userDO == null) {
-            throw new GlobleException("不存在此用户");
+            throw new CustomExecption("不存在此用户");
         }
         //加密用户密码
         String encrypt = new BCryptPasswordEncoder().encode(MD5.md5(password));

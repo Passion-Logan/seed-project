@@ -1,6 +1,7 @@
-package com.cody.common.aspect.annotation;
+package com.cody.seed.modules.system.aspect;
 
-import com.cody.common.exception.GlobleException;
+import com.cody.common.aspect.annotation.NoRepeatSubmit;
+import com.cody.seed.modules.system.execption.CustomExecption;
 import com.google.common.cache.Cache;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -20,14 +21,12 @@ import javax.servlet.http.HttpServletRequest;
  * @date: 2020年06月17日 18:35
  */
 @Aspect
-@Component
 public class NoRepeatSubmitAdvice {
 
     private Logger logger = LoggerFactory.getLogger(NoRepeatSubmitAdvice.class);
 
     @Autowired
     private Cache<String, Integer> cache;
-
 
     @Pointcut("@annotation(nrs)")
     public void noRepeatSubmit(NoRepeatSubmit nrs) {
@@ -47,7 +46,7 @@ public class NoRepeatSubmitAdvice {
             return o;
         } else {
             logger.info(request.getServletPath() + "重复提交");
-            throw new GlobleException("请勿重复操作");
+            throw new CustomExecption("请勿重复操作");
         }
 
     }

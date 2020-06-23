@@ -1,7 +1,7 @@
 package com.cody.seed.modules.system.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cody.common.util.BeanUtil;
+import com.cody.seed.modules.util.BeanUtil;
 import com.cody.seed.modules.system.entity.SysRole;
 import com.cody.seed.modules.system.mapper.SysRoleMapper;
 import com.cody.seed.modules.system.service.ISysRoleService;

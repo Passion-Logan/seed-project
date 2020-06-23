@@ -1,6 +1,6 @@
-package com.cody.common.util;
+package com.cody.seed.modules.util;
 
-import com.cody.common.exception.GlobleException;
+import com.cody.seed.modules.system.execption.CustomExecption;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -22,7 +22,7 @@ public class BeanUtil {
 
     public static <T, F> List<T> convert(List<F> list, Class<T> targetClass) {
         if (targetClass == null) {
-            throw new GlobleException("targetClass is null  请设置目标类型");
+            throw new CustomExecption("targetClass is null  请设置目标类型");
         }
         List<T> rs = new ArrayList();
         if (list != null && !list.isEmpty()) {
@@ -36,7 +36,7 @@ public class BeanUtil {
                     BeanUtils.copyProperties(source, target);
                     rs.add(target);
                 } catch (Exception var6) {
-                    throw new GlobleException("bean convert exception");
+                    throw new CustomExecption("bean convert exception");
                 }
             }
         }

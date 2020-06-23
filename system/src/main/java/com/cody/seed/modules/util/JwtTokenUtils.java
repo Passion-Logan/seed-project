@@ -1,6 +1,6 @@
 package com.cody.seed.modules.util;
 
-import com.cody.common.exception.GlobleException;
+import com.cody.seed.modules.system.execption.CustomExecption;
 import com.cody.seed.modules.security.GrantedAuthorityImpl;
 import com.cody.seed.modules.security.JwtAuthenticatioToken;
 import io.jsonwebtoken.Claims;
@@ -74,7 +74,7 @@ public class JwtTokenUtils implements Serializable {
         Claims claims = getClaimsFromToken(token);
         if (claims == null) {
             logger.error("从令牌中获取用户名失败");
-            throw new GlobleException("无效的token");
+            throw new CustomExecption("无效的token");
         }
         String username = claims.getSubject();
         return username;

@@ -1,4 +1,4 @@
-package com.cody.common.exception;
+package com.cody.seed.modules.system.execption;
 
 import com.cody.common.api.vo.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -14,10 +14,10 @@ import org.springframework.web.servlet.NoHandlerFoundException;
  */
 @RestControllerAdvice
 @Slf4j
-public class GlobleExceptionHandler {
+public class CustomExecptionHandler {
 
-    @ExceptionHandler(GlobleException.class)
-    public Result<?> handleRRException(GlobleException e) {
+    @ExceptionHandler(CustomExecption.class)
+    public Result<?> handleRRException(CustomExecption e) {
         log.error(e.getMessage(), e);
         return Result.error(e.getMessage());
     }
