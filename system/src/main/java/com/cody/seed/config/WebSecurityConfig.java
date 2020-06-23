@@ -137,7 +137,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             resp.setContentType("application/json;charset=utf-8");
             PrintWriter out = resp.getWriter();
             //封装异常描述信息
-            String json = JSONObject.toJSONString(Result.error("认证异常：" + exception.getMessage()));
+//            String json = JSONObject.toJSONString(Result.error("认证异常：" + exception.getMessage()));
+            String json = JSONObject.toJSONString(Result.error(401, "登录失效,请重新登录"));
             out.write(json);
             out.flush();
             out.close();
