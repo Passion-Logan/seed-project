@@ -15,7 +15,6 @@ import java.net.UnknownHostException;
 @Slf4j
 @EnableSwagger2
 @SpringBootApplication
-//        (scanBasePackages = {"com.cody.common.exception"})
 public class SeedApplication {
 
     public static void main(String[] args) throws UnknownHostException {
