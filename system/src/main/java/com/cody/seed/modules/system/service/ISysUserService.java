@@ -1,8 +1,12 @@
 package com.cody.seed.modules.system.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cody.seed.modules.system.entity.SysMenu;
 import com.cody.seed.modules.system.entity.SysUser;
+import com.cody.seed.modules.vo.request.SysUserQueryVO;
+import com.cody.seed.modules.vo.response.SysUserResponseVO;
 
 import java.util.List;
 
@@ -16,6 +20,14 @@ public interface ISysUserService extends IService<SysUser> {
      * @return
      */
     boolean insertUser(SysUser user, String selectedRoles);
+
+    /**
+     * 获取列表
+     * @param page
+     * @param sysUserQueryVO
+     * @return
+     */
+    IPage<SysUserResponseVO> getList(Page<SysUserResponseVO> page, SysUserQueryVO sysUserQueryVO);
 
     /**
      * 更新用户

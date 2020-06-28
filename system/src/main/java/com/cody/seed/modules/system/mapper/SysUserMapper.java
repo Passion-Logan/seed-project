@@ -1,7 +1,11 @@
 package com.cody.seed.modules.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cody.seed.modules.system.entity.SysUser;
+import com.cody.seed.modules.vo.request.SysUserQueryVO;
+import com.cody.seed.modules.vo.response.SysUserResponseVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -38,5 +42,7 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
      * @return
      */
     SysUser findByName(@Param("userName") String userName);
+
+    IPage<SysUserResponseVO> getList(Page<SysUserResponseVO> page, SysUserQueryVO sysUserQueryVO);
 
 }

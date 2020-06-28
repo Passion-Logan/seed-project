@@ -1,18 +1,15 @@
 package com.cody.seed.modules.system.controller;
 
-import com.cody.seed.modules.system.entity.SysUser;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cody.seed.modules.system.service.ISysUserRoleService;
 import com.cody.seed.modules.system.service.ISysUserService;
-import com.cody.seed.modules.util.BeanUtil;
 import com.cody.seed.modules.vo.request.SysUserQueryVO;
 import com.cody.seed.modules.vo.response.SysUserPageInfoVO;
 import com.cody.seed.modules.vo.response.SysUserResponseVO;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * ClassName: SysUserController
@@ -55,14 +51,15 @@ public class SysUserController {
     public SysUserPageInfoVO selectPageList(@RequestBody @Valid SysUserQueryVO sysUserQueryVO) {
         String info = String.format("The method name[selectPageList] params:%s", sysUserQueryVO.toString());
         log.info(info);
-        SysUser sysUser = BeanUtil.convert(sysUserQueryVO, SysUser.class);
 
-        Page<SysUserResponseVO> page = PageHelper.startPage(sysUserQueryVO.getCurrent(), sysUserQueryVO.getPageSize());
-        List<SysUser> sysUserList = sysUserService.getList(sysUser);
+        Page<SysUserResponseVO> page = new Page<>(sysUserQueryVO.getCurrent(), sysUserQueryVO.getPageSize());
+        IPage<SysUserResponseVO> data = sysUserService.getList(page, sysUserQueryVO);
         SysUserPageInfoVO sysUserPageInfo = new SysUserPageInfoVO();
-        BeanUtils.copyProperties(page.toPageInfo(), sysUserPageInfo);
-        List<SysUserResponseVO> voList = BeanUtil.convert(sysUserList, SysUserResponseVO.class);
-        sysUserPageInfo.setList(voList);
+
+        sysUserPageInfo.setTotal(data.getTotal());
+        sysUserPageInfo.setPageNum((int) data.getCurrent());
+        sysUserPageInfo.setPageSize((int) data.getSize());
+        sysUserPageInfo.setList(data.getRecords());
 
         return sysUserPageInfo;
     }

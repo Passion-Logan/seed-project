@@ -128,4 +128,15 @@
 
     </select>
 
+    <!--根据对象查询列表-->
+    <select id="getList" resultMap="BaseResultMap" parameterType="com.cody.seed.modules.vo.request.SysUserQueryVO">
+        SELECT
+        <include refid="columns"/>
+        FROM sys_user
+        <include refid="where_condition"/>
+        order by create_time desc
+    </select>
+
+
+
 </mapper>

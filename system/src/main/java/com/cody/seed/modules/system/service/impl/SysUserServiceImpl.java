@@ -1,6 +1,8 @@
 package com.cody.seed.modules.system.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cody.seed.modules.system.execption.CustomExecption;
 import com.cody.seed.modules.util.BeanUtil;
@@ -12,6 +14,8 @@ import com.cody.seed.modules.system.mapper.SysUserMapper;
 import com.cody.seed.modules.system.service.ISysMenuService;
 import com.cody.seed.modules.system.service.ISysUserRoleService;
 import com.cody.seed.modules.system.service.ISysUserService;
+import com.cody.seed.modules.vo.request.SysUserQueryVO;
+import com.cody.seed.modules.vo.response.SysUserResponseVO;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,6 +69,11 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             sysuserRoleservice.saveBatch(list);
         }
         return true;
+    }
+
+    @Override
+    public IPage<SysUserResponseVO> getList(Page<SysUserResponseVO> page, SysUserQueryVO sysUserQueryVO) {
+        return sysUserMapper.getList(page, sysUserQueryVO);
     }
 
     /**
