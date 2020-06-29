@@ -12,10 +12,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -47,7 +44,7 @@ public class SysUserController {
      * @return 分页参数
      */
     @ApiOperation(value = "分页查询")
-    @PostMapping("getPageList")
+    @GetMapping("getPageList")
     public SysUserPageInfoVO selectPageList(@RequestBody @Valid SysUserQueryVO sysUserQueryVO) {
         String info = String.format("The method name[selectPageList] params:%s", sysUserQueryVO.toString());
         log.info(info);
