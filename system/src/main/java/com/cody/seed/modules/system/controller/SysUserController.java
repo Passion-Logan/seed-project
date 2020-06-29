@@ -45,7 +45,7 @@ public class SysUserController {
      */
     @ApiOperation(value = "分页查询")
     @GetMapping("getPageList")
-    public SysUserPageInfoVO selectPageList(@RequestBody @Valid SysUserQueryVO sysUserQueryVO) {
+    public SysUserPageInfoVO selectPageList(@Valid SysUserQueryVO sysUserQueryVO) {
         String info = String.format("The method name[selectPageList] params:%s", sysUserQueryVO.toString());
         log.info(info);
 
