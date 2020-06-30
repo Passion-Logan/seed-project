@@ -80,9 +80,9 @@ public class DictAspect {
      */
     private void parseDictText(Object result) {
         if (result instanceof Result) {
-            if (((Result) result).getResult() instanceof IPage) {
+            if (((Result) result).getData() instanceof IPage) {
                 List<JSONObject> items = new ArrayList<>();
-                for (Object record : ((IPage) ((Result) result).getResult()).getRecords()) {
+                for (Object record : ((IPage) ((Result) result).getData()).getRecords()) {
                     ObjectMapper mapper = new ObjectMapper();
                     String json = "{}";
                     try {
@@ -118,7 +118,7 @@ public class DictAspect {
                     }
                     items.add(item);
                 }
-                ((IPage) ((Result) result).getResult()).setRecords(items);
+                ((IPage) ((Result) result).getData()).setRecords(items);
             }
 
         }

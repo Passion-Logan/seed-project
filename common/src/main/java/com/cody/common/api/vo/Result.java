@@ -39,7 +39,10 @@ public class Result<T> implements Serializable {
      * 返回数据对象 data
      */
     @ApiModelProperty(value = "返回数据对象")
-    private T result;
+    private T data;
+
+    @ApiModelProperty(value = "数据对象的条数")
+    private Integer total;
 
     /**
      * 时间戳
@@ -79,7 +82,16 @@ public class Result<T> implements Serializable {
         Result<Object> r = new Result<>();
         r.setSuccess(true);
         r.setCode(CommonConstant.SC_OK_200);
-        r.setResult(data);
+        r.setData(data);
+        return r;
+    }
+
+    public static Result<Object> ok(Object data, Integer total) {
+        Result<Object> r = new Result<>();
+        r.setSuccess(true);
+        r.setCode(CommonConstant.SC_OK_200);
+        r.setData(data);
+        r.setData(total);
         return r;
     }
 
