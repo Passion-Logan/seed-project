@@ -48,7 +48,7 @@ public class SysUser implements Serializable {
     /**
      * 生日
      */
-    private String birthday;
+    private Date birthday;
 
     /**
      * 性别

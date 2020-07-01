@@ -2,6 +2,7 @@ package com.cody.seed.modules.system.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.cody.common.api.vo.Result;
 import com.cody.seed.modules.system.service.ISysUserRoleService;
 import com.cody.seed.modules.system.service.ISysUserService;
 import com.cody.seed.modules.vo.request.SysUserQueryVO;
@@ -45,19 +46,13 @@ public class SysUserController {
      */
     @ApiOperation(value = "分页查询")
     @PostMapping("getPageList")
-    public SysUserPageInfoVO selectPageList(@RequestBody @Valid SysUserQueryVO sysUserQueryVO) {
+    public Result selectPageList(@RequestBody @Valid SysUserQueryVO sysUserQueryVO) {
         String info = String.format("The method name[selectPageList] params:%s", sysUserQueryVO.toString());
         log.info(info);
 
         Page<SysUserResponseVO> page = new Page<>(sysUserQueryVO.getCurrent(), sysUserQueryVO.getPageSize());
         IPage<SysUserResponseVO> data = sysUserService.getList(page, sysUserQueryVO);
-        SysUserPageInfoVO sysUserPageInfo = new SysUserPageInfoVO();
 
-        sysUserPageInfo.setTotal(data.getTotal());
-        sysUserPageInfo.setPageNum((int) data.getCurrent());
-        sysUserPageInfo.setPageSize((int) data.getSize());
-        sysUserPageInfo.setList(data.getRecords());
-
-        return sysUserPageInfo;
+        return Result.ok(data.getRecords(), (int) data.getTotal());
     }
 }

@@ -91,7 +91,7 @@ public class Result<T> implements Serializable {
         r.setSuccess(true);
         r.setCode(CommonConstant.SC_OK_200);
         r.setData(data);
-        r.setData(total);
+        r.setTotal(total);
         return r;
     }
 
