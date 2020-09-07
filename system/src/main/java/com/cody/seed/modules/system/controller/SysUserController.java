@@ -6,14 +6,16 @@ import com.cody.common.api.vo.Result;
 import com.cody.seed.modules.system.service.ISysUserRoleService;
 import com.cody.seed.modules.system.service.ISysUserService;
 import com.cody.seed.modules.vo.request.SysUserQueryVO;
-import com.cody.seed.modules.vo.response.SysUserPageInfoVO;
 import com.cody.seed.modules.vo.response.SysUserResponseVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
@@ -38,12 +40,6 @@ public class SysUserController {
     @Autowired
     private ISysUserRoleService sysUserRoleService;
 
-    /**
-     * 分页查询
-     *
-     * @param sysUserQueryVO 分页查询参数
-     * @return 分页参数
-     */
     @ApiOperation(value = "分页查询")
     @PostMapping("getPageList")
     public Result selectPageList(@RequestBody @Valid SysUserQueryVO sysUserQueryVO) {
