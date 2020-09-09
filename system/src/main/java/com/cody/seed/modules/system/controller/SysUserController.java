@@ -17,10 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -65,10 +62,10 @@ public class SysUserController {
     }
 
     @ApiOperation(value = "编辑用户")
-    @PostMapping("updateUser")
+    @PutMapping("updateUser")
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public Result updateUser(@RequestBody @Valid SysUser user) {
-        sysUserService.save(user);
+        sysUserService.updateById(user);
         return Result.ok();
     }
 
