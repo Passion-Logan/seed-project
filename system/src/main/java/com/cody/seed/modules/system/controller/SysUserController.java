@@ -65,9 +65,9 @@ public class SysUserController {
     }
 
     @ApiOperation(value = "编辑用户")
-    @PostMapping("editUser")
+    @PostMapping("updateUser")
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-    public Result editUser(@RequestBody @Valid SysUser user) {
+    public Result updateUser(@RequestBody @Valid SysUser user) {
         sysUserService.save(user);
         return Result.ok();
     }
