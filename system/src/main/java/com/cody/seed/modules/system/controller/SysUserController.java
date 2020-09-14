@@ -70,10 +70,10 @@ public class SysUserController {
     }
 
     @ApiOperation(value = "删除用户")
-    @DeleteMapping("deleteUser")
+    @DeleteMapping("removeUser")
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-    public Result deleteUser(@RequestParam("ids") String ids) {
-        sysUserService.removeByIds(Arrays.asList(ids.split(",")));
+    public Result removeUser(@RequestParam("ids") String ids) {
+//        sysUserService.removeByIds(Arrays.asList(ids.split(",")));
         return Result.ok();
     }
 
