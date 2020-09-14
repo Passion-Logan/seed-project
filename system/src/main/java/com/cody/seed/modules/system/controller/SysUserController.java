@@ -1,5 +1,6 @@
 package com.cody.seed.modules.system.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cody.common.api.vo.Result;
@@ -11,6 +12,7 @@ import com.cody.seed.modules.vo.response.SysUserResponseVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Propagation;
@@ -72,10 +74,9 @@ public class SysUserController {
     @ApiOperation(value = "删除用户")
     @DeleteMapping("removeUser")
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-    public Result removeUser(@RequestParam("ids") String ids) {
-//        sysUserService.removeByIds(Arrays.asList(ids.split(",")));
+    public Result removeUser(@RequestBody JSONObject object) {
+        sysUserService.removeByIds(Arrays.asList(object.getString("ids").split(",")));
         return Result.ok();
     }
-
 
 }
