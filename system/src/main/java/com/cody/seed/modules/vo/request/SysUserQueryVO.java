@@ -44,6 +44,9 @@ public class SysUserQueryVO implements Serializable {
     @ApiModelProperty("用户邮箱")
     private String email;
 
+    @ApiModelProperty("出生日期")
+    private Date birthday;
+
     /**
      * 手机号码
      */

@@ -44,56 +44,56 @@
 
     <sql id="where_condition">
         <where>
-            <if test="id != null">
-                and id=#{id}
+            <if test="sysUserQueryVO.id != null">
+                and id=#{sysUserQueryVO.id}
             </if>
-            <if test="userName != null and userName != ''">
-                and user_name=#{userName}
+            <if test="sysUserQueryVO.userName != null and sysUserQueryVO.userName != ''">
+                and user_name=#{sysUserQueryVO.userName}
             </if>
-            <if test="nickName != null and nickName != ''">
-                and nick_name=#{nickName}
+            <if test="sysUserQueryVO.nickName != null and sysUserQueryVO.nickName != ''">
+                and nick_name like concat('%', #{sysUserQueryVO.nickName}, '%')
             </if>
-            <if test="email != null and email != ''">
-                and email=#{email}
+            <if test="sysUserQueryVO.email != null and sysUserQueryVO.email != ''">
+                and email=#{sysUserQueryVO.email}
             </if>
-            <if test="phone != null and phone != ''">
-                and phone=#{phone}
+            <if test="sysUserQueryVO.phone != null and sysUserQueryVO.phone != ''">
+                and phone=#{sysUserQueryVO.phone}
             </if>
-            <if test="birthday != null and birthday != ''">
-                and birthday=#{birthday}
+            <if test="sysUserQueryVO.birthday != null">
+                and birthday=#{sysUserQueryVO.birthday}
             </if>
-            <if test="sex != null">
-                and sex=#{sex}
+            <if test="sysUserQueryVO.sex != null">
+                and sex=#{sysUserQueryVO.sex}
             </if>
-            <if test="avatar != null and avatar != ''">
-                and avatar=#{avatar}
+            <if test="sysUserQueryVO.avatar != null and sysUserQueryVO.avatar != ''">
+                and avatar=#{sysUserQueryVO.avatar}
             </if>
-            <if test="password != null and password != ''">
-                and password=#{password}
+            <if test="sysUserQueryVO.password != null and sysUserQueryVO.password != ''">
+                and password=#{sysUserQueryVO.password}
             </if>
-            <if test="enabled != null">
-                and enabled=#{enabled}
+            <if test="sysUserQueryVO.enabled != null">
+                and enabled=#{sysUserQueryVO.enabled}
             </if>
-            <if test="deptId != null">
-                and dept_id=#{deptId}
+            <if test="sysUserQueryVO.deptId != null">
+                and dept_id=#{sysUserQueryVO.deptId}
             </if>
-            <if test="jobId != null">
-                and job_id=#{jobId}
+            <if test="sysUserQueryVO.jobId != null">
+                and job_id=#{sysUserQueryVO.jobId}
             </if>
-            <if test="createBy != null and createBy != ''">
-                and create_by=#{createBy}
+            <if test="sysUserQueryVO.createBy != null and sysUserQueryVO.createBy != ''">
+                and create_by=#{sysUserQueryVO.createBy}
             </if>
-            <if test="createTime != null">
-                and create_time=#{createTime}
+            <if test="sysUserQueryVO.createTime != null">
+                and create_time=#{sysUserQueryVO.createTime}
             </if>
-            <if test="loginIp != null and loginIp != ''">
-                and login_ip=#{loginIp}
+            <if test="sysUserQueryVO.loginIp != null and sysUserQueryVO.loginIp != ''">
+                and login_ip=#{sysUserQueryVO.loginIp}
             </if>
-            <if test="loginTime != null">
-                and login_time=#{loginTime}
+            <if test="sysUserQueryVO.loginTime != null">
+                and login_time=#{sysUserQueryVO.loginTime}
             </if>
-            <if test="remark != null and remark != ''">
-                and remark=#{remark}
+            <if test="sysUserQueryVO.remark != null and sysUserQueryVO.remark != ''">
+                and remark=#{sysUserQueryVO.remark}
             </if>
         </where>
     </sql>
@@ -109,7 +109,6 @@
     </update>
 
     <update id="frozenBatch">
-
         update sys_user
         set enabled = #{status}
         where id in
@@ -120,7 +119,6 @@
     </update>
 
     <select id="findByName" resultMap="BaseResultMap">
-
         select
         <include refid="columns"></include>
         from sys_user
@@ -133,6 +131,7 @@
         SELECT
         <include refid="columns"/>
         FROM sys_user
+        <include refid="where_condition" />
         order by create_time desc
     </select>
 

@@ -10,7 +10,6 @@ import com.cody.seed.modules.vo.request.SysUserQueryVO;
 import com.cody.seed.modules.vo.response.SysUserResponseVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import jodd.crypt.BCrypt;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,6 +19,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 
 /**
  * ClassName: SysUserController
@@ -69,6 +69,13 @@ public class SysUserController {
         return Result.ok();
     }
 
+    @ApiOperation(value = "删除用户")
+    @DeleteMapping("deleteUser")
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+    public Result deleteUser(@RequestParam("ids") String ids) {
+        sysUserService.removeByIds(Arrays.asList(ids.split(",")));
+        return Result.ok();
+    }
 
 
 }
