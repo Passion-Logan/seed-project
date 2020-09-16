@@ -4,16 +4,16 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cody.seed.modules.system.execption.CustomExecption;
-import com.cody.seed.modules.util.BeanUtil;
 import com.cody.common.util.MD5;
 import com.cody.seed.modules.system.entity.SysMenu;
 import com.cody.seed.modules.system.entity.SysUser;
 import com.cody.seed.modules.system.entity.SysUserRole;
+import com.cody.seed.modules.system.execption.CustomExecption;
 import com.cody.seed.modules.system.mapper.SysUserMapper;
 import com.cody.seed.modules.system.service.ISysMenuService;
 import com.cody.seed.modules.system.service.ISysUserRoleService;
 import com.cody.seed.modules.system.service.ISysUserService;
+import com.cody.seed.modules.util.BeanUtil;
 import com.cody.seed.modules.vo.request.SysUserQueryVO;
 import com.cody.seed.modules.vo.response.SysUserResponseVO;
 import org.apache.commons.lang.StringUtils;
@@ -197,12 +197,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             throw new CustomExecption("不存在此用户");
         }
         //加密用户密码
-        String encrypt = new BCryptPasswordEncoder().encode(MD5.md5(password));
-        SysUser modify = new SysUser();
-        modify.setId(userDO.getId());
-        modify.setPassword(encrypt);
-
-        return sysUserMapper.updateById(modify) > 0;
+        String encrypt = new BCryptPasswordEncoder().encode(password);
+        userDO.setPassword(encrypt);
+        return sysUserMapper.updateById(userDO) > 0;
     }
 
     private void insertUserRole(String[] roleId, SysUser user, List<SysUserRole> list) {

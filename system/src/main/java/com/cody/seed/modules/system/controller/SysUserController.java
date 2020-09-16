@@ -71,6 +71,14 @@ public class SysUserController {
         return Result.ok();
     }
 
+    @ApiOperation(value = "修改密码")
+    @GetMapping("updatePassword")
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+    public Result updatePassword(String userName, String password) {
+        sysUserService.changePassword(userName, password);
+        return Result.ok();
+    }
+
     @ApiOperation(value = "删除用户")
     @DeleteMapping("removeUser")
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
