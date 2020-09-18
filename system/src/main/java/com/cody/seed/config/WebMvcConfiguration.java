@@ -42,4 +42,14 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
         registry.addViewController("/").setViewName("index.html");
     }
 
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(authenticationInterceptor()).addPathPatterns("/**");
+    }
+
+    @Bean
+    public DefaultAuthenticationInterceptor authenticationInterceptor() {
+        return new DefaultAuthenticationInterceptor();
+    }
+
 }
