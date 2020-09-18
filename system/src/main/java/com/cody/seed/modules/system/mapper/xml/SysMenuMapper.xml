@@ -54,7 +54,6 @@
     </select>
 
     <select id="findMenuByUserId" resultMap="BaseResultMap">
-
         select
         m.*
         from sys_menu m
