@@ -47,7 +47,6 @@
         m.id,
         m.type,
         m.menu,
-        m.component,
         m.component_name componentName,
         m.path,
         m.redirect,

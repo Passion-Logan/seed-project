@@ -1,6 +1,8 @@
 package com.cody.seed.modules.system.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cody.common.api.vo.Result;
+import com.cody.seed.modules.system.entity.SysMenu;
 import com.cody.seed.modules.system.service.ISysMenuService;
 import com.cody.seed.modules.system.service.ISysRoleMenuService;
 import com.cody.seed.modules.util.TreeUtil;
@@ -9,12 +11,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -48,4 +52,29 @@ public class SysMenuController {
 
         return Result.ok(data, data.size());
     }
+
+    @ApiOperation(value = "添加菜单")
+    @PostMapping("addMenu")
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+    public Result addMenu(@RequestBody @Valid SysMenu menu) {
+        menuService.save(menu);
+        return Result.ok();
+    }
+
+    @ApiOperation(value = "编辑菜单")
+    @PutMapping("updateMenu")
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+    public Result updateMenu(@RequestBody @Valid SysMenu menu) {
+        menuService.updateById(menu);
+        return Result.ok();
+    }
+
+    @ApiOperation(value = "删除菜单")
+    @DeleteMapping("removeMenu")
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+    public Result removeMenu(@RequestBody JSONObject object) {
+        menuService.removeByIds(Arrays.asList(object.getString("ids").split(",")));
+        return Result.ok();
+    }
+
 }
