@@ -20,7 +20,7 @@ public class TreeUtil {
             }
         }
         for (SysUserMenuResponseVO nav : rootMenu) {
-            nav.setChildren(getMenuChild(nav.getId(), rootMenu));
+            nav.setChildren(getMenuChild(nav.getId(), allMenu));
         }
 
         return rootMenu;
