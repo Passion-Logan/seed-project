@@ -15,7 +15,7 @@ public class TreeUtil {
         List<SysUserMenuResponseVO> rootMenu = new ArrayList<>(16);
         for (SysUserMenuResponseVO nav : allMenu) {
             //父节点是0的，为根节点
-            if (nav.getPid().equals(0)) {
+            if ("0".equals(nav.getPid())) {
                 rootMenu.add(nav);
             }
         }

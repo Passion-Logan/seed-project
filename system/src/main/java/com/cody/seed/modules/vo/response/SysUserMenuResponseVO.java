@@ -21,6 +21,9 @@ public class SysUserMenuResponseVO implements Serializable {
     @ApiModelProperty("菜单名称")
     private String menu;
 
+    @ApiModelProperty("菜单类型")
+    private String type;
+
     @ApiModelProperty("组件")
     private String component;
 
@@ -34,7 +37,7 @@ public class SysUserMenuResponseVO implements Serializable {
     private String redirect;
 
     @ApiModelProperty("父级id")
-    private Integer pid;
+    private String pid;
 
     @ApiModelProperty("菜单图标")
     private String icon;

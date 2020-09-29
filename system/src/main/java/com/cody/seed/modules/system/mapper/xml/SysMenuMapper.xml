@@ -45,6 +45,7 @@
     <select id="getList" resultType="com.cody.seed.modules.vo.response.SysUserMenuResponseVO">
         select
         m.id,
+        m.type,
         m.menu,
         m.component,
         m.component_name componentName,

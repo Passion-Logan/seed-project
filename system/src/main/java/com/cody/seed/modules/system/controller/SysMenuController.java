@@ -1,5 +1,6 @@
 package com.cody.seed.modules.system.controller;
 
+import com.cody.common.api.vo.Result;
 import com.cody.seed.modules.system.service.ISysMenuService;
 import com.cody.seed.modules.system.service.ISysRoleMenuService;
 import com.cody.seed.modules.util.TreeUtil;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -36,8 +38,14 @@ public class SysMenuController {
     //@Cacheable(value="menuCache")
     @ApiOperation(value = "菜单树形展示")
     @GetMapping("list")
-    public List<SysUserMenuResponseVO> selectPageList() {
+    public Result selectPageList() {
+        List<SysUserMenuResponseVO> data = new ArrayList<>();
         List<SysUserMenuResponseVO> voList = menuService.getList();
-        return TreeUtil.buildMenuTree(voList);
+
+        if (voList.size() > 0) {
+            data = TreeUtil.buildMenuTree(voList);
+        }
+
+        return Result.ok(data, data.size());
     }
 }
