@@ -42,6 +42,22 @@
 		remark
 	</sql>
 
+    <select id="getList" resultType="com.cody.seed.modules.vo.response.SysUserMenuResponseVO">
+        select
+        m.id,
+        m.menu,
+        m.component,
+        m.component_name componentName,
+        m.path,
+        m.redirect,
+        m.pid,
+        m.icon,
+        m.visible hideInMenu,
+        m.sort
+        from sys_menu m
+        order by m.sort
+    </select>
+
     <select id="getListByPid" resultMap="BaseResultMap">
 
         select

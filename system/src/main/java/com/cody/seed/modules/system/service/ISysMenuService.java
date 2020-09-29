@@ -2,10 +2,18 @@ package com.cody.seed.modules.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cody.seed.modules.system.entity.SysMenu;
+import com.cody.seed.modules.vo.response.SysUserMenuResponseVO;
 
 import java.util.List;
 
 public interface ISysMenuService extends IService<SysMenu> {
+
+    /**
+     * 获取菜单列表
+     *
+     * @return
+     */
+    List<SysUserMenuResponseVO> getList();
 
     /**
      * 新增菜单

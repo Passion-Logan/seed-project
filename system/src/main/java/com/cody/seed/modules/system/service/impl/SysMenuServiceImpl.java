@@ -2,11 +2,12 @@ package com.cody.seed.modules.system.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cody.common.enmus.MenulTypeEnum;
-import com.cody.seed.modules.system.execption.CustomExecption;
-import com.cody.seed.modules.util.BeanUtil;
 import com.cody.seed.modules.system.entity.SysMenu;
+import com.cody.seed.modules.system.execption.CustomExecption;
 import com.cody.seed.modules.system.mapper.SysMenuMapper;
 import com.cody.seed.modules.system.service.ISysMenuService;
+import com.cody.seed.modules.util.BeanUtil;
+import com.cody.seed.modules.vo.response.SysUserMenuResponseVO;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,11 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Autowired
     private SysMenuMapper sysMenuMapper;
+
+    @Override
+    public List<SysUserMenuResponseVO> getList() {
+        return sysMenuMapper.getList();
+    }
 
     @Override
     public boolean insertMenu(SysMenu menuDTO) {

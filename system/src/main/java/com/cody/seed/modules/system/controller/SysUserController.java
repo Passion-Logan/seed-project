@@ -12,7 +12,6 @@ import com.cody.seed.modules.vo.response.SysUserResponseVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Propagation;
@@ -23,14 +22,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.Arrays;
 
-/**
- * ClassName: SysUserController
- *
- * @author WQL
- * @Description:
- * @date: 2020/6/28 23:22
- * @since JDK 1.8
- */
 @RestController
 @Api(value = "SysUserController", tags = "系统-用户管理")
 @RequestMapping("/sys/user")

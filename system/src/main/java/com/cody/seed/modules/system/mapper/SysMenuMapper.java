@@ -2,6 +2,7 @@ package com.cody.seed.modules.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cody.seed.modules.system.entity.SysMenu;
+import com.cody.seed.modules.vo.response.SysUserMenuResponseVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -9,6 +10,13 @@ import java.util.List;
 
 @Repository
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
+
+    /**
+     * 获取菜单列表
+     *
+     * @return
+     */
+    List<SysUserMenuResponseVO> getList();
 
     /**
      * 根据pid批量查询
