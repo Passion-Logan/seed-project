@@ -63,7 +63,7 @@
         where
         m.visible = 1 and m.type in (1,2)
         and ur.user_id = #{userId}
-
+        order by m.sort
     </select>
 
 
