@@ -47,6 +47,7 @@
         m.id,
         m.type,
         m.menu,
+        m.is_frame isFrame,
         m.component_name componentName,
         m.path,
         m.redirect,

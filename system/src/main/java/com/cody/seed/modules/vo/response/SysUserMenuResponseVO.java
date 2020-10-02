@@ -1,5 +1,6 @@
 package com.cody.seed.modules.vo.response;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -22,7 +23,7 @@ public class SysUserMenuResponseVO implements Serializable {
     private String menu;
 
     @ApiModelProperty("菜单类型")
-    private String type;
+    private Integer type;
 
     @ApiModelProperty("菜单名称")
     private String componentName;
@@ -44,6 +45,9 @@ public class SysUserMenuResponseVO implements Serializable {
 
     @ApiModelProperty("排序")
     private Integer sort;
+
+    @ApiModelProperty("是否外链")
+    private Boolean isFrame;
 
     @ApiModelProperty("子菜单")
     private List<SysUserMenuResponseVO> children;
