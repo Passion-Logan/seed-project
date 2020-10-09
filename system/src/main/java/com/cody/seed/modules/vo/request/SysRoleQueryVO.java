@@ -10,7 +10,7 @@ import java.util.Date;
 
 @ApiModel
 @Data
-public class SysUserQueryVO implements Serializable {
+public class SysRoleQueryVO implements Serializable {
 
     /**
      * 用户ID

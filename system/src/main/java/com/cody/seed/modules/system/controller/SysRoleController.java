@@ -1,16 +1,20 @@
 package com.cody.seed.modules.system.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cody.common.api.vo.Result;
 import com.cody.seed.modules.system.service.ISysMenuService;
+import com.cody.seed.modules.system.service.ISysRoleService;
+import com.cody.seed.modules.vo.request.SysRoleQueryVO;
+import com.cody.seed.modules.vo.response.SysRoleResponseVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,12 +28,50 @@ public class SysRoleController {
     @Autowired
     private ISysMenuService menuService;
 
-    @ApiOperation(value = "查询菜单权限树")
+    @Autowired
+    private ISysRoleService roleService;
+
+    @ApiOperation(value = "查询角色")
     @GetMapping(value = "/queryTreeList")
     public Result queryTreeList() {
         Map<String, Object> resMap = new HashMap<>(1);
         resMap.put("treeList", menuService.queryTreeList());
         return Result.ok(resMap);
     }
+
+    @ApiOperation(value = "分页查询")
+    @PostMapping("getPageList")
+    public Result selectPageList(@RequestBody @Valid SysRoleQueryVO queryVO) {
+        Page<SysRoleResponseVO> page = new Page<>(queryVO.getCurrent(), queryVO.getPageSize());
+        IPage<SysRoleResponseVO> data = roleService.getList(page, queryVO);
+
+        return Result.ok(data.getRecords(), (int) data.getTotal());
+    }
+
+//    @ApiOperation(value = "添加用户")
+//    @PostMapping("addUser")
+//    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+//    public Result addUser(@RequestBody @Valid SysUser user) {
+//        String encrypt = new BCryptPasswordEncoder().encode(user.getPassword());
+//        user.setPassword(encrypt);
+//        sysUserService.save(user);
+//        return Result.ok();
+//    }
+//
+//    @ApiOperation(value = "编辑用户")
+//    @PutMapping("updateUser")
+//    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+//    public Result updateUser(@RequestBody @Valid SysUser user) {
+//        sysUserService.updateById(user);
+//        return Result.ok();
+//    }
+//
+//    @ApiOperation(value = "删除用户")
+//    @DeleteMapping("removeUser")
+//    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+//    public Result removeUser(@RequestBody JSONObject object) {
+//        sysUserService.removeByIds(Arrays.asList(object.getString("ids").split(",")));
+//        return Result.ok();
+//    }
 
 }

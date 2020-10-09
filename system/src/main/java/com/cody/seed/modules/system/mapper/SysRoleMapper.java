@@ -1,7 +1,11 @@
 package com.cody.seed.modules.system.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cody.seed.modules.system.entity.SysRole;
+import com.cody.seed.modules.vo.request.SysRoleQueryVO;
+import com.cody.seed.modules.vo.response.SysRoleResponseVO;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -17,5 +21,7 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
      * @return
      */
     List<SysRole> getRolesByUserId(@Param("userId") String userId);
+
+    IPage<SysRoleResponseVO> getList(Page<SysRoleResponseVO> page, SysRoleQueryVO query);
 
 }
