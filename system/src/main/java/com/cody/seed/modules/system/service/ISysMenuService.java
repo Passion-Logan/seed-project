@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cody.seed.modules.system.entity.SysMenu;
 import com.cody.seed.modules.vo.response.SysUserMenuResponseVO;
+import com.cody.seed.modules.vo.response.TreeData;
 
 import java.util.List;
 
@@ -63,5 +64,8 @@ public interface ISysMenuService extends IService<SysMenu> {
      * @return
      */
     List<String> getPermissionsByUserId(String userId);
+
+
+    List<TreeData> queryTreeList();
 
 }

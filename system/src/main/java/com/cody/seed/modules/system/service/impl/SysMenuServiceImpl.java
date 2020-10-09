@@ -8,6 +8,7 @@ import com.cody.seed.modules.system.mapper.SysMenuMapper;
 import com.cody.seed.modules.system.service.ISysMenuService;
 import com.cody.seed.modules.util.BeanUtil;
 import com.cody.seed.modules.vo.response.SysUserMenuResponseVO;
+import com.cody.seed.modules.vo.response.TreeData;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -30,6 +33,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Autowired
     private SysMenuMapper sysMenuMapper;
+
+    @Autowired
+    private ISysMenuService menuService;
 
     @Override
     public List<SysUserMenuResponseVO> getList() {
@@ -169,4 +175,43 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     public List<String> getPermissionsByUserId(String userId) {
         return sysMenuMapper.getPermissionsByUserId(userId);
     }
+
+    @Override
+    public List<TreeData> queryTreeList() {
+        List<TreeData> treeList = new ArrayList<>();
+        List<SysUserMenuResponseVO> list = menuService.getList();
+
+        for (SysUserMenuResponseVO vo : list) {
+            treeList.add(TreeData.builder()
+                    .pid(vo.getPid())
+                    .key(vo.getId())
+                    .sort(vo.getSort())
+                    .title(vo.getMenu())
+                    .value(vo.getId())
+                    .build());
+        }
+
+        return buildMenuTree(treeList);
+    }
+
+    private List<TreeData> buildMenuTree(List<TreeData> list) {
+        Map<String, List<TreeData>> map = list.stream()
+                .sorted(Comparator.comparing(TreeData::getSort))
+                .collect(Collectors.groupingBy(TreeData::getPid));
+
+        List<TreeData> directory = map.get("0");
+
+        directory.forEach(menu -> {
+            List<TreeData> children = map.get(menu.getValue());
+            if (children != null) {
+                menu.setChildren(children);
+            } else {
+                menu.setChildren(new ArrayList<>(0));
+            }
+        });
+
+        return directory;
+    }
+
+
 }

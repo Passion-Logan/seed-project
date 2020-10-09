@@ -1,10 +1,10 @@
 package com.cody.seed.modules.system.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cody.seed.modules.util.BeanUtil;
 import com.cody.seed.modules.system.entity.SysRole;
 import com.cody.seed.modules.system.mapper.SysRoleMapper;
 import com.cody.seed.modules.system.service.ISysRoleService;
+import com.cody.seed.modules.util.BeanUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,4 +31,5 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> impl
         List<SysRole> list = roleMapper.getRolesByUserId(userId);
         return BeanUtil.convert(list, SysRole.class);
     }
+
 }
