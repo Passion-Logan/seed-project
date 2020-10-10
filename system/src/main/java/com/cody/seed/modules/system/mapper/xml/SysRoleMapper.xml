@@ -23,4 +23,14 @@
 
     </select>
 
+    <select id="getList" resultMap="BaseResultMap" parameterType="com.cody.seed.modules.vo.request.SysRoleQueryVO">
+
+        select
+        r.*
+        from sys_role r
+        left join sys_user_role ur on r.id = ur.role_id
+        where ur.user_id = #{userId}
+
+    </select>
+
 </mapper>
