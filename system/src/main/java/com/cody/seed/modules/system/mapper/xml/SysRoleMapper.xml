@@ -13,6 +13,18 @@
         <result property="remark" column="remark"/>
     </resultMap>
 
+    <sql id="columns">
+        id,
+        role_code,
+        role_name,
+        permission,
+        level,
+        data_scope,
+        create_by,
+        create_time,
+        remark
+    </sql>
+
     <select id="getRolesByUserId" resultMap="BaseResultMap">
 
         select
@@ -26,11 +38,12 @@
     <select id="getList" resultMap="BaseResultMap" parameterType="com.cody.seed.modules.vo.request.SysRoleQueryVO">
 
         select
-        r.*
+        <include refid="columns" />
         from sys_role r
-        left join sys_user_role ur on r.id = ur.role_id
-        where ur.user_id = #{userId}
-
+        where 1 = 1
+        <if test="query.roleName != null">
+            and r.role_name like concat('%', #{query.roleName}, '%')
+        </if>
     </select>
 
 </mapper>
