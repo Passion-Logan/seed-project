@@ -3,6 +3,7 @@ package com.cody.seed.modules.system.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.cody.common.api.vo.Result;
 import com.cody.seed.modules.system.entity.SysMenu;
+import com.cody.seed.modules.system.execption.CustomExecption;
 import com.cody.seed.modules.system.service.ISysMenuService;
 import com.cody.seed.modules.system.service.ISysRoleMenuService;
 import com.cody.seed.modules.util.TreeUtil;
@@ -70,11 +71,19 @@ public class SysMenuController {
         return Result.ok();
     }
 
+    /**
+     * 删除节点菜单
+     * 如果父节点存在子节点 则不删除
+     *
+     * @param object
+     * @return
+     */
     @ApiOperation(value = "删除菜单")
     @DeleteMapping("removeMenu")
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public Result removeMenu(@RequestBody JSONObject object) {
-        menuService.removeByIds(Arrays.asList(object.getString("ids").split(",")));
+        List<String> ids = Arrays.asList(object.getString("ids").split(","));
+        menuService.deleteBatch(ids);
         return Result.ok();
     }
 

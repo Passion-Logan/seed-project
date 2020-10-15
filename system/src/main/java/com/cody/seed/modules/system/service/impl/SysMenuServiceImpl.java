@@ -121,7 +121,6 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
      */
     @Override
     public boolean deleteBatch(List<String> ids) {
-
         List<String> idList = new ArrayList<>();
         for (String id : ids) {
             //查看是否为子菜单
@@ -131,7 +130,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
                 idList.add(id);
             }
         }
-        return this.deleteBatch(idList);
+        return this.removeByIds(idList);
     }
 
     /**
@@ -212,6 +211,5 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
         return directory;
     }
-
 
 }
