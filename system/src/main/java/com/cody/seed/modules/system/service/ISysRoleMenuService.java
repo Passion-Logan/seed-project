@@ -3,6 +3,8 @@ package com.cody.seed.modules.system.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cody.seed.modules.system.entity.SysRoleMenu;
 
+import java.util.List;
+
 public interface ISysRoleMenuService extends IService<SysRoleMenu> {
 
 
@@ -13,5 +15,13 @@ public interface ISysRoleMenuService extends IService<SysRoleMenu> {
      * @param permissionIds
      */
     void saveRolePermission(String roleId, String permissionIds);
+
+    /**
+     * 获取角色菜单
+     *
+     * @param roleId
+     * @return
+     */
+    List<SysRoleMenu> getListByRoleId(String roleId);
 
 }

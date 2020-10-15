@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cody.seed.modules.system.entity.SysRoleMenu;
 import com.cody.seed.modules.system.mapper.SysRoleMenuMapper;
 import com.cody.seed.modules.system.service.ISysRoleMenuService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,9 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRoleMenu> implements ISysRoleMenuService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SysRoleMenuServiceImpl.class);
+    @Autowired
+    private SysRoleMenuMapper roleMenuMapper;
 
     /**
      * 保存用户角色权限
@@ -27,7 +29,6 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void saveRolePermission(String roleId, String permissionIds) {
-
         //先删除角色菜单
         SysRoleMenu roleMenu = new SysRoleMenu();
         roleMenu.setRoleId(roleId);
@@ -35,7 +36,6 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
         QueryWrapper wrapper = new QueryWrapper();
         wrapper.eq("role_id", roleId);
         this.remove(wrapper);
-
 
         //批量添加角色菜单
         String[] menuIds = permissionIds.split(",");
@@ -48,5 +48,13 @@ public class SysRoleMenuServiceImpl extends ServiceImpl<SysRoleMenuMapper, SysRo
         }
 
         this.saveBatch(list);
+    }
+
+    @Override
+    public List<SysRoleMenu> getListByRoleId(String roleId) {
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("role_id", roleId);
+
+        return roleMenuMapper.selectList(wrapper);
     }
 }

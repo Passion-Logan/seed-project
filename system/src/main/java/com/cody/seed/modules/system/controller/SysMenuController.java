@@ -3,7 +3,7 @@ package com.cody.seed.modules.system.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.cody.common.api.vo.Result;
 import com.cody.seed.modules.system.entity.SysMenu;
-import com.cody.seed.modules.system.execption.CustomExecption;
+import com.cody.seed.modules.system.entity.SysRoleMenu;
 import com.cody.seed.modules.system.service.ISysMenuService;
 import com.cody.seed.modules.system.service.ISysRoleMenuService;
 import com.cody.seed.modules.util.TreeUtil;
@@ -85,6 +85,17 @@ public class SysMenuController {
         List<String> ids = Arrays.asList(object.getString("ids").split(","));
         menuService.deleteBatch(ids);
         return Result.ok();
+    }
+
+    @GetMapping("queryRolePermission")
+    @ApiOperation(value = "查询角色授权")
+    public Result queryRolePermission(@RequestParam(name = "roleId") String roleId) {
+        List<SysRoleMenu> list = roleMenuService.getListByRoleId(roleId);
+        List<String> idList = new ArrayList<>();
+
+        list.stream().forEach(item -> idList.add(item.getMenuId()));
+
+        return Result.ok(idList);
     }
 
 }

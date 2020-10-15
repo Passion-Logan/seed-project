@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cody.common.api.vo.Result;
 import com.cody.seed.modules.system.entity.SysRole;
 import com.cody.seed.modules.system.service.ISysMenuService;
+import com.cody.seed.modules.system.service.ISysRoleMenuService;
 import com.cody.seed.modules.system.service.ISysRoleService;
 import com.cody.seed.modules.vo.request.SysRoleQueryVO;
 import com.cody.seed.modules.vo.response.SysRoleResponseVO;
@@ -35,6 +36,9 @@ public class SysRoleController {
 
     @Autowired
     private ISysRoleService roleService;
+
+    @Autowired
+    private ISysRoleMenuService roleMenuService;
 
     @ApiOperation(value = "查询角色")
     @GetMapping(value = "/queryTreeList")
@@ -74,6 +78,15 @@ public class SysRoleController {
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public Result removeRole(@RequestBody JSONObject object) {
         roleService.removeByIds(Arrays.asList(object.getString("ids").split(",")));
+        return Result.ok();
+    }
+
+    @ApiOperation(value = "保存角色授权")
+    @PutMapping("saveRolePermission")
+    public Result saveRolePermission(@RequestBody JSONObject json) {
+        String roleId = json.getString("roleId");
+        String permissionIds = json.getString("permissionIds");
+        roleMenuService.saveRolePermission(roleId, permissionIds);
         return Result.ok();
     }
 
