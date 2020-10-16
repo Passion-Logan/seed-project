@@ -102,9 +102,10 @@ public class SysUserController {
         return Result.ok();
     }
 
-    @GetMapping(value = "获取用户角色")
+    @GetMapping("getUserRole")
+    @ApiOperation(value = "获取用户角色")
     @DeleteMapping("getUserRole")
-    public Result getUserRole(@ApiParam(name = "userid", value = "userid", required = true) @RequestParam(value = "userId") String userId) {
+    public Result getUserRole(@ApiParam(name = "userId", value = "userId", required = true) @RequestParam(value = "userId") String userId) {
         QueryWrapper wrapper = new QueryWrapper();
         wrapper.eq("user_id", userId);
         List<SysUserRole> userRoles = sysUserRoleService.list(wrapper);
@@ -116,6 +117,5 @@ public class SysUserController {
         }
         return Result.ok(roleIds);
     }
-
 
 }
