@@ -9,17 +9,15 @@ import com.cody.seed.modules.system.service.ISysRoleService;
 import com.cody.seed.modules.util.BeanUtil;
 import com.cody.seed.modules.vo.request.SysRoleQueryVO;
 import com.cody.seed.modules.vo.response.SysRoleResponseVO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements ISysRoleService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(SysRoleServiceImpl.class);
 
     @Autowired
     private SysRoleMapper roleMapper;

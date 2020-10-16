@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cody.common.api.vo.Result;
 import com.cody.seed.modules.system.entity.SysRole;
-import com.cody.seed.modules.system.service.ISysMenuService;
 import com.cody.seed.modules.system.service.ISysRoleMenuService;
 import com.cody.seed.modules.system.service.ISysRoleService;
 import com.cody.seed.modules.vo.request.SysRoleQueryVO;
@@ -21,8 +20,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @Api(value = "SysRoleController", tags = "系统-角色管理")
@@ -32,20 +29,19 @@ import java.util.Map;
 public class SysRoleController {
 
     @Autowired
-    private ISysMenuService menuService;
-
-    @Autowired
     private ISysRoleService roleService;
 
     @Autowired
     private ISysRoleMenuService roleMenuService;
 
-    @ApiOperation(value = "查询角色")
-    @GetMapping(value = "/queryTreeList")
-    public Result queryTreeList() {
-        Map<String, Object> resMap = new HashMap<>(1);
-        resMap.put("treeList", menuService.queryTreeList());
-        return Result.ok(resMap);
+    @ApiOperation(value = "查询所有角色集合")
+    @GetMapping("getAllList")
+    public Result getAllList() {
+        SysRoleQueryVO vo = new SysRoleQueryVO();
+        Page<SysRoleResponseVO> page = new Page<>(1, 999);
+        IPage<SysRoleResponseVO> data = roleService.getList(page, vo);
+
+        return Result.ok(data.getRecords());
     }
 
     @ApiOperation(value = "分页查询")

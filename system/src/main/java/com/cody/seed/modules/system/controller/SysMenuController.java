@@ -19,9 +19,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @Api(value = "SysMenuController", tags = "系统-菜单管理")
@@ -35,6 +33,14 @@ public class SysMenuController {
 
     @Autowired
     private ISysRoleMenuService roleMenuService;
+
+    @ApiOperation(value = "查询角色")
+    @GetMapping(value = "/queryTreeList")
+    public Result queryTreeList() {
+        Map<String, Object> resMap = new HashMap<>(1);
+        resMap.put("treeList", menuService.queryTreeList());
+        return Result.ok(resMap);
+    }
 
     /**
      * 菜单树形展示
