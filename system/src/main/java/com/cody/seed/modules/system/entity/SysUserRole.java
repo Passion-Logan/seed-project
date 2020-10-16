@@ -1,7 +1,6 @@
 package com.cody.seed.modules.system.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
@@ -11,6 +10,9 @@ import java.io.Serializable;
  * @date: 2020年06月16日 18:37
  */
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 public class SysUserRole implements Serializable {
