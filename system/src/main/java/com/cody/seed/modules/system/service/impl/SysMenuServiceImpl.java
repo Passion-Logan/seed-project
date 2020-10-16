@@ -1,11 +1,13 @@
 package com.cody.seed.modules.system.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cody.common.enmus.MenulTypeEnum;
 import com.cody.seed.modules.system.entity.SysMenu;
 import com.cody.seed.modules.system.execption.CustomExecption;
 import com.cody.seed.modules.system.mapper.SysMenuMapper;
 import com.cody.seed.modules.system.service.ISysMenuService;
+import com.cody.seed.modules.system.service.ISysRoleMenuService;
 import com.cody.seed.modules.util.BeanUtil;
 import com.cody.seed.modules.vo.response.SysUserMenuResponseVO;
 import com.cody.seed.modules.vo.response.TreeData;
@@ -36,6 +38,9 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     @Autowired
     private ISysMenuService menuService;
+
+    @Autowired
+    private ISysRoleMenuService roleMenuService;
 
     @Override
     public List<SysUserMenuResponseVO> getList() {
@@ -122,14 +127,28 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     @Override
     public boolean deleteBatch(List<String> ids) {
         List<String> idList = new ArrayList<>();
+        List<String> names = new ArrayList<>();
         for (String id : ids) {
             //查看是否为子菜单
             List<SysMenu> list = sysMenuMapper.getListByPid(id);
             if (CollectionUtils.isEmpty(list)) {
                 //不存在子节点了 则删除
                 idList.add(id);
+            } else {
+                names.add(this.getById(id).getMenu());
             }
         }
+        if (names.size() > 0) {
+            throw new CustomExecption(StringUtils.join(names, ",") + " 存在子菜单!");
+        }
+
+        // 删除角色菜单关联
+        for (String id : idList) {
+            QueryWrapper wrapper = new QueryWrapper();
+            wrapper.eq("menu_id", id);
+            roleMenuService.remove(wrapper);
+        }
+
         return this.removeByIds(idList);
     }
 
@@ -146,8 +165,11 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         if (!CollectionUtils.isEmpty(list)) {
             throw new CustomExecption("存在子菜单 无法删除");
         }
-        //不存在子节点了 则删除
-        return this.deleteById(id);
+        QueryWrapper wrapper = new QueryWrapper();
+        wrapper.eq("menu_id", id);
+        roleMenuService.remove(wrapper);
+
+        return this.removeById(id);
     }
 
     /**

@@ -10,6 +10,7 @@ import com.cody.seed.modules.util.TreeUtil;
 import com.cody.seed.modules.vo.response.SysUserMenuResponseVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
@@ -73,6 +74,21 @@ public class SysMenuController {
 
     /**
      * 删除节点菜单
+     * 如果父节点存在子节点 则不删除
+     *
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "删除菜单")
+    @DeleteMapping("deleteMenu")
+    @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
+    public Result deleteMenu(@ApiParam(name = "id", value = "id", required = true) @RequestParam String id) {
+        menuService.deleteById(id);
+        return Result.ok();
+    }
+
+    /**
+     * 批量删除节点菜单
      * 如果父节点存在子节点 则不删除
      *
      * @param object
