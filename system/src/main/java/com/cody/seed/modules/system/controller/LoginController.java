@@ -183,10 +183,12 @@ public class LoginController {
      */
     @ApiOperation("登录查询用户菜单")
     @GetMapping(value = "/user/nav")
-    public List<SysUserMenuResponseVO> getUserNav() {
+    public Map<String, Object> getUserNav() {
+        Map<String, Object> result = new HashMap<>(2);
         List<SysMenu> list = sysUserService.getUserNav(SecurityUtils.getUsername());
         //处理数据
-        return BeanUtil.convert(list, SysUserMenuResponseVO.class);
+        result.put("menuData", BeanUtil.convert(list, SysUserMenuResponseVO.class));
+        return result;
     }
 
 }
