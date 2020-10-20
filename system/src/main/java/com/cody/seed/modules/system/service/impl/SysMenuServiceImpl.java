@@ -202,17 +202,20 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         List<TreeData> treeList = new ArrayList<>();
         List<SysUserMenuResponseVO> list = menuService.getList();
 
-        for (SysUserMenuResponseVO vo : list) {
-            treeList.add(TreeData.builder()
-                    .pid(vo.getPid())
-                    .key(vo.getId())
-                    .sort(vo.getSort())
-                    .title(vo.getMenu())
-                    .value(vo.getId())
-                    .build());
-        }
+        if (list.size() > 0) {
+            for (SysUserMenuResponseVO vo : list) {
+                treeList.add(TreeData.builder()
+                        .pid(vo.getPid())
+                        .key(vo.getId())
+                        .sort(vo.getSort())
+                        .title(vo.getMenu())
+                        .value(vo.getId())
+                        .build());
+            }
 
-        return buildMenuTree(treeList);
+            return buildMenuTree(treeList);
+        }
+        return treeList;
     }
 
     private List<TreeData> buildMenuTree(List<TreeData> list) {

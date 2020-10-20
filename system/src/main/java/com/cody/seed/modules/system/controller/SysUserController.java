@@ -56,10 +56,24 @@ public class SysUserController {
     @ApiOperation(value = "添加用户")
     @PostMapping("addUser")
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-    public Result addUser(@RequestBody @Valid SysUser user) {
+    public Result addUser(@RequestBody @Valid SysUserRoleRequestVO user) {
+        SysUser entity = new SysUser();
+        BeanUtils.copyProperties(user, entity);
+
         String encrypt = new BCryptPasswordEncoder().encode(user.getPassword());
-        user.setPassword(encrypt);
-        sysUserService.save(user);
+        entity.setPassword(encrypt);
+        sysUserService.save(entity);
+
+        String userId = entity.getId();
+        if (StrUtil.isNotEmpty(user.getRoleIds())) {
+            String[] ids = user.getRoleIds().split(",");
+            List<SysUserRole> userRoles = new ArrayList<>(ids.length);
+            for (String id : ids) {
+                userRoles.add(SysUserRole.builder().userId(userId).roleId(id).build());
+            }
+            sysUserRoleService.saveBatch(userRoles);
+        }
+
         return Result.ok();
     }
 
