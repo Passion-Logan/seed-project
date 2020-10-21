@@ -11,7 +11,7 @@
  Target Server Version : 50720
  File Encoding         : 65001
 
- Date: 20/10/2020 23:52:24
+ Date: 21/10/2020 18:58:32
 */
 
 SET NAMES utf8mb4;
@@ -32,7 +32,7 @@ CREATE TABLE `sys_dept`  (
   `remark` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uniq_dept_name`(`dept_name`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_dept
@@ -55,7 +55,7 @@ CREATE TABLE `sys_dict`  (
   `type` int(1) UNSIGNED ZEROFILL NULL DEFAULT 0 COMMENT '字典类型0为string,1为number',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `indextable_dict_code`(`dict_code`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_dict
@@ -81,7 +81,7 @@ CREATE TABLE `sys_dict_item`  (
   INDEX `index_table_dict_id`(`dict_id`) USING BTREE,
   INDEX `index_table_sort_order`(`sort_order`) USING BTREE,
   INDEX `index_table_dict_status`(`status`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_dict_item
@@ -113,7 +113,7 @@ CREATE TABLE `sys_log`  (
   INDEX `index_logt_ype`(`log_type`) USING BTREE,
   INDEX `index_operate_type`(`operate_type`) USING BTREE,
   INDEX `index_log_type`(`log_type`) USING BTREE
-) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统操作日志表' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统操作日志表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_log
@@ -134,7 +134,7 @@ CREATE TABLE `sys_login_log`  (
   `msg` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '提示消息',
   `login_time` datetime(0) NOT NULL COMMENT '访问时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统访问记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统访问记录' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_login_log
@@ -190,6 +190,12 @@ INSERT INTO `sys_login_log` VALUES ('1317143112152465409', 'admin', '127.0.0.1',
 INSERT INTO `sys_login_log` VALUES ('1318190407459426306', 'admin', '127.0.0.1', NULL, 'Chrome 8', 'Windows 10', 0, '', '2020-10-19 22:00:58');
 INSERT INTO `sys_login_log` VALUES ('1318540398556291074', 'admin', '127.0.0.1', NULL, 'Chrome 8', 'Windows 10', 0, '', '2020-10-20 21:11:43');
 INSERT INTO `sys_login_log` VALUES ('1318569348540071937', 'admin', '192.168.199.101', NULL, 'Chrome 8', 'Windows 10', 0, '', '2020-10-20 23:06:45');
+INSERT INTO `sys_login_log` VALUES ('1318743507397861377', 'admin', '127.0.0.1', NULL, 'Chrome 8', 'Windows 10', 0, '', '2020-10-21 10:38:48');
+INSERT INTO `sys_login_log` VALUES ('1318765669785624577', 'admin', '127.0.0.1', NULL, 'Chrome 8', 'Windows 10', 0, '', '2020-10-21 12:06:52');
+INSERT INTO `sys_login_log` VALUES ('1318765758973304834', 'test', '127.0.0.1', NULL, 'Chrome 8', 'Windows 10', 0, '', '2020-10-21 12:07:13');
+INSERT INTO `sys_login_log` VALUES ('1318765835162836994', 'admin', '127.0.0.1', NULL, 'Chrome 8', 'Windows 10', 0, '', '2020-10-21 12:07:31');
+INSERT INTO `sys_login_log` VALUES ('1318802019037569025', 'admin', '127.0.0.1', NULL, 'Chrome 8', 'Windows 10', 0, '', '2020-10-21 14:31:18');
+INSERT INTO `sys_login_log` VALUES ('1318837220065251330', 'admin', '127.0.0.1', NULL, 'Chrome 8', 'Windows 10', 0, '', '2020-10-21 16:51:11');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -215,21 +221,24 @@ CREATE TABLE `sys_menu`  (
   `remark` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uniq_menu`(`menu`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单权限表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单权限表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
 INSERT INTO `sys_menu` VALUES ('1318547064467148801', '查询表格', b'0', NULL, 'list.table-list', '/list', '', '0', 1, b'1', '', NULL, 'SmileOutlined', 1, 'admin', '2020-10-20 21:38:12', '');
-INSERT INTO `sys_menu` VALUES ('1318547678320316418', '管理页', b'0', NULL, 'admin', '/admin', '', '0', 1, b'1', '', NULL, 'StarOutlined', 1, 'admin', '2020-10-20 21:40:39', '');
+INSERT INTO `sys_menu` VALUES ('1318547678320316418', '管理页', b'0', NULL, 'admin', '/admin', '', '0', 1, b'1', '', NULL, 'StarOutlined', 3, 'admin', '2020-10-20 21:40:39', '');
 INSERT INTO `sys_menu` VALUES ('1318549151200501762', '二级管理页', b'0', NULL, 'sub-page', '/admin/sub-page', '', '1318547678320316418', 2, b'1', '', NULL, '', 1, 'admin', '2020-10-20 21:46:30', '');
-INSERT INTO `sys_menu` VALUES ('1318550685359407106', '测试页面', b'0', NULL, 'test', '/test', '', '0', 1, b'1', '', NULL, 'WarningOutlined', 1, 'admin', '2020-10-20 21:52:35', '');
+INSERT INTO `sys_menu` VALUES ('1318550685359407106', '测试页面', b'0', NULL, 'test', '/test', '', '0', 1, b'1', '', NULL, 'WarningOutlined', 2, 'admin', '2020-10-20 21:52:35', '');
 INSERT INTO `sys_menu` VALUES ('1318550824027291649', '测试子页面', b'0', NULL, 'sub-test', '/test/sub-test', '', '1318550685359407106', 2, b'1', '', NULL, '', 1, 'admin', '2020-10-20 21:53:09', '');
-INSERT INTO `sys_menu` VALUES ('1318550980101537794', '系统管理', b'0', NULL, 'system', '/system', '', '0', 1, b'1', '', NULL, 'SettingOutlined', 1, 'admin', '2020-10-20 21:53:46', '');
+INSERT INTO `sys_menu` VALUES ('1318550980101537794', '系统管理', b'0', NULL, 'system', '/system', '', '0', 1, b'1', '', NULL, 'SettingOutlined', 5, 'admin', '2020-10-20 21:53:46', '');
 INSERT INTO `sys_menu` VALUES ('1318551098947141633', '用户管理', b'0', NULL, 'system-user', '/system/user', '', '1318550980101537794', 2, b'1', '', NULL, '', 1, 'admin', '2020-10-20 21:54:14', '');
 INSERT INTO `sys_menu` VALUES ('1318551201015529473', '角色管理', b'0', NULL, 'system-role', '/system/role', '', '1318550980101537794', 2, b'1', '', NULL, '', 2, 'admin', '2020-10-20 21:54:38', '');
 INSERT INTO `sys_menu` VALUES ('1318551300202430466', '菜单管理', b'0', NULL, 'system-menu', '/system/menu', '', '1318550980101537794', 2, b'1', '', NULL, '', 3, 'admin', '2020-10-20 21:55:02', '');
 INSERT INTO `sys_menu` VALUES ('1318551489143242754', '系统设置', b'0', NULL, 'system-globle', '/system/globle', '', '1318550980101537794', 2, b'1', '', NULL, '', 4, 'admin', '2020-10-20 21:55:47', '');
+INSERT INTO `sys_menu` VALUES ('1318813923990671361', '网页链接', b'1', NULL, '网页链接', '/', '', '0', 1, b'1', '', NULL, 'IeOutlined', 4, 'admin', '2020-10-21 15:18:36', '');
+INSERT INTO `sys_menu` VALUES ('1318814244045426690', 'swagger接口文档', b'1', NULL, 'swagger接口文档', 'http://localhost:8081/seed-project/swagger-ui.html', '', '1318813923990671361', 2, b'1', '', NULL, '', 1, 'admin', '2020-10-21 15:19:53', '');
+INSERT INTO `sys_menu` VALUES ('1318814544424701954', 'bootstrap接口文档', b'1', NULL, 'bootstrap接口文档', 'http://localhost:8081/seed-project/doc.html', '', '1318813923990671361', 2, b'1', '', NULL, '', 2, 'admin', '2020-10-21 15:21:04', '');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -247,7 +256,7 @@ CREATE TABLE `sys_role`  (
   `remark` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uniq_role_code`(`role_code`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role
@@ -264,7 +273,7 @@ CREATE TABLE `sys_role_dept`  (
   `role_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色ID',
   `dept_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '岗位ID',
   PRIMARY KEY (`role_id`, `dept_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色和部门关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色和部门关联表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role_dept
@@ -278,7 +287,7 @@ CREATE TABLE `sys_role_menu`  (
   `role_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色ID',
   `menu_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '菜单ID',
   PRIMARY KEY (`role_id`, `menu_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色和菜单关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色和菜单关联表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role_menu
@@ -293,6 +302,9 @@ INSERT INTO `sys_role_menu` VALUES ('1', '1318551098947141633');
 INSERT INTO `sys_role_menu` VALUES ('1', '1318551201015529473');
 INSERT INTO `sys_role_menu` VALUES ('1', '1318551300202430466');
 INSERT INTO `sys_role_menu` VALUES ('1', '1318551489143242754');
+INSERT INTO `sys_role_menu` VALUES ('1', '1318813923990671361');
+INSERT INTO `sys_role_menu` VALUES ('1', '1318814244045426690');
+INSERT INTO `sys_role_menu` VALUES ('1', '1318814544424701954');
 INSERT INTO `sys_role_menu` VALUES ('6', '1318547064467148801');
 INSERT INTO `sys_role_menu` VALUES ('6', '1318550685359407106');
 INSERT INTO `sys_role_menu` VALUES ('6', '1318550824027291649');
@@ -322,7 +334,7 @@ CREATE TABLE `sys_user`  (
   `login_time` datetime(0) NULL DEFAULT NULL COMMENT '最后登录时间',
   `remark` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统用户信息表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统用户信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user
@@ -338,7 +350,7 @@ CREATE TABLE `sys_user_role`  (
   `user_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户ID',
   `role_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色ID',
   PRIMARY KEY (`user_id`, `role_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户和角色关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户和角色关联表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user_role
