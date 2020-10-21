@@ -16,9 +16,9 @@ import com.cody.seed.modules.system.service.ISysUserService;
 import com.cody.seed.modules.util.BeanUtil;
 import com.cody.seed.modules.util.SecurityUtils;
 import com.cody.seed.modules.vo.LoginRequestVO;
+import com.cody.seed.modules.vo.response.MenuResponseVO;
 import com.cody.seed.modules.vo.response.SysRoleResponseVO;
 import com.cody.seed.modules.vo.response.SysUserInfoResponseVO;
-import com.cody.seed.modules.vo.response.SysUserMenuResponseVO;
 import com.wf.captcha.ArithmeticCaptcha;
 import com.zengtengpeng.operation.RedissonObject;
 import io.swagger.annotations.Api;
@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @Description: 登录控制器
@@ -186,9 +187,33 @@ public class LoginController {
     public Map<String, Object> getUserNav() {
         Map<String, Object> result = new HashMap<>(2);
         List<SysMenu> list = sysUserService.getUserNav(SecurityUtils.getUsername());
-        //处理数据
-        result.put("menuData", BeanUtil.convert(list, SysUserMenuResponseVO.class));
+        List<MenuResponseVO> menuPid = getByPid(list, "0");
+
+        if (menuPid.size() > 0) {
+            for (MenuResponseVO menu : menuPid) {
+                menu.setChildren(getByPid(list, menu.getKey()));
+            }
+        }
+
+        result.put("menuData", menuPid);
         return result;
+    }
+
+    private List<MenuResponseVO> getByPid(List<SysMenu> list, String pid) {
+        List<MenuResponseVO> data = list.stream().filter(item -> pid.equals(item.getPid())).map(item -> MenuResponseVO.builder()
+                .key(item.getId())
+                .name(item.getMenu())
+                .path(item.getPath())
+                .redirect(item.getRedirect())
+                .icon(item.getIcon())
+                .target(item.getIsFrame() ? "_blank" : null)
+                .hideInMenu(!item.getVisible())
+                .sort(item.getSort())
+                .isFrame(item.getIsFrame())
+                .build()).collect(Collectors.toList());
+        data.sort(Comparator.comparing(MenuResponseVO::getSort));
+
+        return data;
     }
 
 }
