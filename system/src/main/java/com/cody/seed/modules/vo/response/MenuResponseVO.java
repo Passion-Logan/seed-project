@@ -16,7 +16,7 @@ import java.util.List;
 @Builder
 public class MenuResponseVO implements Serializable {
 
-    private String key;
+    private String id;
     private String name;
     private String path;
     private String redirect;

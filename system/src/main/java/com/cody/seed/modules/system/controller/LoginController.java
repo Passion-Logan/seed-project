@@ -191,7 +191,7 @@ public class LoginController {
 
         if (menuPid.size() > 0) {
             for (MenuResponseVO menu : menuPid) {
-                menu.setChildren(getByPid(list, menu.getKey()));
+                menu.setChildren(getByPid(list, menu.getId()));
             }
         }
 
@@ -201,7 +201,7 @@ public class LoginController {
 
     private List<MenuResponseVO> getByPid(List<SysMenu> list, String pid) {
         List<MenuResponseVO> data = list.stream().filter(item -> pid.equals(item.getPid())).map(item -> MenuResponseVO.builder()
-                .key(item.getId())
+                .id(item.getId())
                 .name(item.getMenu())
                 .path(item.getPath())
                 .redirect(item.getRedirect())
