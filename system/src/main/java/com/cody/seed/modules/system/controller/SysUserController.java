@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cody.common.api.vo.Result;
 import com.cody.seed.modules.system.entity.SysUser;
 import com.cody.seed.modules.system.entity.SysUserRole;
+import com.cody.seed.modules.system.execption.CustomExecption;
 import com.cody.seed.modules.system.service.ISysUserRoleService;
 import com.cody.seed.modules.system.service.ISysUserService;
 import com.cody.seed.modules.vo.request.SysUserQueryVO;
@@ -57,6 +58,7 @@ public class SysUserController {
     @PostMapping("addUser")
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public Result addUser(@RequestBody @Valid SysUserRoleRequestVO user) {
+        isUsername(user.getUserName());
         SysUser entity = new SysUser();
         BeanUtils.copyProperties(user, entity);
 
@@ -81,6 +83,7 @@ public class SysUserController {
     @PutMapping("updateUser")
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public Result updateUser(@RequestBody @Valid SysUserRoleRequestVO user) {
+        isUsername(user.getUserName());
         SysUser entity = new SysUser();
         BeanUtils.copyProperties(user, entity);
 
@@ -112,7 +115,15 @@ public class SysUserController {
     @DeleteMapping("removeUser")
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
     public Result removeUser(@RequestBody JSONObject object) {
-        sysUserService.removeByIds(Arrays.asList(object.getString("ids").split(",")));
+        List<String> ids = Arrays.asList(object.getString("ids").split(","));
+        sysUserService.removeByIds(ids);
+
+        ids.forEach(id -> {
+            QueryWrapper wrapper = new QueryWrapper();
+            wrapper.eq("user_id", id);
+            sysUserRoleService.remove(wrapper);
+        });
+
         return Result.ok();
     }
 
@@ -130,6 +141,12 @@ public class SysUserController {
             roleIds = roleList.stream().toArray(String[]::new);
         }
         return Result.ok(roleIds);
+    }
+
+    private void isUsername(String username) {
+        if (sysUserService.findByUsername(username) != null) {
+            throw new CustomExecption("账号已存在");
+        }
     }
 
 }
