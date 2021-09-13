@@ -2,8 +2,14 @@ package com.cody.common.constant;
 
 /**
  * 缓存常量
+ *
+ * @author Administrator
+ * @date 2021/9/13
+ * @lastUpdateUser Administrator
+ * @lastUpdateDesc
+ * @lastUpdateTime 2021/9/13
  */
-public interface CacheConstant {
+public class CacheConstant {
 
     /**
      * 字典信息缓存

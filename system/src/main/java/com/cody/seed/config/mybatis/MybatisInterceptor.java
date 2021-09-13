@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.Properties;
 
 /**
+ * @author Administrator
  * @Description: mybatis拦截器，自动注入创建人、创建时间、修改人、修改时间
  * @date: 2020年06月16日 17:11
  */
@@ -39,7 +40,6 @@ public class MybatisInterceptor implements Interceptor {
             return invocation.proceed();
         }
         if (SqlCommandType.INSERT == sqlCommandType) {
-//            LoginUser sysUser = this.getLoginUser();
             String username = this.getLoginUser();
             Field[] fields = oConvertUtils.getAllFields(parameter);
             for (Field field : fields) {
@@ -47,9 +47,9 @@ public class MybatisInterceptor implements Interceptor {
                 try {
                     if ("createBy".equals(field.getName())) {
                         field.setAccessible(true);
-                        Object local_createBy = field.get(parameter);
+                        Object localCreateBy = field.get(parameter);
                         field.setAccessible(false);
-                        if (StringUtils.isBlank(ObjectUtils.toString(local_createBy, ""))) {
+                        if (StringUtils.isBlank(ObjectUtils.toString(localCreateBy, ""))) {
                             if (StrUtil.isNotBlank(username)) {
                                 // 登录人账号
                                 field.setAccessible(true);
@@ -61,22 +61,22 @@ public class MybatisInterceptor implements Interceptor {
                     // 注入创建时间
                     if ("createTime".equals(field.getName())) {
                         field.setAccessible(true);
-                        Object local_createDate = field.get(parameter);
+                        Object localCreateDate = field.get(parameter);
                         field.setAccessible(false);
-                        if (StringUtils.isBlank(ObjectUtils.toString(local_createDate, ""))) {
+                        if (StringUtils.isBlank(ObjectUtils.toString(localCreateDate, ""))) {
                             field.setAccessible(true);
                             field.set(parameter, new Date());
                             field.setAccessible(false);
                         }
                     }
                 } catch (Exception e) {
+                    log.error("错误了:{}", e.getMessage());
                 }
             }
         }
         if (SqlCommandType.UPDATE == sqlCommandType) {
-//            LoginUser sysUser = this.getLoginUser();
             String username = this.getLoginUser();
-            Field[] fields = null;
+            Field[] fields;
             if (parameter instanceof MapperMethod.ParamMap) {
                 MapperMethod.ParamMap<?> p = (MapperMethod.ParamMap<?>) parameter;
                 if (p.containsKey("et")) {

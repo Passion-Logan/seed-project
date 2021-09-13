@@ -15,69 +15,77 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Administrator
+ * @date 2021/9/13
+ * @lastUpdateUser Administrator
+ * @lastUpdateDesc
+ * @lastUpdateTime 2021/9/13
+ */
+@SuppressWarnings("ALL")
 @Repository
 public interface SysDictMapper extends BaseMapper<SysDict> {
 
     /**
      * 重复检查SQL
      *
-     * @return
+     * @return Long
      */
-    public Long duplicateCheckCountSql(DuplicateCheckVo duplicateCheckVo);
+    Long duplicateCheckCountSql(DuplicateCheckVo duplicateCheckVo);
 
-    public Long duplicateCheckCountSqlNoDataId(DuplicateCheckVo duplicateCheckVo);
+    Long duplicateCheckCountSqlNoDataId(DuplicateCheckVo duplicateCheckVo);
 
-    public List<DictModel> queryDictItemsByCode(@Param("code") String code);
-
-    @Deprecated
-    public List<DictModel> queryTableDictItemsByCode(@Param("table") String table, @Param("text") String text, @Param("code") String code);
+    List<DictModel> queryDictItemsByCode(@Param("code") String code);
 
     @Deprecated
-    public List<DictModel> queryTableDictItemsByCodeAndFilter(@Param("table") String table, @Param("text") String text, @Param("code") String code, @Param("filterSql") String filterSql);
-
-    public String queryDictTextByKey(@Param("code") String code, @Param("key") String key);
+    List<DictModel> queryTableDictItemsByCode(@Param("table") String table, @Param("text") String text, @Param("code") String code);
 
     @Deprecated
-    public String queryTableDictTextByKey(@Param("table") String table, @Param("text") String text, @Param("code") String code, @Param("key") String key);
+    List<DictModel> queryTableDictItemsByCodeAndFilter(@Param("table") String table, @Param("text") String text, @Param("code") String code, @Param("filterSql") String filterSql);
+
+    String queryDictTextByKey(@Param("code") String code, @Param("key") String key);
 
     @Deprecated
-    public List<DictModel> queryTableDictByKeys(@Param("table") String table, @Param("text") String text, @Param("code") String code, @Param("keyArray") String[] keyArray);
+    String queryTableDictTextByKey(@Param("table") String table, @Param("text") String text, @Param("code") String code, @Param("key") String key);
+
+    @Deprecated
+    List<DictModel> queryTableDictByKeys(@Param("table") String table, @Param("text") String text, @Param("code") String code, @Param("keyArray") String[] keyArray);
 
     /**
      * 查询所有部门 作为字典信息 id -->value,departName -->text
      *
-     * @return
+     * @return DictModel
      */
-    public List<DictModel> queryAllDepartBackDictModel();
+    List<DictModel> queryAllDepartBackDictModel();
 
     /**
      * 查询所有用户  作为字典信息 username -->value,realname -->text
      *
      * @return
      */
-    public List<DictModel> queryAllUserBackDictModel();
+    List<DictModel> queryAllUserBackDictModel();
 
     /**
      * 通过关键字查询出字典表
      *
-     * @param table
-     * @param text
-     * @param code
-     * @param keyword
-     * @return
+     * @param table   table
+     * @param text    text
+     * @param code    code
+     * @param keyword keyword
+     * @return DictModel
      */
     @Deprecated
-    public List<DictModel> queryTableDictItems(@Param("table") String table, @Param("text") String text, @Param("code") String code, @Param("keyword") String keyword);
+    List<DictModel> queryTableDictItems(@Param("table") String table, @Param("text") String text, @Param("code") String code, @Param("keyword") String keyword);
 
     /**
      * 根据表名、显示字段名、存储字段名 查询树
      *
-     * @param table
-     * @param text
-     * @param code
-     * @param pid
-     * @param hasChildField
-     * @return
+     * @param table         table
+     * @param text          text
+     * @param code          code
+     * @param pid           pid
+     * @param hasChildField hasChildField
+     * @return TreeSelectModel
      */
     @Deprecated
     List<TreeSelectModel> queryTreeList(@Param("query") Map<String, String> query, @Param("table") String table, @Param("text") String text, @Param("code") String code, @Param("pidField") String pidField, @Param("pid") String pid, @Param("hasChildField") String hasChildField);
@@ -85,37 +93,37 @@ public interface SysDictMapper extends BaseMapper<SysDict> {
     /**
      * 删除
      *
-     * @param id
+     * @param id id
      */
     @Select("delete from sys_dict where id = #{id}")
-    public void deleteOneById(@Param("id") String id);
+    void deleteOneById(@Param("id") String id);
 
     /**
      * 查询被逻辑删除的数据
      *
-     * @return
+     * @return SysDict
      */
     @Select("select * from sys_dict where del_flag = 1")
-    public List<SysDict> queryDeleteList();
+    List<SysDict> queryDeleteList();
 
     /**
      * 修改状态值
      *
-     * @param delFlag
-     * @param id
+     * @param delFlag delFlag
+     * @param id      id
      */
     @Update("update sys_dict set del_flag = #{flag,jdbcType=INTEGER} where id = #{id,jdbcType=VARCHAR}")
-    public void updateDictDelFlag(@Param("flag") int delFlag, @Param("id") String id);
+    void updateDictDelFlag(@Param("flag") int delFlag, @Param("id") String id);
 
 
     /**
      * 分页查询字典表数据
      *
-     * @param page
-     * @param query
-     * @return
+     * @param page  page
+     * @param query query
+     * @return DictModel
      */
     @Deprecated
-    public Page<DictModel> queryDictTablePageList(Page page, @Param("query") DictQuery query);
+    Page<DictModel> queryDictTablePageList(Page page, @Param("query") DictQuery query);
 
 }

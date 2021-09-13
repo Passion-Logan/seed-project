@@ -3,6 +3,7 @@ package com.cody.seed.modules.security;
 import org.springframework.security.core.GrantedAuthority;
 
 /**
+ * @author Administrator
  * @Description: TODO
  * @date: 2020年06月16日 18:49
  */

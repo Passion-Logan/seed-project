@@ -7,6 +7,12 @@ import java.lang.annotation.Target;
 
 /**
  * 字典注解
+ *
+ * @author Administrator
+ * @date 2021/9/13
+ * @lastUpdateUser Administrator
+ * @lastUpdateDesc
+ * @lastUpdateTime 2021/9/13
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)

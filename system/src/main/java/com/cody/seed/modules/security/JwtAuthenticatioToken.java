@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import java.util.Collection;
 
 /**
+ * @author Administrator
  * @Description: 自定义令牌对象
  * @date: 2020年06月17日 10:02
  */

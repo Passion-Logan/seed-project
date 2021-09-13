@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
+ * @author Administrator
  * @Description: 身份验证提供者
  * 登录身份认证组件
  *

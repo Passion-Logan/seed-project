@@ -1,6 +1,7 @@
 package com.cody.seed.modules.system.execption;
 
 /**
+ * @author Administrator
  * @Description: 自定义业务异常
  * @date: 2020年06月16日 16:52
  */

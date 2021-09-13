@@ -11,7 +11,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.lang.reflect.Method;
 
 /**
  * ClassName: DefaultAuthenticationInterceptor
@@ -27,7 +26,7 @@ public class DefaultAuthenticationInterceptor extends HandlerInterceptorAdapter 
     private ISysUserService userService;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         return getUser(request, handler);
     }
 
@@ -49,9 +48,6 @@ public class DefaultAuthenticationInterceptor extends HandlerInterceptorAdapter 
         if (request.getRequestURI().contains("captcha") || request.getRequestURI().contains("login")) {
             return true;
         }
-
-        HandlerMethod handlerMethod = (HandlerMethod) handler;
-        Method method = handlerMethod.getMethod();
 
         if (StrUtil.isNotEmpty(token)) {
             String username = JwtTokenUtils.getUsernameFromToken(token);

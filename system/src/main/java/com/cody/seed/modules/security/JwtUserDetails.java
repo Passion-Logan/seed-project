@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.User;
 import java.util.Collection;
 
 /**
+ * @author Administrator
  * @Description: 安全用户模型
  * 用户认证信息
  * UserDetailsService 加载好用户认证信息后会封装认证信息到一个 UserDetails 的实现类。

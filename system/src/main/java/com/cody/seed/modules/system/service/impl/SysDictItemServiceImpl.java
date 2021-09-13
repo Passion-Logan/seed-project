@@ -4,15 +4,22 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cody.seed.modules.system.entity.SysDictItem;
 import com.cody.seed.modules.system.mapper.SysDictItemMapper;
 import com.cody.seed.modules.system.service.ISysDictItemService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * @author Administrator
+ * @date 2021/9/13
+ * @lastUpdateUser Administrator
+ * @lastUpdateDesc
+ * @lastUpdateTime 2021/9/13
+ */
 @Service
 public class SysDictItemServiceImpl extends ServiceImpl<SysDictItemMapper, SysDictItem> implements ISysDictItemService {
 
-    @Autowired
+    @Resource
     private SysDictItemMapper sysDictItemMapper;
 
     @Override

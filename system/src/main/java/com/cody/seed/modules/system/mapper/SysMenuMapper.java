@@ -8,6 +8,13 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * @author Administrator
+ * @date 2021/9/13
+ * @lastUpdateUser Administrator
+ * @lastUpdateDesc
+ * @lastUpdateTime 2021/9/13
+ */
 @Repository
 public interface SysMenuMapper extends BaseMapper<SysMenu> {
 
@@ -21,6 +28,7 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
     /**
      * 根据pid批量查询
      *
+     * @param pid pid
      * @return SysMenu
      */
     List<SysMenu> getListByPid(@Param("pid") String pid);

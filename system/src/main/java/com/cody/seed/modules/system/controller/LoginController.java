@@ -26,7 +26,6 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,13 +35,14 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @Description: 登录控制器
+ * @author Administrator
  * 除了使用登录认证过滤器拦截 /login Post请求之外，我们也可以不使用上面的过滤器，通过自定义登录接口实现，
  * 只要在登录接口手动触发登录流程并生产令牌即可。
  * <p>
  * 其实 Spring Security 的登录认证过程只需调用 AuthenticationManager 的 authenticate(Authentication authentication) 方法，
  * 最终返回认证成功的 Authentication 实现类并存储到SpringContexHolder 上下文即可，这样后面授权的时候就可以从
  * SpringContexHolder 中获取登录认证信息，并根据其中的用户信息和权限信息决定是否进行授权。
+ * @Description: 登录控制器
  * @date: 2020年06月17日 16:39
  */
 @Api(value = "LoginController", tags = "系统-spring security登录")
@@ -52,21 +52,16 @@ public class LoginController {
 
     private static Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-    @Autowired
+    @Resource
     private AuthenticationManager authenticationManager;
-
-    @Autowired
+    @Resource
     private ISysUserService sysUserService;
-
-    @Autowired
+    @Resource
     private ISysRoleService roleService;
-
-    @Autowired
+    @Resource
     private ISysMenuService sysMenuService;
-
-    @Autowired
+    @Resource
     private ISysLoginLogService loginLogService;
-
     @Resource
     private RedissonObject redissonObject;
 
@@ -115,7 +110,7 @@ public class LoginController {
         loginLog.setLoginName(loginRequestVO.getUsername());
         String ip = IPUtilsPro.getIpAddr(request);
         loginLog.setIp(ip);
-//        loginLog.setLoginLocation(IPUtilsPro.getCityInfo(ip));
+        loginLog.setLoginLocation(IPUtilsPro.getCityInfo(ip));
         loginLog.setBrowser(IPUtilsPro.getBrowser(request));
         loginLog.setOs(IPUtilsPro.getOperatingSystem(request));
         loginLog.setStatus(0);
@@ -133,7 +128,7 @@ public class LoginController {
     @NoRepeatSubmit
     @ApiOperation("获取验证码")
     @GetMapping(value = "/captcha")
-    public Result getCode() {
+    public Result<Map<String, Object>> getCode() {
         // 算术类型 https://gitee.com/whvse/EasyCaptcha
         ArithmeticCaptcha captcha = new ArithmeticCaptcha(111, 36);
         // 几位数运算，默认是两位

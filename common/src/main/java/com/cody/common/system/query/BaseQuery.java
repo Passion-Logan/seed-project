@@ -7,6 +7,7 @@ import lombok.Data;
 /**
  * @Description: TODO
  * @date: 2020年06月17日 15:10
+ * @author Administrator
  */
 @Data
 @ApiModel(value = "分页查询参数")

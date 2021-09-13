@@ -7,6 +7,12 @@ import java.lang.annotation.Target;
 
 /**
  * 防止重复提交标记注解
+ *
+ * @author Administrator
+ * @date 2021/9/13
+ * @lastUpdateUser Administrator
+ * @lastUpdateDesc
+ * @lastUpdateTime 2021/9/13
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

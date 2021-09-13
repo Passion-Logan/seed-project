@@ -4,6 +4,13 @@ import com.cody.common.constant.CommonConstant;
 
 import java.lang.annotation.*;
 
+/**
+ * @author Administrator
+ * @date 2021/9/13
+ * @lastUpdateUser Administrator
+ * @lastUpdateDesc
+ * @lastUpdateTime 2021/9/13
+ */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
@@ -12,7 +19,7 @@ public @interface AutoLog {
     /**
      * 日志内容
      *
-     * @return
+     * @return String
      */
     String value() default "";
 

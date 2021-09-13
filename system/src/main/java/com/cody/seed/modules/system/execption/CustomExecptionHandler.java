@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 /**
+ * @author Administrator
  * @Description: 异常处理器
  * @date: 2020年06月16日 16:53
  */
@@ -29,33 +30,33 @@ public class CustomExecptionHandler {
     }
 
     @ExceptionHandler(DuplicateKeyException.class)
-    public Result<?> handleDuplicateKeyException(DuplicateKeyException e){
+    public Result<?> handleDuplicateKeyException(DuplicateKeyException e) {
         log.error(e.getMessage(), e);
         return Result.error("数据库中已存在该记录");
     }
 
     @ExceptionHandler(Exception.class)
-    public Result<?> handleException(Exception e){
+    public Result<?> handleException(Exception e) {
         log.error(e.getMessage(), e);
-        return Result.error("操作失败，"+e.getMessage());
+        return Result.error("操作失败，" + e.getMessage());
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public Result<?> HttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e){
+    public Result<?> HttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
         StringBuffer sb = new StringBuffer();
         sb.append("不支持");
         sb.append(e.getMethod());
         sb.append("请求方法，");
         sb.append("支持以下");
-        String [] methods = e.getSupportedMethods();
-        if(methods!=null){
-            for(String str:methods){
+        String[] methods = e.getSupportedMethods();
+        if (methods != null) {
+            for (String str : methods) {
                 sb.append(str);
                 sb.append("、");
             }
         }
         log.error(sb.toString(), e);
-        return Result.error(405,sb.toString());
+        return Result.error(405, sb.toString());
     }
 
 }

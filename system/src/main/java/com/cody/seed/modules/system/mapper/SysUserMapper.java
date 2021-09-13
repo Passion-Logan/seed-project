@@ -11,15 +11,22 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * @author Administrator
+ * @date 2021/9/13
+ * @lastUpdateUser Administrator
+ * @lastUpdateDesc
+ * @lastUpdateTime 2021/9/13
+ */
 @Repository
 public interface SysUserMapper extends BaseMapper<SysUser> {
 
     /**
      * 更新用户部门id
      *
-     * @param deptId
-     * @param list
-     * @return
+     * @param deptId deptId
+     * @param list   list
+     * @return int
      */
     int updateDeptIdByUserIds(@Param("deptId") String deptId,
                               @Param("list") List<String> list);
@@ -28,9 +35,9 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
     /**
      * 解冻 冻结
      *
-     * @param status
-     * @param list
-     * @return
+     * @param status status
+     * @param list   list
+     * @return int
      */
     int frozenBatch(@Param("status") boolean status,
                     @Param("list") List<String> list);
@@ -38,8 +45,8 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
     /**
      * 查询用户信息
      *
-     * @param userName
-     * @return
+     * @param userName userName
+     * @return SysUser
      */
     SysUser findByName(@Param("userName") String userName);
 

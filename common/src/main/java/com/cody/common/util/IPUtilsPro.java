@@ -18,12 +18,10 @@ import java.net.NetworkInterface;
 import java.util.Enumeration;
 
 /**
- * @ProjectName: jinkai-parent
- * @Package: com.scil.jinkai.utils
  * @ClassName: IpUtil
  * @Description: 获取ip工具类
- * @author:songqiang
- * @Date:2020-01-16 09:13
+ * @author: Administrator
+ * @Date: 2020-01-16 09:13
  **/
 public class IPUtilsPro {
 

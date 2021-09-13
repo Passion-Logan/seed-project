@@ -24,6 +24,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
 /**
+ * @author Administrator
  * @Description: 启动登录认证流程过滤器
  * 覆写认证方法，修改用户名、密码的获取方式，具体原因看代码注释
  * 覆写认证成功后的操作，移除后台跳转，添加生成令牌并返回给客户端

@@ -9,6 +9,7 @@ import java.io.Serializable;
 /**
  * @Description: 重复校验VO
  * @date: 2020年06月17日 14:30
+ * @author Administrator
  */
 @Data
 @ApiModel(value = "重复校验数据模型", description = "重复校验数据模型")

@@ -49,13 +49,12 @@ public class SysUserController {
 
     @Resource
     private ISysUserService sysUserService;
-
     @Resource
     private ISysUserRoleService sysUserRoleService;
 
     @ApiOperation(value = "分页查询")
     @PostMapping("getPageList")
-    public Result selectPageList(@RequestBody @Valid SysUserQueryVO sysUserQueryVO) {
+    public Result<List<SysUserResponseVO>> selectPageList(@RequestBody @Valid SysUserQueryVO sysUserQueryVO) {
         Page<SysUserResponseVO> page = new Page<>(sysUserQueryVO.getCurrent(), sysUserQueryVO.getPageSize());
         IPage<SysUserResponseVO> data = sysUserService.getList(page, sysUserQueryVO);
 
@@ -66,7 +65,7 @@ public class SysUserController {
     @ApiOperation(value = "添加用户")
     @PostMapping("addUser")
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-    public Result addUser(@RequestBody @Valid SysUserRoleRequestVO user) {
+    public Result<Void> addUser(@RequestBody @Valid SysUserRoleRequestVO user) {
         isUsername(user.getUserName(), null);
         SysUser entity = new SysUser();
         BeanUtils.copyProperties(user, entity);
@@ -77,12 +76,7 @@ public class SysUserController {
 
         Long userId = entity.getId();
         if (StrUtil.isNotEmpty(user.getRoleIds())) {
-            String[] ids = user.getRoleIds().split(",");
-            List<SysUserRole> userRoles = new ArrayList<>(ids.length);
-            for (String id : ids) {
-                userRoles.add(SysUserRole.builder().userId(userId).roleId(Long.parseLong(id)).build());
-            }
-            sysUserRoleService.saveBatch(userRoles);
+            updateUserRole(user.getRoleIds(), userId);
         }
 
         return Result.ok();
@@ -91,7 +85,7 @@ public class SysUserController {
     @ApiOperation(value = "编辑用户")
     @PutMapping("updateUser")
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-    public Result editUser(@RequestBody @Valid SysUserRoleRequestVO user) {
+    public Result<Void> editUser(@RequestBody @Valid SysUserRoleRequestVO user) {
         isUsername(user.getUserName(), user.getId());
         SysUser entity = new SysUser();
         BeanUtils.copyProperties(user, entity);
@@ -99,21 +93,25 @@ public class SysUserController {
         if (StrUtil.isNotEmpty(user.getRoleIds())) {
             Long userId = user.getId();
             sysUserRoleService.remove(Wrappers.<SysUserRole>lambdaQuery().eq(SysUserRole::getUserId, userId));
-            String[] ids = user.getRoleIds().split(",");
-            List<SysUserRole> userRoles = new ArrayList<>(ids.length);
-            for (String id : ids) {
-                userRoles.add(SysUserRole.builder().userId(userId).roleId(Long.parseLong(id)).build());
-            }
-            sysUserRoleService.saveBatch(userRoles);
+            updateUserRole(user.getRoleIds(), userId);
         }
         sysUserService.updateById(entity);
         return Result.ok();
     }
 
+    private void updateUserRole(String roleIds, Long userId) {
+        String[] ids = roleIds.split(",");
+        List<SysUserRole> userRoles = new ArrayList<>(ids.length);
+        for (String id : ids) {
+            userRoles.add(SysUserRole.builder().userId(userId).roleId(Long.parseLong(id)).build());
+        }
+        sysUserRoleService.saveBatch(userRoles);
+    }
+
     @ApiOperation(value = "修改密码")
     @GetMapping("updatePassword")
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-    public Result editPassword(String userName, String password) {
+    public Result<Void> editPassword(String userName, String password) {
         sysUserService.changePassword(userName, password);
         return Result.ok();
     }
@@ -122,7 +120,7 @@ public class SysUserController {
     @ApiOperation(value = "删除用户")
     @DeleteMapping("removeUser")
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-    public Result deleteUser(@RequestBody JSONObject object) {
+    public Result<Void> deleteUser(@RequestBody JSONObject object) {
         List<String> ids = Arrays.asList(object.getString("ids").split(","));
         sysUserService.removeByIds(ids);
         sysUserRoleService.remove(Wrappers.<SysUserRole>lambdaQuery().in(SysUserRole::getUserId, ids));
@@ -133,7 +131,7 @@ public class SysUserController {
     @GetMapping("getUserRole")
     @ApiOperation(value = "获取用户角色")
     @DeleteMapping("getUserRole")
-    public Result getUserRole(@ApiParam(name = "userId", value = "userId", required = true) @RequestParam(value = "userId") String userId) {
+    public Result<List<String>> getUserRole(@ApiParam(name = "userId", value = "userId", required = true) @RequestParam(value = "userId") String userId) {
         List<SysUserRole> userRoles = sysUserRoleService.list(Wrappers.<SysUserRole>lambdaQuery().eq(SysUserRole::getUserId, userId));
         List<String> roleList = userRoles.stream().map(m -> m.getRoleId().toString()).collect(Collectors.toList());
         return Result.ok(roleList);

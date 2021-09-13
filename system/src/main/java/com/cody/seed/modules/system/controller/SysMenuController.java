@@ -12,16 +12,25 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * 系统-菜单管理
+ *
+ * @author Administrator
+ * @date 2021/9/13
+ * @lastUpdateUser Administrator
+ * @lastUpdateDesc
+ * @lastUpdateTime 2021/9/13
+ */
 @RestController
 @Api(value = "SysMenuController", tags = "系统-菜单管理")
 @RequestMapping("/sys/menu")
@@ -29,15 +38,14 @@ import java.util.stream.Collectors;
 @Slf4j
 public class SysMenuController {
 
-    @Autowired
+    @Resource
     private ISysMenuService menuService;
-
-    @Autowired
+    @Resource
     private ISysRoleMenuService roleMenuService;
 
     @ApiOperation(value = "查询角色")
     @GetMapping(value = "/queryTreeList")
-    public Result queryTreeList() {
+    public Result<Map<String, Object>> queryTreeList() {
         Map<String, Object> resMap = new HashMap<>(1);
         resMap.put("treeList", menuService.queryTreeList());
         return Result.ok(resMap);
@@ -46,11 +54,11 @@ public class SysMenuController {
     /**
      * 菜单树形展示
      *
-     * @return
+     * @return List<SysUserMenuResponseVO>
      */
     @ApiOperation(value = "菜单树形展示")
     @GetMapping("list")
-    public Result selectPageList() {
+    public Result<List<SysUserMenuResponseVO>> selectPageList() {
         // todo:添加缓存
         List<SysUserMenuResponseVO> data = new ArrayList<>();
         List<SysUserMenuResponseVO> voList = menuService.getList();
@@ -65,7 +73,7 @@ public class SysMenuController {
     @ApiOperation(value = "添加菜单")
     @PostMapping("addMenu")
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-    public Result addMenu(@RequestBody @Valid SysMenu menu) {
+    public Result<Void> addMenu(@RequestBody @Valid SysMenu menu) {
         menuService.save(menu);
         return Result.ok();
     }
@@ -73,7 +81,7 @@ public class SysMenuController {
     @ApiOperation(value = "编辑菜单")
     @PutMapping("updateMenu")
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-    public Result updateMenu(@RequestBody @Valid SysMenu menu) {
+    public Result<Void> updateMenu(@RequestBody @Valid SysMenu menu) {
         menuService.updateById(menu);
         return Result.ok();
     }
@@ -82,13 +90,13 @@ public class SysMenuController {
      * 删除节点菜单
      * 如果父节点存在子节点 则不删除
      *
-     * @param id
-     * @return
+     * @param id id
+     * @return Void
      */
     @ApiOperation(value = "删除菜单")
     @DeleteMapping("deleteMenu")
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-    public Result deleteMenu(@ApiParam(name = "id", value = "id", required = true) @RequestParam String id) {
+    public Result<Void> deleteMenu(@ApiParam(name = "id", value = "id", required = true) @RequestParam String id) {
         menuService.deleteById(id);
         return Result.ok();
     }
@@ -97,13 +105,13 @@ public class SysMenuController {
      * 批量删除节点菜单
      * 如果父节点存在子节点 则不删除
      *
-     * @param object
-     * @return
+     * @param object object
+     * @return Void
      */
     @ApiOperation(value = "删除菜单")
     @DeleteMapping("removeMenu")
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-    public Result removeMenu(@RequestBody JSONObject object) {
+    public Result<Void> removeMenu(@RequestBody JSONObject object) {
         List<String> ids = Arrays.asList(object.getString("ids").split(","));
         menuService.deleteBatch(ids);
         return Result.ok();
@@ -111,7 +119,7 @@ public class SysMenuController {
 
     @GetMapping("queryRolePermission")
     @ApiOperation(value = "查询角色授权")
-    public Result queryRolePermission(@RequestParam(name = "roleId") String roleId) {
+    public Result<List<String>> queryRolePermission(@RequestParam(name = "roleId") String roleId) {
         List<SysRoleMenu> list = roleMenuService.getListByRoleId(roleId);
         List<String> idList = list.stream().map(item -> item.getMenuId().toString()).collect(Collectors.toList());
         return Result.ok(idList);

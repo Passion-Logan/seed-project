@@ -26,6 +26,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * @author Administrator
  * @Description: 字典aop类
  * @date: 2020年06月17日 14:23
  */
@@ -37,7 +38,9 @@ public class DictAspect {
     @Autowired
     private ISysDictService dictService;
 
-    // 定义切点Pointcut
+    /**
+     * 定义切点Pointcut
+     */
     @Pointcut("execution(public * com.cody..*.*Controller.*(..))")
     public void excudeService() {
     }
@@ -76,7 +79,7 @@ public class DictAspect {
      * }
      * 目前vue是这么进行字典渲染到table上的多了就很麻烦了 这个直接在服务端渲染完成前端可以直接用
      *
-     * @param result
+     * @param result result
      */
     private void parseDictText(Object result) {
         if (result instanceof Result) {

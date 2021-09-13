@@ -10,19 +10,26 @@ import com.cody.seed.modules.system.entity.SysDictItem;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Administrator
+ * @date 2021/9/13
+ * @lastUpdateUser Administrator
+ * @lastUpdateDesc
+ * @lastUpdateTime 2021/9/13
+ */
 public interface ISysDictService extends IService<SysDict> {
 
-    public List<DictModel> queryDictItemsByCode(String code);
+    List<DictModel> queryDictItemsByCode(String code);
 
-    public Map<String,List<DictModel>> queryAllDictItems();
+    Map<String, List<DictModel>> queryAllDictItems();
 
     @Deprecated
     List<DictModel> queryTableDictItemsByCode(String table, String text, String code);
 
     @Deprecated
-    public List<DictModel> queryTableDictItemsByCodeAndFilter(String table, String text, String code, String filterSql);
+    List<DictModel> queryTableDictItemsByCodeAndFilter(String table, String text, String code, String filterSql);
 
-    public String queryDictTextByKey(String code, String key);
+    String queryDictTextByKey(String code, String key);
 
     @Deprecated
     String queryTableDictTextByKey(String table, String text, String code, String key);
@@ -40,72 +47,84 @@ public interface ISysDictService extends IService<SysDict> {
 
     /**
      * 添加一对多
+     *
+     * @param sysDict         sysDict
+     * @param sysDictItemList sysDictItemList
+     * @return Integer
      */
-    public Integer saveMain(SysDict sysDict, List<SysDictItem> sysDictItemList);
+    Integer saveMain(SysDict sysDict, List<SysDictItem> sysDictItemList);
 
     /**
      * 查询所有部门 作为字典信息 id -->value,departName -->text
-     * @return
+     *
+     * @return DictModel
      */
-    public List<DictModel> queryAllDepartBackDictModel();
+    List<DictModel> queryAllDepartBackDictModel();
 
     /**
      * 查询所有用户  作为字典信息 username -->value,realname -->text
-     * @return
+     *
+     * @return DictModel
      */
-    public List<DictModel> queryAllUserBackDictModel();
+    List<DictModel> queryAllUserBackDictModel();
 
     /**
      * 通过关键字查询字典表
-     * @param table
-     * @param text
-     * @param code
-     * @param keyword
-     * @return
+     *
+     * @param table   table
+     * @param text    text
+     * @param code    code
+     * @param keyword keyword
+     * @return DictModel
      */
     @Deprecated
-    public List<DictModel> queryTableDictItems(String table, String text, String code,String keyword);
+    List<DictModel> queryTableDictItems(String table, String text, String code, String keyword);
 
     /**
      * 根据表名、显示字段名、存储字段名 查询树
-     * @param table
-     * @param text
-     * @param code
-     * @param pidField
-     * @param pid
-     * @param hasChildField
-     * @return
+     *
+     * @param table         table
+     * @param text          text
+     * @param code          code
+     * @param pidField      pidField
+     * @param pid           pid
+     * @param hasChildField hasChildField
+     * @return TreeSelectModel
      */
     @Deprecated
     List<TreeSelectModel> queryTreeList(Map<String, String> query, String table, String text, String code, String pidField, String pid, String hasChildField);
 
     /**
      * 真实删除
-     * @param id
+     *
+     * @param id id
      */
-    public void deleteOneDictPhysically(String id);
+    void deleteOneDictPhysically(String id);
 
     /**
      * 修改delFlag
-     * @param delFlag
-     * @param id
+     *
+     * @param delFlag delFlag
+     * @param id      id
      */
-    public void updateDictDelFlag(int delFlag,String id);
+    void updateDictDelFlag(int delFlag, String id);
 
     /**
      * 查询被逻辑删除的数据
-     * @return
+     *
+     * @return SysDict
      */
-    public List<SysDict> queryDeleteList();
+    List<SysDict> queryDeleteList();
 
     /**
      * 分页查询
-     * @param query
-     * @param pageSize
-     * @param pageNo
-     * @return
+     *
+     * @param query    query
+     * @param pageSize pageSize
+     * @param pageNo   pageNo
+     * @return DictModel
      */
     @Deprecated
-    public List<DictModel> queryDictTablePageList(DictQuery query, int pageSize, int pageNo);
+    List<DictModel> queryDictTablePageList(DictQuery query, int pageSize, int pageNo);
 
 }

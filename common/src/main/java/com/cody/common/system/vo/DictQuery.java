@@ -5,6 +5,7 @@ import lombok.Data;
 /**
  * @Description: 字典查询参数实体
  * @date: 2020年06月17日 13:40
+ * @author Administrator
  */
 @Data
 public class DictQuery {

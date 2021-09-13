@@ -8,9 +8,9 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
+ * @author Administrator
  * @Description: 接口返回数据格式
  * @date: 2020年06月16日 16:16
- * @author Administrator
  */
 @Data
 @ApiModel(value = "接口返回对象", description = "接口返回对象")
@@ -63,32 +63,32 @@ public class Result<T> implements Serializable {
     }
 
 
-    public static Result<Object> ok() {
-        Result<Object> r = new Result<>();
+    public static <T> Result<T> ok() {
+        Result<T> r = new Result<>();
         r.setSuccess(true);
         r.setCode(CommonConstant.SC_OK_200);
         r.setMessage("成功");
         return r;
     }
 
-    public static Result<Object> ok(String msg) {
-        Result<Object> r = new Result<>();
+    public static <T> Result<T> ok(String msg) {
+        Result<T> r = new Result<>();
         r.setSuccess(true);
         r.setCode(CommonConstant.SC_OK_200);
         r.setMessage(msg);
         return r;
     }
 
-    public static Result<Object> ok(Object data) {
-        Result<Object> r = new Result<>();
+    public static <T> Result<T> ok(T data) {
+        Result<T> r = new Result<>();
         r.setSuccess(true);
         r.setCode(CommonConstant.SC_OK_200);
         r.setData(data);
         return r;
     }
 
-    public static Result<Object> ok(Object data, Integer total) {
-        Result<Object> r = new Result<>();
+    public static <T> Result<T> ok(T data, Integer total) {
+        Result<T> r = new Result<>();
         r.setSuccess(true);
         r.setCode(CommonConstant.SC_OK_200);
         r.setData(data);
@@ -96,12 +96,12 @@ public class Result<T> implements Serializable {
         return r;
     }
 
-    public static Result<Object> error(String msg) {
+    public static <T> Result<T> error(String msg) {
         return error(CommonConstant.SC_INTERNAL_SERVER_ERROR_500, msg);
     }
 
-    public static Result<Object> error(int code, String msg) {
-        Result<Object> r = new Result<>();
+    public static <T> Result<T> error(int code, String msg) {
+        Result<T> r = new Result<>();
         r.setCode(code);
         r.setMessage(msg);
         r.setSuccess(false);

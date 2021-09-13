@@ -12,11 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
+ * @author Administrator
  * @Description: 登录认证检查过滤器
  * <p>
  * 访问接口的时候，登录认证检查过滤器 JwtAuthenticationFilter 会拦截请求校验令牌和登录状态，并根据情况设置登录状态。
  * @date: 2020年06月17日 9:49
  */
+@SuppressWarnings("ALL")
 public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 
     @Autowired

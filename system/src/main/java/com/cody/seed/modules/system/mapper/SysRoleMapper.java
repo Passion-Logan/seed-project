@@ -11,6 +11,13 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * @author Administrator
+ * @date 2021/9/13
+ * @lastUpdateUser Administrator
+ * @lastUpdateDesc
+ * @lastUpdateTime 2021/9/13
+ */
 @Repository
 public interface SysRoleMapper extends BaseMapper<SysRole> {
 
@@ -22,6 +29,11 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
      */
     List<SysRole> getRolesByUserId(@Param("userId") Long userId);
 
+    /**
+     * @param page  page
+     * @param query query
+     * @return SysRoleResponseVO
+     */
     IPage<SysRoleResponseVO> getList(Page<SysRoleResponseVO> page, SysRoleQueryVO query);
 
 }

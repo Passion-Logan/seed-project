@@ -7,6 +7,13 @@ import com.cody.seed.modules.vo.response.TreeData;
 
 import java.util.List;
 
+/**
+ * @author Administrator
+ * @date 2021/9/13
+ * @lastUpdateUser Administrator
+ * @lastUpdateDesc
+ * @lastUpdateTime 2021/9/13
+ */
 public interface ISysMenuService extends IService<SysMenu> {
 
     /**

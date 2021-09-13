@@ -10,6 +10,13 @@ import com.cody.seed.modules.vo.response.SysUserResponseVO;
 
 import java.util.List;
 
+/**
+ * @author Administrator
+ * @date 2021/9/13
+ * @lastUpdateUser Administrator
+ * @lastUpdateDesc
+ * @lastUpdateTime 2021/9/13
+ */
 public interface ISysUserService extends IService<SysUser> {
 
     /**
@@ -23,6 +30,7 @@ public interface ISysUserService extends IService<SysUser> {
 
     /**
      * 获取列表
+     *
      * @param page
      * @param sysUserQueryVO
      * @return
@@ -83,7 +91,7 @@ public interface ISysUserService extends IService<SysUser> {
      * 查询用户信息
      *
      * @param username username
-     * @param id id
+     * @param id       id
      * @return SysUser
      */
     SysUser findByUsername(String username, Long id);

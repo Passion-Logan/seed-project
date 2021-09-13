@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
 /**
+ * @author Administrator
  * @Description: TODO
  * @date: 2020年06月17日 14:13
  */
@@ -51,7 +51,7 @@ public class SysBaseApiImpl implements ISysBaseAPI {
     }
 
     @Override
-    public String getDatabaseType() throws SQLException {
+    public String getDatabaseType() {
         return null;
     }
 

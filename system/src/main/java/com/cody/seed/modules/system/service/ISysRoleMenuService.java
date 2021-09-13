@@ -5,6 +5,13 @@ import com.cody.seed.modules.system.entity.SysRoleMenu;
 
 import java.util.List;
 
+/**
+ * @author Administrator
+ * @date 2021/9/13
+ * @lastUpdateUser Administrator
+ * @lastUpdateDesc
+ * @lastUpdateTime 2021/9/13
+ */
 public interface ISysRoleMenuService extends IService<SysRoleMenu> {
 
 

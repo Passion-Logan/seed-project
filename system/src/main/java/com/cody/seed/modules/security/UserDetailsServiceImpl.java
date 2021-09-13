@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
+ * @author Administrator
  * @Description: 用户登录认证信息查询
  * 一般而言，定制 UserDetailsService 就可以满足大部分需求了，在 UserDetailsService 满足不了
  * 我们的需求的时候考虑定制 AuthenticationProvider。

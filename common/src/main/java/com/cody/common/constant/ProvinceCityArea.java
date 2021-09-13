@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
+ * @author Administrator
  * @Description: TODO
  * @date: 2020年06月16日 16:50
  */
@@ -56,7 +57,6 @@ public class ProvinceCityArea {
     }
 
     private void initAreaList() {
-        //System.out.println("=====================");
         if (this.areaList == null || this.areaList.size() == 0) {
             this.areaList = new ArrayList<Area>();
             try {
@@ -66,20 +66,17 @@ public class ProvinceCityArea {
                 //第一层 省
                 JSONObject provinceJson = baseJson.getJSONObject("86");
                 for (String provinceKey : provinceJson.keySet()) {
-                    //System.out.println("===="+provinceKey);
                     Area province = new Area(provinceKey, provinceJson.getString(provinceKey), "86");
                     this.areaList.add(province);
                     //第二层 市
                     JSONObject cityJson = baseJson.getJSONObject(provinceKey);
                     for (String cityKey : cityJson.keySet()) {
-                        //System.out.println("-----"+cityKey);
                         Area city = new Area(cityKey, cityJson.getString(cityKey), provinceKey);
                         this.areaList.add(city);
                         //第三层 区
                         JSONObject areaJson = baseJson.getJSONObject(cityKey);
                         if (areaJson != null) {
                             for (String areaKey : areaJson.keySet()) {
-                                //System.out.println("········"+areaKey);
                                 Area area = new Area(areaKey, areaJson.getString(areaKey), cityKey);
                                 this.areaList.add(area);
                             }

@@ -11,14 +11,20 @@ import java.util.Map;
 
 /**
  * 系统日志表 Mapper 接口
+ *
+ * @author Administrator
+ * @date 2021/9/13
+ * @lastUpdateUser Administrator
+ * @lastUpdateDesc
+ * @lastUpdateTime 2021/9/13
  */
 @Repository
 public interface SysLogMapper extends BaseMapper<SysLog> {
 
     /**
-     * @功能：清空所有日志记录
+     * 清空所有日志记录
      */
-    public void removeAll();
+    void removeAll();
 
     /**
      * 获取系统总访问次数
@@ -47,9 +53,9 @@ public interface SysLogMapper extends BaseMapper<SysLog> {
     /**
      * 首页：根据时间统计访问数量/ip数量
      *
-     * @param dayStart
-     * @param dayEnd
-     * @return
+     * @param dayStart dayStart
+     * @param dayEnd   dayEnd
+     * @return Map
      */
     List<Map<String, Object>> findVisitCount(@Param("dayStart") Date dayStart, @Param("dayEnd") Date dayEnd, @Param("dbType") String dbType);
 

@@ -9,14 +9,14 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 /**
+ * @author Administrator
  * @Description: 防止重复提交切面
  * @date: 2020年06月17日 18:35
  */
@@ -25,7 +25,7 @@ public class NoRepeatSubmitAdvice {
 
     private Logger logger = LoggerFactory.getLogger(NoRepeatSubmitAdvice.class);
 
-    @Autowired
+    @Resource
     private Cache<String, Integer> cache;
 
     @Pointcut("@annotation(nrs)")

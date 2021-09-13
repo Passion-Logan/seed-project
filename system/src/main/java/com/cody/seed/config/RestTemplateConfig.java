@@ -7,6 +7,7 @@ import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 /**
+ * @author Administrator
  * @Description: TODO
  * @date: 2020年06月16日 17:39
  */
