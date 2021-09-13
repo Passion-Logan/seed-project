@@ -1,33 +1,31 @@
 package com.cody.seed.modules.system.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import lombok.*;
+import com.cody.common.aspect.annotation.Stringify;
+import com.cody.common.entity.SysBaseModel;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.springframework.data.annotation.Id;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
+ * @author Administrator
  * @Description: 部门表
  * @date: 2020年06月17日 15:04
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class SysDept {
+public class SysDept extends SysBaseModel<SysDept> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 部门id
-     */
-    @TableId(type = IdType.ID_WORKER_STR)
-    private String id;
-    /**
      * 父部门id
      */
-    private String pid;
+    @Stringify
+    private Long pid;
     /**
      * 部门名称
      */
@@ -52,4 +50,5 @@ public class SysDept {
      * 备注
      */
     private String remark;
+
 }

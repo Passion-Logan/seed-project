@@ -10,26 +10,33 @@ import com.cody.seed.modules.util.BeanUtil;
 import com.cody.seed.modules.vo.request.SysRoleQueryVO;
 import com.cody.seed.modules.vo.response.SysRoleResponseVO;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * @author wql
+ * @date 2021/9/13
+ * @lastUpdateUser wql
+ * @lastUpdateDesc
+ * @lastUpdateTime 2021/9/13
+ */
 @Service
 @Slf4j
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements ISysRoleService {
 
-    @Autowired
+    @Resource
     private SysRoleMapper roleMapper;
 
     /**
      * 查询用户角色
      *
-     * @param userId
-     * @return
+     * @param userId userId
+     * @return SysRole
      */
     @Override
-    public List<SysRole> getRolesByUserId(String userId) {
+    public List<SysRole> getRolesByUserId(Long userId) {
         List<SysRole> list = roleMapper.getRolesByUserId(userId);
         return BeanUtil.convert(list, SysRole.class);
     }

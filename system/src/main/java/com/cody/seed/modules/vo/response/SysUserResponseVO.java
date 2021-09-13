@@ -1,5 +1,6 @@
 package com.cody.seed.modules.vo.response;
 
+import com.cody.common.aspect.annotation.Stringify;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -22,8 +23,9 @@ public class SysUserResponseVO implements Serializable {
     /**
      * 用户ID
      */
+    @Stringify
     @ApiModelProperty("用户ID")
-    private String id;
+    private Long id;
 
     /**
      * 用户昵称

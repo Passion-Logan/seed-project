@@ -55,7 +55,7 @@ public class DefaultAuthenticationInterceptor extends HandlerInterceptorAdapter 
 
         if (StrUtil.isNotEmpty(token)) {
             String username = JwtTokenUtils.getUsernameFromToken(token);
-            SysUser user = userService.findByUsername(username);
+            SysUser user = userService.findByUsername(username, null);
 
             request.setAttribute("token", token);
             request.setAttribute("username", username);

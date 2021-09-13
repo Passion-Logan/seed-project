@@ -106,8 +106,8 @@ public class LoginController {
     /**
      * 记录登录日志
      *
-     * @param loginRequestVO
-     * @param request
+     * @param loginRequestVO SysUserInfoResponseVO
+     * @param request        SysUserInfoResponseVO
      */
     private void insertLoginLog(LoginRequestVO loginRequestVO, HttpServletRequest request) {
         //记录登录日志
@@ -128,7 +128,7 @@ public class LoginController {
     /**
      * 验证码
      *
-     * @return
+     * @return Result
      */
     @NoRepeatSubmit
     @ApiOperation("获取验证码")
@@ -154,7 +154,7 @@ public class LoginController {
     /**
      * 登录用户信息
      *
-     * @return
+     * @return SysUserInfoResponseVO
      */
     @ApiOperation("登录用户信息")
     @GetMapping(value = "/user/info")
@@ -162,13 +162,13 @@ public class LoginController {
         //查询用户信息
         SysUser userDTO = new SysUser();
         userDTO.setUserName(SecurityUtils.getUsername());
-        SysUser user = sysUserService.findByUsername(SecurityUtils.getUsername());
+        SysUser user = sysUserService.findByUsername(SecurityUtils.getUsername(), null);
         SysUserInfoResponseVO responseVo = BeanUtil.convert(user, SysUserInfoResponseVO.class);
 
         //查询角色信息
         List<SysRole> roles = roleService.getRolesByUserId(user.getId());
         List<SysRoleResponseVO> roleList = BeanUtil.convert(roles, SysRoleResponseVO.class);
-        responseVo.setRoles(roleList);
+        Objects.requireNonNull(responseVo).setRoles(roleList);
 
         //查询角色权限信息
         List<String> permissions = sysMenuService.getPermissionsByUserId(user.getId());
@@ -180,7 +180,7 @@ public class LoginController {
     /**
      * 登录查询用户菜单
      *
-     * @return
+     * @return Map
      */
     @ApiOperation("登录查询用户菜单")
     @GetMapping(value = "/user/nav")
@@ -200,7 +200,7 @@ public class LoginController {
     }
 
     private List<MenuResponseVO> getByPid(List<SysMenu> list, String pid) {
-        List<MenuResponseVO> data = list.stream().filter(item -> pid.equals(item.getPid())).map(item -> MenuResponseVO.builder()
+        return list.stream().filter(item -> pid.equals(item.getPid())).map(item -> MenuResponseVO.builder()
                 .id(item.getId())
                 .name(item.getMenu())
                 .path(item.getPath())
@@ -210,10 +210,7 @@ public class LoginController {
                 .hideInMenu(!item.getVisible())
                 .sort(item.getSort())
                 .isFrame(item.getIsFrame())
-                .build()).collect(Collectors.toList());
-        data.sort(Comparator.comparing(MenuResponseVO::getSort));
-
-        return data;
+                .build()).sorted(Comparator.comparing(MenuResponseVO::getSort)).collect(Collectors.toList());
     }
 
 }

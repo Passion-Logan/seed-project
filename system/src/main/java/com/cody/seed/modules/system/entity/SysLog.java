@@ -1,55 +1,24 @@
 package com.cody.seed.modules.system.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.cody.common.aspect.annotation.Dict;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.cody.common.entity.SysBaseModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
+ * @author Administrator
  * @Description: 系统操作日志表
  * @date: 2020年06月17日 14:04
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class SysLog implements Serializable {
+public class SysLog extends SysBaseModel<SysLog> implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    /**
-     * id
-     */
-    @TableId(type = IdType.ID_WORKER_STR)
-    private String id;
-
-    /**
-     * 创建人
-     */
-    private String createBy;
-
-    /**
-     * 创建时间
-     */
-    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createTime;
-
-    /**
-     * 更新人
-     */
-    private String updateBy;
-
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
 
     /**
      * 耗时
@@ -87,7 +56,7 @@ public class SysLog implements Serializable {
     /**
      * 操作人用户账户
      */
-    private String userid;
+    private String userId;
     /**
      * 操作详细日志
      */

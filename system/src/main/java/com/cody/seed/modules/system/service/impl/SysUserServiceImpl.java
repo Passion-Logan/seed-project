@@ -16,7 +16,7 @@ import com.cody.seed.modules.system.service.ISysUserService;
 import com.cody.seed.modules.util.BeanUtil;
 import com.cody.seed.modules.vo.request.SysUserQueryVO;
 import com.cody.seed.modules.vo.response.SysUserResponseVO;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ import java.util.Objects;
  * @date: 2020年06月16日 18:21
  */
 @Service
-@Log4j
+@Slf4j
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
 
     @Resource
@@ -177,7 +177,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Override
     public SysUser findByUsername(String username, Long id) {
         return sysUserMapper.selectOne(Wrappers.<SysUser>lambdaQuery()
-                .eq(Objects.nonNull(id), SysUser::getId, id)
+                .ne(Objects.nonNull(id), SysUser::getId, id)
                 .eq(SysUser::getUserName, username)
         );
     }

@@ -17,10 +17,10 @@ public interface SysRoleMapper extends BaseMapper<SysRole> {
     /**
      * 查询用户角色
      *
-     * @param userId
-     * @return
+     * @param userId userId
+     * @return SysRole
      */
-    List<SysRole> getRolesByUserId(@Param("userId") String userId);
+    List<SysRole> getRolesByUserId(@Param("userId") Long userId);
 
     IPage<SysRoleResponseVO> getList(Page<SysRoleResponseVO> page, SysRoleQueryVO query);
 

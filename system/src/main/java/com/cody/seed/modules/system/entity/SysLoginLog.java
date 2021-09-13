@@ -2,13 +2,15 @@ package com.cody.seed.modules.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
+ * @author Administrator
  * @Description: 系统登录日志表
  * @date: 2020年06月16日 18:13
  */
@@ -22,7 +24,7 @@ public class SysLoginLog implements Serializable {
     /**
      * 访问ID
      */
-    @TableId(type = IdType.ID_WORKER_STR)
+    @TableId(type = IdType.ASSIGN_ID)
     private String id;
 
     /**

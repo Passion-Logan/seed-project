@@ -1,31 +1,23 @@
 package com.cody.seed.modules.system.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.cody.common.entity.SysLogicDeleteModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
+ * @author Administrator
  * @Description: 字典表
  * @date: 2020年06月17日 14:24
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class SysDict implements Serializable {
+public class SysDict extends SysLogicDeleteModel<SysDict> implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    /**
-     * id
-     */
-    @TableId(type = IdType.ID_WORKER_STR)
-    private String id;
 
     /**
      * [预留字段，暂时无用]
@@ -49,31 +41,5 @@ public class SysDict implements Serializable {
      * 描述
      */
     private String description;
-
-    /**
-     * 删除状态
-     */
-    @TableLogic
-    private Integer delFlag;
-
-    /**
-     * 创建人
-     */
-    private String createBy;
-
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 更新人
-     */
-    private String updateBy;
-
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
 
 }

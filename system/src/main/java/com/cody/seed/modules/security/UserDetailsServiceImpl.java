@@ -38,7 +38,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        SysUser user = sysUserService.findByUsername(username);
+        SysUser user = sysUserService.findByUsername(username, null);
         if (user == null) {
             throw new UsernameNotFoundException("该用户不存在");
         }

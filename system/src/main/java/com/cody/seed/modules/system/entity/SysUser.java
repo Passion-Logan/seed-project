@@ -1,30 +1,25 @@
 package com.cody.seed.modules.system.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import lombok.*;
+import com.cody.common.aspect.annotation.Stringify;
+import com.cody.common.entity.SysLogicDeleteModel;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
+ * @author Administrator
  * @Description: 系统用户表
  * @date: 2020年06月16日 18:27
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class SysUser implements Serializable {
+public class SysUser extends SysLogicDeleteModel<SysUser> implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    /**
-     * 用户ID
-     */
-    @TableId(type = IdType.ASSIGN_ID)
-    private Long id;
 
     /**
      * 用户昵称
@@ -74,23 +69,14 @@ public class SysUser implements Serializable {
     /**
      * 部门id
      */
-    private String deptId;
+    @Stringify
+    private Long deptId;
 
     /**
      * 岗位id
      */
-    private String jobId;
-
-    /**
-     * 创建者
-     */
-
-    private String createBy;
-
-    /**
-     * 创建时间
-     */
-    private Date createTime;
+    @Stringify
+    private Long jobId;
 
     /**
      * 最后登录ip
@@ -107,6 +93,4 @@ public class SysUser implements Serializable {
      */
     private String remark;
 
-    @TableLogic(value = "0", delval = "1")
-    private Boolean deleted;
 }

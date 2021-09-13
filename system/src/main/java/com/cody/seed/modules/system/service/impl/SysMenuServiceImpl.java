@@ -1,9 +1,10 @@
 package com.cody.seed.modules.system.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cody.common.enmus.MenulTypeEnum;
 import com.cody.seed.modules.system.entity.SysMenu;
+import com.cody.seed.modules.system.entity.SysRoleMenu;
 import com.cody.seed.modules.system.execption.CustomExecption;
 import com.cody.seed.modules.system.mapper.SysMenuMapper;
 import com.cody.seed.modules.system.service.ISysMenuService;
@@ -14,10 +15,10 @@ import com.cody.seed.modules.vo.response.TreeData;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -25,6 +26,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
+ * @author wql
  * @Description: TODO
  * @date: 2020年06月16日 18:45
  */
@@ -33,13 +35,13 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
 
     private static final Logger logger = LoggerFactory.getLogger(SysMenuServiceImpl.class);
 
-    @Autowired
+    @Resource
     private SysMenuMapper sysMenuMapper;
 
-    @Autowired
+    @Resource
     private ISysMenuService menuService;
 
-    @Autowired
+    @Resource
     private ISysRoleMenuService roleMenuService;
 
     @Override
@@ -59,7 +61,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
      * 由于前端是动态form表单
      * validation注解+后台控制参数校验
      *
-     * @param menuDTO
+     * @param menuDTO menuDTO
      */
     private void checkMenuData(SysMenu menuDTO) {
 
@@ -108,9 +110,10 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     /**
      * 编辑菜单
      *
-     * @param menu
-     * @return
+     * @param menu menu
+     * @return boolean
      */
+    @SuppressWarnings("all")
     @Override
     public boolean updateMenu(SysMenu menu) {
         //校验菜单数据
@@ -121,8 +124,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     /**
      * 批量删除菜单
      *
-     * @param ids
-     * @return
+     * @param ids ids
+     * @return boolean
      */
     @Override
     public boolean deleteBatch(List<String> ids) {
@@ -143,11 +146,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         }
 
         // 删除角色菜单关联
-        for (String id : idList) {
-            QueryWrapper wrapper = new QueryWrapper();
-            wrapper.eq("menu_id", id);
-            roleMenuService.remove(wrapper);
-        }
+        roleMenuService.remove(Wrappers.<SysRoleMenu>lambdaQuery().in(SysRoleMenu::getMenuId, idList));
 
         return this.removeByIds(idList);
     }
@@ -155,8 +154,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     /**
      * 删除单条
      *
-     * @param id
-     * @return
+     * @param id id
+     * @return boolean
      */
     @Override
     public boolean deleteById(String id) {
@@ -165,9 +164,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         if (!CollectionUtils.isEmpty(list)) {
             throw new CustomExecption("存在子菜单 无法删除");
         }
-        QueryWrapper wrapper = new QueryWrapper();
-        wrapper.eq("menu_id", id);
-        roleMenuService.remove(wrapper);
+        roleMenuService.remove(Wrappers.<SysRoleMenu>lambdaQuery().eq(SysRoleMenu::getMenuId, id));
 
         return this.removeById(id);
     }
@@ -175,25 +172,24 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
     /**
      * 查询用户菜单
      *
-     * @param userId
-     * @return
+     * @param userId userId
+     * @return SysMenu
      */
     @Override
     public List<SysMenu> findMenuByUserId(Long userId) {
         List<SysMenu> list = sysMenuMapper.findMenuByUserId(userId);
         //由于用户对应多个角色 菜单去重
-        List<SysMenu> distinct = list.stream().distinct().collect(Collectors.toList());
-        return distinct;
+        return list.stream().distinct().collect(Collectors.toList());
     }
 
     /**
      * 查询用户权限
      *
-     * @param userId
-     * @return
+     * @param userId userId
+     * @return String
      */
     @Override
-    public List<String> getPermissionsByUserId(String userId) {
+    public List<String> getPermissionsByUserId(Long userId) {
         return sysMenuMapper.getPermissionsByUserId(userId);
     }
 
