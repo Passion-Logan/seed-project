@@ -54,7 +54,7 @@ public interface ISysMenuService extends IService<SysMenu> {
      * @param userId
      * @return
      */
-    List<SysMenu> findMenuByUserId(String userId);
+    List<SysMenu> findMenuByUserId(Long userId);
 
     /**
      * 查询用户权限

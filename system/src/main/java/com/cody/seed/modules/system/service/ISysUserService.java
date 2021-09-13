@@ -82,18 +82,19 @@ public interface ISysUserService extends IService<SysUser> {
     /**
      * 查询用户信息
      *
-     * @param username
-     * @return
+     * @param username username
+     * @param id id
+     * @return SysUser
      */
-    SysUser findByUsername(String username);
+    SysUser findByUsername(String username, Long id);
 
     /**
      * 修改密码
      *
-     * @param userName
-     * @param password
-     * @return
+     * @param userName userName
+     * @param password password
+     * @return Boolean
      */
-    boolean changePassword(String userName, String password);
+    Boolean changePassword(String userName, String password);
 
 }

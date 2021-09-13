@@ -1,7 +1,7 @@
 package com.cody.seed.modules.system.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cody.common.util.MD5;
@@ -16,41 +16,39 @@ import com.cody.seed.modules.system.service.ISysUserService;
 import com.cody.seed.modules.util.BeanUtil;
 import com.cody.seed.modules.vo.request.SysUserQueryVO;
 import com.cody.seed.modules.vo.response.SysUserResponseVO;
+import lombok.extern.log4j.Log4j;
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 /**
+ * @author Administrator
  * @Description: TODO
  * @date: 2020年06月16日 18:21
  */
 @Service
+@Log4j
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SysUserServiceImpl.class);
-
-    @Autowired
+    @Resource
     private SysUserMapper sysUserMapper;
-
-    @Autowired
-    private ISysUserRoleService sysuserRoleservice;
-
-    @Autowired
+    @Resource
+    private ISysUserRoleService sysUserRoleService;
+    @Resource
     private ISysMenuService sysMenuService;
 
     /**
      * 新增用户
      *
-     * @param user
-     * @param selectedRoles
-     * @return
+     * @param user          user
+     * @param selectedRoles selectedRoles
+     * @return boolean
      */
     @Override
     public boolean insertUser(SysUser user, String selectedRoles) {
@@ -66,7 +64,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             //添加用户角色
             List<SysUserRole> list = new ArrayList<>();
             insertUserRole(roleId, user, list);
-            sysuserRoleservice.saveBatch(list);
+            sysUserRoleService.saveBatch(list);
         }
         return true;
     }
@@ -79,9 +77,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     /**
      * 更新用户
      *
-     * @param user
-     * @param selectedRoles
-     * @return
+     * @param user          user
+     * @param selectedRoles selectedRoles
+     * @return boolean
      */
     @Override
     public boolean updateUser(SysUser user, String selectedRoles) {
@@ -93,15 +91,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
             //先删除用户角色信息
             SysUserRole userRoleDTO = new SysUserRole();
             userRoleDTO.setUserId(user.getId());
-            QueryWrapper wrapper = new QueryWrapper<SysUserRole>();
-            wrapper.eq("user_id", user.getId());
-            sysuserRoleservice.remove(wrapper);
+
+            sysUserRoleService.remove(Wrappers.<SysUserRole>lambdaQuery().eq(SysUserRole::getUserId, user.getId()));
 
             String[] roleId = selectedRoles.split(",");
             //再添加用户角色
             List<SysUserRole> list = new ArrayList<>();
             insertUserRole(roleId, user, list);
-            sysuserRoleservice.saveBatch(list);
+            sysUserRoleService.saveBatch(list);
         }
 
         return true;
@@ -110,9 +107,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     /**
      * 批量更新用户部门id
      *
-     * @param deptId
-     * @param userIdList
-     * @return
+     * @param deptId     deptId
+     * @param userIdList userIdList
+     * @return boolean
      */
     @Override
     public boolean updateDeptIdByUserIds(String deptId, List<String> userIdList) {
@@ -122,9 +119,9 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     /**
      * 批量 更新用户状态
      *
-     * @param status
-     * @param ids
-     * @return
+     * @param status status
+     * @param ids    ids
+     * @return boolean
      */
     @Override
     public boolean frozenBatch(boolean status, String ids) {
@@ -135,8 +132,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     /**
      * 删除用户部门关系
      *
-     * @param userId
-     * @return
+     * @param userId userId
+     * @return boolean
      */
     @Override
     public boolean deleteUserDept(String userId) {
@@ -148,8 +145,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     /**
      * 批量删除用户部门关系
      *
-     * @param userIds
-     * @return
+     * @param userIds userIds
+     * @return boolean
      */
     @Override
     public boolean deleteUserDeptBatch(String userIds) {
@@ -160,8 +157,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     /**
      * 查询用户权限
      *
-     * @param userName
-     * @return
+     * @param userName userName
+     * @return List<SysMenu>
      */
     @Override
     public List<SysMenu> getUserNav(String userName) {
@@ -173,24 +170,27 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     /**
      * 查询用户信息
      *
-     * @param username
-     * @return
+     * @param username username
+     * @param id       id
+     * @return SysUser
      */
     @Override
-    public SysUser findByUsername(String username) {
-        SysUser user = sysUserMapper.findByName(username);
-        return user;
+    public SysUser findByUsername(String username, Long id) {
+        return sysUserMapper.selectOne(Wrappers.<SysUser>lambdaQuery()
+                .eq(Objects.nonNull(id), SysUser::getId, id)
+                .eq(SysUser::getUserName, username)
+        );
     }
 
     /**
      * 修改密码
      *
-     * @param userName
-     * @param password
-     * @return
+     * @param userName userName
+     * @param password password
+     * @return Boolean
      */
     @Override
-    public boolean changePassword(String userName, String password) {
+    public Boolean changePassword(String userName, String password) {
         //查询用户信息
         SysUser userDO = sysUserMapper.findByName(userName);
         if (userDO == null) {
@@ -205,7 +205,7 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     private void insertUserRole(String[] roleId, SysUser user, List<SysUserRole> list) {
         for (String id : roleId) {
             SysUserRole role = new SysUserRole();
-            role.setRoleId(id);
+            role.setRoleId(Long.parseLong(id));
             role.setUserId(user.getId());
             list.add(role);
         }

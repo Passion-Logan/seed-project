@@ -95,6 +95,7 @@
             <if test="sysUserQueryVO.remark != null and sysUserQueryVO.remark != ''">
                 and remark=#{sysUserQueryVO.remark}
             </if>
+            and deleted = false
         </where>
     </sql>
 
@@ -123,7 +124,7 @@
         <include refid="columns"></include>
         from sys_user
         where user_name = #{userName}
-
+        and deleted = false
     </select>
 
     <!--根据对象查询列表 <include refid="where_condition"/> -->
@@ -131,10 +132,8 @@
         SELECT
         <include refid="columns"/>
         FROM sys_user
-        <include refid="where_condition" />
+        <include refid="where_condition"/>
         order by create_time desc
     </select>
-
-
 
 </mapper>

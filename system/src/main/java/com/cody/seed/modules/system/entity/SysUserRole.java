@@ -22,9 +22,9 @@ public class SysUserRole implements Serializable {
     /**
      * 角色ID
      */
-    private String roleId;
+    private Long roleId;
     /**
      * 用户ID
      */
-    private String userId;
+    private Long userId;
 }

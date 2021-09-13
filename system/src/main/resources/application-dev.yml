@@ -80,9 +80,9 @@ spring:
   autoconfigure:
     exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/seed_project?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false
+    url: jdbc:mysql://127.0.0.1:3307/seed_project?characterEncoding=UTF-8&useUnicode=true&useSSL=false&tinyInt1isBit=false
     username: root
-    password: root
+    password: 123456
     driver-class-name: com.mysql.jdbc.Driver
     druid:
       stat-view-servlet:
@@ -163,7 +163,7 @@ seed:
 #Mybatis输出sql日志
 logging:
   level:
-    org.jeecg.modules.system.mapper : debug
+    com.cody.demo.modules.system.mapper : debug
 #enable swagger
 swagger:
   enable: true

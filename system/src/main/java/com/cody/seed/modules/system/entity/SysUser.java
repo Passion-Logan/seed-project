@@ -2,6 +2,7 @@ package com.cody.seed.modules.system.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -22,8 +23,8 @@ public class SysUser implements Serializable {
     /**
      * 用户ID
      */
-    @TableId(type = IdType.ID_WORKER_STR)
-    private String id;
+    @TableId(type = IdType.ASSIGN_ID)
+    private Long id;
 
     /**
      * 用户昵称
@@ -105,4 +106,7 @@ public class SysUser implements Serializable {
      * 备注
      */
     private String remark;
+
+    @TableLogic(value = "0", delval = "1")
+    private Boolean deleted;
 }

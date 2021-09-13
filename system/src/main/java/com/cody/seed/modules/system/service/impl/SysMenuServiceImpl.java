@@ -179,7 +179,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
      * @return
      */
     @Override
-    public List<SysMenu> findMenuByUserId(String userId) {
+    public List<SysMenu> findMenuByUserId(Long userId) {
         List<SysMenu> list = sysMenuMapper.findMenuByUserId(userId);
         //由于用户对应多个角色 菜单去重
         List<SysMenu> distinct = list.stream().distinct().collect(Collectors.toList());

@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cody.common.api.vo.Result;
+import com.cody.common.aspect.annotation.AutoLog;
+import com.cody.common.constant.CommonConstant;
 import com.cody.seed.modules.system.entity.SysUser;
 import com.cody.seed.modules.system.entity.SysUserRole;
 import com.cody.seed.modules.system.execption.CustomExecption;
@@ -54,6 +56,7 @@ public class SysUserController {
         return Result.ok(data.getRecords(), (int) data.getTotal());
     }
 
+    @AutoLog(value = "添加用户", operateType = 2)
     @ApiOperation(value = "添加用户")
     @PostMapping("addUser")
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
@@ -82,7 +85,7 @@ public class SysUserController {
     @ApiOperation(value = "编辑用户")
     @PutMapping("updateUser")
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-    public Result updateUser(@RequestBody @Valid SysUserRoleRequestVO user) {
+    public Result editUser(@RequestBody @Valid SysUserRoleRequestVO user) {
         isUsername(user.getUserName());
         SysUser entity = new SysUser();
         BeanUtils.copyProperties(user, entity);
@@ -106,15 +109,16 @@ public class SysUserController {
     @ApiOperation(value = "修改密码")
     @GetMapping("updatePassword")
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-    public Result updatePassword(String userName, String password) {
+    public Result editPassword(String userName, String password) {
         sysUserService.changePassword(userName, password);
         return Result.ok();
     }
 
+    @AutoLog(value = "删除用户", operateType = 4)
     @ApiOperation(value = "删除用户")
     @DeleteMapping("removeUser")
     @Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)
-    public Result removeUser(@RequestBody JSONObject object) {
+    public Result deleteUser(@RequestBody JSONObject object) {
         List<String> ids = Arrays.asList(object.getString("ids").split(","));
         sysUserService.removeByIds(ids);
 

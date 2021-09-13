@@ -4,10 +4,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.cody.common.aspect.annotation.AutoLog;
 import com.cody.common.constant.CommonConstant;
 import com.cody.common.util.IPUtils;
-import com.cody.seed.modules.util.SecurityUtils;
 import com.cody.common.util.SpringContextUtils;
 import com.cody.seed.modules.system.entity.SysLog;
 import com.cody.seed.modules.system.service.ISysLogService;
+import com.cody.seed.modules.util.SecurityUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -69,16 +69,16 @@ public class AutoLogAspect {
         String methodName = signature.getName();
         sysLog.setMethod(className + "." + methodName + "()");
 
-
         //设置操作类型
         if (sysLog.getLogType() == CommonConstant.LOG_TYPE_2) {
-            sysLog.setOperateType(getOperateType(methodName, syslog.operateType()));
+            sysLog.setOperateType(getOperateType(methodName, syslog != null ? syslog.operateType() : 0));
         }
 
         //获取request
         HttpServletRequest request = SpringContextUtils.getHttpServletRequest();
         //请求的参数
         sysLog.setRequestParam(getReqestParams(request, joinPoint));
+        sysLog.setRequestType(request.getMethod());
 
         //设置IP地址
         sysLog.setIp(IPUtils.getIpAddr(request));
@@ -125,10 +125,10 @@ public class AutoLogAspect {
      */
     private String getReqestParams(HttpServletRequest request, JoinPoint joinPoint) {
         String httpMethod = request.getMethod();
-        String params = "";
+        StringBuilder params = new StringBuilder();
         if ("POST".equals(httpMethod) || "PUT".equals(httpMethod) || "PATCH".equals(httpMethod)) {
             Object[] paramsArray = joinPoint.getArgs();
-            params = JSONObject.toJSONString(paramsArray);
+            params = new StringBuilder(JSONObject.toJSONString(paramsArray));
         } else {
             MethodSignature signature = (MethodSignature) joinPoint.getSignature();
             Method method = signature.getMethod();
@@ -139,11 +139,11 @@ public class AutoLogAspect {
             String[] paramNames = u.getParameterNames(method);
             if (args != null && paramNames != null) {
                 for (int i = 0; i < args.length; i++) {
-                    params += "  " + paramNames[i] + ": " + args[i];
+                    params.append("  ").append(paramNames[i]).append(": ").append(args[i]);
                 }
             }
         }
-        return params;
+        return params.toString();
     }
 
 }

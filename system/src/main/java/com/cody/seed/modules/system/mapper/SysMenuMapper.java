@@ -28,10 +28,10 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
     /**
      * 根据用户id查询
      *
-     * @param userId
+     * @param userId userId
      * @return
      */
-    List<SysMenu> findMenuByUserId(@Param("userId") String userId);
+    List<SysMenu> findMenuByUserId(@Param("userId") Long userId);
 
     /**
      * 查询用户按钮权限
