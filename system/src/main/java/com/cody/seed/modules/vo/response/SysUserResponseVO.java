@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * ClassName: SysUserResponseVO
  *
- * @author WQL
+ * @author Administrator
  * @Description:
  * @date: 2020/6/28 23:26
  * @since JDK 1.8

@@ -8,10 +8,10 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 
 /**
- * @author wql
+ * @author Administrator
  * @desc StringifyAnnotationFieldJsonSerializer
  * @date 2021/9/13
- * @lastUpdateUser wql
+ * @lastUpdateUser Administrator
  * @lastUpdateDesc
  * @lastUpdateTime 2021/9/13
  */

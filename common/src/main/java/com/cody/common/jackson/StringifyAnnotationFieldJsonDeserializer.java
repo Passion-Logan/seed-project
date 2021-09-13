@@ -8,10 +8,10 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import java.io.IOException;
 
 /**
- * @author wql
+ * @author Administrator
  * @desc StringifyAnnotationFieldJsonDeserializer
  * @date 2021/9/13
- * @lastUpdateUser wql
+ * @lastUpdateUser Administrator
  * @lastUpdateDesc
  * @lastUpdateTime 2021/9/13
  */

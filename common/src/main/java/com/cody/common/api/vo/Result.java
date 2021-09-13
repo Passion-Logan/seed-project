@@ -10,6 +10,7 @@ import java.io.Serializable;
 /**
  * @Description: 接口返回数据格式
  * @date: 2020年06月16日 16:16
+ * @author Administrator
  */
 @Data
 @ApiModel(value = "接口返回对象", description = "接口返回对象")

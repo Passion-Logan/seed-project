@@ -16,7 +16,7 @@ import java.lang.reflect.Method;
 /**
  * ClassName: DefaultAuthenticationInterceptor
  *
- * @author WQL
+ * @author Administrator
  * @Description:
  * @date: 2020/9/18 22:45
  * @since JDK 1.8

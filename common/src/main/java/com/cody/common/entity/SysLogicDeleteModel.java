@@ -9,10 +9,10 @@ import lombok.experimental.Accessors;
 /**
  * 实体公共类-逻辑删除
  *
- * @author wql
+ * @author Administrator
  * @desc SysLogicDeleteModel
  * @date 2021/9/13
- * @lastUpdateUser wql
+ * @lastUpdateUser Administrator
  * @lastUpdateDesc
  * @lastUpdateTime 2021/9/13
  */
