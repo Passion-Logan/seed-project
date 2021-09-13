@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @Api(value = "SysMenuController", tags = "系统-菜单管理")
@@ -47,7 +48,6 @@ public class SysMenuController {
      *
      * @return
      */
-    //@Cacheable(value="menuCache")
     @ApiOperation(value = "菜单树形展示")
     @GetMapping("list")
     public Result selectPageList() {
@@ -113,10 +113,7 @@ public class SysMenuController {
     @ApiOperation(value = "查询角色授权")
     public Result queryRolePermission(@RequestParam(name = "roleId") String roleId) {
         List<SysRoleMenu> list = roleMenuService.getListByRoleId(roleId);
-        List<String> idList = new ArrayList<>();
-
-        list.stream().forEach(item -> idList.add(item.getMenuId()));
-
+        List<String> idList = list.stream().map(item -> item.getMenuId().toString()).collect(Collectors.toList());
         return Result.ok(idList);
     }
 

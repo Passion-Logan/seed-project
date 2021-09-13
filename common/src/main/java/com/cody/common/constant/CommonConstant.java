@@ -1,6 +1,13 @@
 package com.cody.common.constant;
 
-public interface CommonConstant {
+/**
+ * @author wql
+ * @date 2021/9/13
+ * @lastUpdateUser wql
+ * @lastUpdateDesc
+ * @lastUpdateTime 2021/9/13
+ */
+public class CommonConstant {
 
     /**
      * 正常状态
@@ -63,59 +70,79 @@ public interface CommonConstant {
     public static final int OPERATE_TYPE_6 = 6;
 
 
-    /** {@code 500 Server Error} (HTTP/1.0 - RFC 1945) */
+    /**
+     * {@code 500 Server Error} (HTTP/1.0 - RFC 1945)
+     */
     public static final Integer SC_INTERNAL_SERVER_ERROR_500 = 500;
-    /** {@code 200 OK} (HTTP/1.0 - RFC 1945) */
+    /**
+     * {@code 200 OK} (HTTP/1.0 - RFC 1945)
+     */
     public static final Integer SC_OK_200 = 200;
 
-    /**访问权限认证未通过 510*/
-    public static final Integer SC_JEECG_NO_AUTHZ=510;
+    /**
+     * 访问权限认证未通过 510
+     */
+    public static final Integer SC_JEECG_NO_AUTHZ = 510;
 
-    /** 登录用户Shiro权限缓存KEY前缀 */
-    public static String PREFIX_USER_SHIRO_CACHE  = "shiro:cache:org.jeecg.modules.shiro.authc.ShiroRealm.authorizationCache:";
-    /** 登录用户Token令牌缓存KEY前缀 */
-    public static final String PREFIX_USER_TOKEN  = "prefix_user_token_";
-    /** Token缓存时间：3600秒即一小时 */
-    public static final int  TOKEN_EXPIRE_TIME  = 3600;
+    /**
+     * 登录用户Shiro权限缓存KEY前缀
+     */
+    public static String PREFIX_USER_SHIRO_CACHE = "shiro:cache:org.jeecg.modules.shiro.authc.ShiroRealm.authorizationCache:";
+    /**
+     * 登录用户Token令牌缓存KEY前缀
+     */
+    public static final String PREFIX_USER_TOKEN = "prefix_user_token_";
+    /**
+     * Token缓存时间：3600秒即一小时
+     */
+    public static final int TOKEN_EXPIRE_TIME = 3600;
 
 
     /**
-     *  0：一级菜单
+     * 0：一级菜单
      */
-    public static final Integer MENU_TYPE_0  = 0;
+    public static final Integer MENU_TYPE_0 = 0;
     /**
-     *  1：子菜单
+     * 1：子菜单
      */
-    public static final Integer MENU_TYPE_1  = 1;
+    public static final Integer MENU_TYPE_1 = 1;
     /**
-     *  2：按钮权限
+     * 2：按钮权限
      */
-    public static final Integer MENU_TYPE_2  = 2;
+    public static final Integer MENU_TYPE_2 = 2;
 
-    /**通告对象类型（USER:指定用户，ALL:全体用户）*/
-    public static final String MSG_TYPE_UESR  = "USER";
-    public static final String MSG_TYPE_ALL  = "ALL";
+    /**
+     * 通告对象类型（USER:指定用户，ALL:全体用户）
+     */
+    public static final String MSG_TYPE_UESR = "USER";
+    public static final String MSG_TYPE_ALL = "ALL";
 
-    /**发布状态（0未发布，1已发布，2已撤销）*/
-    public static final String NO_SEND  = "0";
-    public static final String HAS_SEND  = "1";
-    public static final String HAS_CANCLE  = "2";
+    /**
+     * 发布状态（0未发布，1已发布，2已撤销）
+     */
+    public static final String NO_SEND = "0";
+    public static final String HAS_SEND = "1";
+    public static final String HAS_CANCLE = "2";
 
-    /**阅读状态（0未读，1已读）*/
-    public static final String HAS_READ_FLAG  = "1";
-    public static final String NO_READ_FLAG  = "0";
+    /**
+     * 阅读状态（0未读，1已读）
+     */
+    public static final String HAS_READ_FLAG = "1";
+    public static final String NO_READ_FLAG = "0";
 
-    /**优先级（L低，M中，H高）*/
-    public static final String PRIORITY_L  = "L";
-    public static final String PRIORITY_M  = "M";
-    public static final String PRIORITY_H  = "H";
+    /**
+     * 优先级（L低，M中，H高）
+     */
+    public static final String PRIORITY_L = "L";
+    public static final String PRIORITY_M = "M";
+    public static final String PRIORITY_H = "H";
 
     /**
      * 短信模板方式  0 .登录模板、1.注册模板、2.忘记密码模板
      */
-    public static final String SMS_TPL_TYPE_0  = "0";
-    public static final String SMS_TPL_TYPE_1  = "1";
-    public static final String SMS_TPL_TYPE_2  = "2";
+    public static final String SMS_TPL_TYPE_0 = "0";
+    public static final String SMS_TPL_TYPE_1 = "1";
+    public static final String SMS_TPL_TYPE_2 = "2";
 
     /**
      * 状态(0无效1有效)
@@ -147,7 +174,9 @@ public interface CommonConstant {
     public static final Integer USER_UNFREEZE = 1;
     public static final Integer USER_FREEZE = 2;
 
-    /**字典翻译文本后缀*/
+    /**
+     * 字典翻译文本后缀
+     */
     public static final String DICT_TEXT_SUFFIX = "_dictText";
 
     /**
@@ -172,21 +201,37 @@ public interface CommonConstant {
     public static final Integer USER_IDENTITY_1 = 1;
     public static final Integer USER_IDENTITY_2 = 2;
 
-    /** sys_user 表 username 唯一键索引 */
+    /**
+     * sys_user 表 username 唯一键索引
+     */
     public static final String SQL_INDEX_UNIQ_SYS_USER_USERNAME = "uniq_sys_user_username";
-    /** sys_user 表 work_no 唯一键索引 */
+    /**
+     * sys_user 表 work_no 唯一键索引
+     */
     public static final String SQL_INDEX_UNIQ_SYS_USER_WORK_NO = "uniq_sys_user_work_no";
-    /** sys_user 表 phone 唯一键索引 */
+    /**
+     * sys_user 表 phone 唯一键索引
+     */
     public static final String SQL_INDEX_UNIQ_SYS_USER_PHONE = "uniq_sys_user_phone";
-    /** sys_user 表 email 唯一键索引 */
+    /**
+     * sys_user 表 email 唯一键索引
+     */
     public static final String SQL_INDEX_UNIQ_SYS_USER_EMAIL = "uniq_sys_user_email";
-    /** sys_quartz_job 表 job_class_name 唯一键索引 */
+    /**
+     * sys_quartz_job 表 job_class_name 唯一键索引
+     */
     public static final String SQL_INDEX_UNIQ_JOB_CLASS_NAME = "uniq_job_class_name";
-    /** sys_position 表 code 唯一键索引 */
+    /**
+     * sys_position 表 code 唯一键索引
+     */
     public static final String SQL_INDEX_UNIQ_CODE = "uniq_code";
-    /** sys_role 表 code 唯一键索引 */
+    /**
+     * sys_role 表 code 唯一键索引
+     */
     public static final String SQL_INDEX_UNIQ_SYS_ROLE_CODE = "uniq_sys_role_role_code";
-    /** sys_depart 表 code 唯一键索引 */
+    /**
+     * sys_depart 表 code 唯一键索引
+     */
     public static final String SQL_INDEX_UNIQ_DEPART_ORG_CODE = "uniq_depart_org_code";
 
 

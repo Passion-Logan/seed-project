@@ -39,14 +39,6 @@ public class SysDept extends SysBaseModel<SysDept> implements Serializable {
      */
     private Boolean enabled;
     /**
-     * 创建者
-     */
-    private String createBy;
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-    /**
      * 备注
      */
     private String remark;

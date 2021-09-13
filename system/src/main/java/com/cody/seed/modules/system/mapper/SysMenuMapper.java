@@ -48,6 +48,6 @@ public interface SysMenuMapper extends BaseMapper<SysMenu> {
      * @param id         id
      * @return int
      */
-    int checkPermission(@Param("permission") String permission, @Param("id") String id);
+    int checkPermission(@Param("permission") String permission, @Param("id") Long id);
 
 }

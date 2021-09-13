@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @Description: 系统日志，切面处理类
@@ -83,11 +83,11 @@ public class AutoLogAspect {
         //设置IP地址
         sysLog.setIp(IPUtils.getIpAddr(request));
         //获取登录用户信息
-        sysLog.setUserid(SecurityUtils.getUsername());
+        sysLog.setUserId(SecurityUtils.getUsername());
         sysLog.setUsername(SecurityUtils.getUsername());
         //耗时
         sysLog.setCostTime(time);
-        sysLog.setCreateTime(new Date());
+        sysLog.setCreateTime(LocalDateTime.now());
         //保存系统日志
         sysLogService.save(sysLog);
     }

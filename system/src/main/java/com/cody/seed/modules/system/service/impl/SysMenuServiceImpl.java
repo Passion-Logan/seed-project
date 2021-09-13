@@ -68,7 +68,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenu> impl
         //一级菜单 pid 默认为0
         if (MenulTypeEnum.ROOT_MENU.getValue().equals(menuDTO.getType())) {
             //一级菜单pid=0
-            menuDTO.setPid("0");
+            menuDTO.setPid(Long.valueOf("0"));
             if (StringUtils.isBlank(menuDTO.getRedirect())) {
                 throw new CustomExecption("跳转路径不能为空");
             }

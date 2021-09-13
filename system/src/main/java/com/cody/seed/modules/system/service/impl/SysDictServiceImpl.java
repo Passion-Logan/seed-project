@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cody.common.constant.CacheConstant;
-import com.cody.common.constant.CommonConstant;
 import com.cody.common.system.vo.DictModel;
 import com.cody.common.system.vo.DictQuery;
 import com.cody.seed.modules.module.TreeSelectModel;
@@ -14,11 +13,11 @@ import com.cody.seed.modules.system.mapper.SysDictItemMapper;
 import com.cody.seed.modules.system.mapper.SysDictMapper;
 import com.cody.seed.modules.system.service.ISysDictService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,24 +25,26 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
+ * @author Administrator
  * @Description: 字典表 服务实现类
  * @date: 2020年06月17日 14:28
  */
+@SuppressWarnings("ALL")
 @Service
 @Slf4j
 public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> implements ISysDictService {
 
-    @Autowired
+    @Resource
     private SysDictMapper sysDictMapper;
 
-    @Autowired
+    @Resource
     private SysDictItemMapper sysDictItemMapper;
 
     /**
      * 通过查询指定code 获取字典
      *
-     * @param code
-     * @return
+     * @param code code
+     * @return DictModel
      */
     @Override
     @Cacheable(value = CacheConstant.SYS_DICT_CACHE, key = "#code")
@@ -54,9 +55,9 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
 
     @Override
     public Map<String, List<DictModel>> queryAllDictItems() {
-        Map<String, List<DictModel>> res = new HashMap<String, List<DictModel>>();
+        Map<String, List<DictModel>> res = new HashMap<>();
         List<SysDict> ls = sysDictMapper.selectList(null);
-        LambdaQueryWrapper<SysDictItem> queryWrapper = new LambdaQueryWrapper<SysDictItem>();
+        LambdaQueryWrapper<SysDictItem> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SysDictItem::getStatus, 1);
         queryWrapper.orderByAsc(SysDictItem::getSortOrder);
         List<SysDictItem> sysDictItemList = sysDictItemMapper.selectList(queryWrapper);
@@ -77,11 +78,10 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
     /**
      * 通过查询指定code 获取字典值text
      *
-     * @param code
-     * @param key
-     * @return
+     * @param code code
+     * @param key  key
+     * @return String
      */
-
     @Override
     @Cacheable(value = CacheConstant.SYS_DICT_CACHE, key = "#code+':'+#key")
     public String queryDictTextByKey(String code, String key) {
@@ -93,13 +93,12 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
      * 通过查询指定table的 text code 获取字典
      * dictTableCache采用redis缓存有效期10分钟
      *
-     * @param table
-     * @param text
-     * @param code
-     * @return
+     * @param table table
+     * @param text  text
+     * @param code  code
+     * @return DictModel
      */
     @Override
-    //@Cacheable(value = CacheConstant.SYS_DICT_TABLE_CACHE)
     public List<DictModel> queryTableDictItemsByCode(String table, String text, String code) {
         log.info("无缓存dictTableList的时候调用这里！");
         return sysDictMapper.queryTableDictItemsByCode(table, text, code);
@@ -115,11 +114,11 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
      * 通过查询指定table的 text code 获取字典值text
      * dictTableCache采用redis缓存有效期10分钟
      *
-     * @param table
-     * @param text
-     * @param code
-     * @param key
-     * @return
+     * @param table table
+     * @param text  text
+     * @param code  code
+     * @param key   key
+     * @return String
      */
     @Override
     @Cacheable(value = CacheConstant.SYS_DICT_TABLE_CACHE)
@@ -132,11 +131,11 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
      * 通过查询指定table的 text code 获取字典，包含text和value
      * dictTableCache采用redis缓存有效期10分钟
      *
-     * @param table
-     * @param text
-     * @param code
-     * @param keyArray
-     * @return
+     * @param table    table
+     * @param text     text
+     * @param code     code
+     * @param keyArray keyArray
+     * @return String
      */
     @Override
     @Cacheable(value = CacheConstant.SYS_DICT_TABLE_CACHE)
@@ -160,7 +159,6 @@ public class SysDictServiceImpl extends ServiceImpl<SysDictMapper, SysDict> impl
      */
     @Override
     public boolean deleteByDictId(SysDict sysDict) {
-        sysDict.setDelFlag(CommonConstant.DEL_FLAG_1);
         return this.updateById(sysDict);
     }
 

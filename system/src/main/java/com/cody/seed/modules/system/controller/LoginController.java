@@ -199,9 +199,10 @@ public class LoginController {
         return result;
     }
 
+    @SuppressWarnings("EqualsBetweenInconvertibleTypes")
     private List<MenuResponseVO> getByPid(List<SysMenu> list, String pid) {
         return list.stream().filter(item -> pid.equals(item.getPid())).map(item -> MenuResponseVO.builder()
-                .id(item.getId())
+                .id(item.getId().toString())
                 .name(item.getMenu())
                 .path(item.getPath())
                 .redirect(item.getRedirect())

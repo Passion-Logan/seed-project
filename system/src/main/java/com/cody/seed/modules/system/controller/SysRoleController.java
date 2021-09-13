@@ -80,7 +80,7 @@ public class SysRoleController {
     @ApiOperation(value = "保存角色授权")
     @PutMapping("saveRolePermission")
     public Result saveRolePermission(@RequestBody JSONObject json) {
-        String roleId = json.getString("roleId");
+        Long roleId = json.getLong("roleId");
         String permissionIds = json.getString("permissionIds");
         roleMenuService.saveRolePermission(roleId, permissionIds);
         return Result.ok();
