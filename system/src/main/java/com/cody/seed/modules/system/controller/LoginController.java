@@ -23,6 +23,7 @@ import com.wf.captcha.ArithmeticCaptcha;
 import com.zengtengpeng.operation.RedissonObject;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +32,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -48,6 +50,7 @@ import java.util.stream.Collectors;
 @Api(value = "LoginController", tags = "系统-spring security登录")
 @RequestMapping("/auth")
 @RestController
+@Slf4j
 public class LoginController {
 
     private static Logger logger = LoggerFactory.getLogger(LoginController.class);
@@ -94,7 +97,12 @@ public class LoginController {
         JwtAuthenticatioToken token = SecurityUtils.login(request, username, password, authenticationManager);
 
         //添加登录日志
-        insertLoginLog(loginRequestVO, request);
+        try {
+            insertLoginLog(loginRequestVO, request);
+        } catch (Exception e) {
+            log.error("添加登录日志错误:{}", e.getMessage());
+        }
+
         return token;
     }
 
@@ -104,13 +112,13 @@ public class LoginController {
      * @param loginRequestVO SysUserInfoResponseVO
      * @param request        SysUserInfoResponseVO
      */
-    private void insertLoginLog(LoginRequestVO loginRequestVO, HttpServletRequest request) {
+    private void insertLoginLog(LoginRequestVO loginRequestVO, HttpServletRequest request) throws IOException {
         //记录登录日志
         SysLoginLog loginLog = new SysLoginLog();
         loginLog.setLoginName(loginRequestVO.getUsername());
         String ip = IPUtilsPro.getIpAddr(request);
         loginLog.setIp(ip);
-        loginLog.setLoginLocation(IPUtilsPro.getCityInfo(ip));
+        loginLog.setLoginLocation(IPUtilsPro.getCityInfo2(ip));
         loginLog.setBrowser(IPUtilsPro.getBrowser(request));
         loginLog.setOs(IPUtilsPro.getOperatingSystem(request));
         loginLog.setStatus(0);

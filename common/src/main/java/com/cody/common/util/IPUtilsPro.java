@@ -6,11 +6,13 @@ import eu.bitwalker.useragentutils.UserAgent;
 import org.lionsoul.ip2region.DataBlock;
 import org.lionsoul.ip2region.DbConfig;
 import org.lionsoul.ip2region.DbSearcher;
+import org.lionsoul.ip2region.Util;
 import org.springframework.core.io.ClassPathResource;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -25,21 +27,72 @@ import java.util.Enumeration;
  **/
 public class IPUtilsPro {
 
+    public static String getCityInfo2(String ip) throws IOException {
+//        String dbPath = IPUtilsPro.class.getResource("ip2region/ip2region.db").getPath();
+        String dbPath = "ip2region/ip2region.db";
+        File file = new File(dbPath);
+
+        InputStream stream = new ClassPathResource(dbPath).getInputStream();
+        byte[] bytes = new byte[stream.available()];
+
+        if (file.exists() == false) {
+            System.out.println("Error: Invalid ip2region.db file");
+        }
+
+        //查询算法
+        int algorithm = DbSearcher.BTREE_ALGORITHM;
+        try {
+            DbConfig config = new DbConfig();
+            DbSearcher searcher = new DbSearcher(config, bytes);
+
+            Method method = null;
+            switch (algorithm) {
+                case DbSearcher.BTREE_ALGORITHM:
+                    method = searcher.getClass().getMethod("btreeSearch", String.class);
+                    break;
+                case DbSearcher.BINARY_ALGORITHM:
+                    method = searcher.getClass().getMethod("binarySearch", String.class);
+                    break;
+                case DbSearcher.MEMORY_ALGORITYM:
+                    method = searcher.getClass().getMethod("memorySearch", String.class);
+                    break;
+            }
+
+            DataBlock dataBlock = null;
+            if (Util.isIpAddress(ip) == false) {
+                System.out.println("Error: Invalid ip address");
+            }
+
+            dataBlock = (DataBlock) method.invoke(searcher, ip);
+
+            return dataBlock.getRegion();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
     /**
      * 根据ip获取详细地址
      */
     public static String getCityInfo(String ip) {
         DbSearcher searcher = null;
         try {
-            String path = "ip2region/ip2region.db";
+
+            String path = IPUtilsPro.class.getResource("ip2region/ip2region.db").getPath();
+//            String path = "ip2region/ip2region.db";
             String name = "ip2region.db";
             DbConfig config = new DbConfig();
             File file = FileUtil.inputStreamToFile(new ClassPathResource(path).getInputStream(), name);
             searcher = new DbSearcher(config, file.getPath());
             Method method;
-            method = searcher.getClass().getMethod("btreeSearch", String.class);
+            //method = searcher.getClass().getMethod("btreeSearch", String.class);
             DataBlock dataBlock;
-            dataBlock = (DataBlock) method.invoke(searcher, ip);
+            dataBlock = searcher.binarySearch(ip);
+//            dataBlock = (DataBlock) method.invoke(searcher, ip);
             String address = dataBlock.getRegion().replace("0|", "");
             char symbol = '|';
             if (address.charAt(address.length() - 1) == symbol) {
