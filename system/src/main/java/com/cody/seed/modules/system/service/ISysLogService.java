@@ -1,7 +1,9 @@
 package com.cody.seed.modules.system.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cody.seed.modules.system.entity.SysLog;
+import com.cody.seed.modules.vo.request.SysLogQueryVO;
 
 import java.util.Date;
 import java.util.List;
@@ -52,5 +54,15 @@ public interface ISysLogService extends IService<SysLog> {
      * @return Map
      */
     List<Map<String, Object>> findVisitCount(Date dayStart, Date dayEnd);
+
+
+    /**
+     * 分页获取操作日志
+     *
+     * @param vo
+     * @return
+     */
+    IPage<SysLog> getByPage(SysLogQueryVO vo);
+
 
 }

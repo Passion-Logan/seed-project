@@ -106,9 +106,9 @@ public class SysUserQueryVO implements Serializable {
     private Date loginTime;
 
     /**
-     *
+     * 备注
      */
-    @ApiModelProperty("")
+    @ApiModelProperty("备注")
     private String remark;
 
     /**

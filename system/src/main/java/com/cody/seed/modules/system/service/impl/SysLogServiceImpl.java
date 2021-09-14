@@ -1,10 +1,15 @@
 package com.cody.seed.modules.system.service.impl;
 
+import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cody.common.system.api.ISysBaseAPI;
 import com.cody.seed.modules.system.entity.SysLog;
 import com.cody.seed.modules.system.mapper.SysLogMapper;
 import com.cody.seed.modules.system.service.ISysLogService;
+import com.cody.seed.modules.vo.request.SysLogQueryVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -62,6 +67,14 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
             log.error("错误信息:{}", e.getMessage());
         }
         return null;
+    }
+
+    @Override
+    public IPage<SysLog> getByPage(SysLogQueryVO vo) {
+        Page<SysLog> page = new Page<>(vo.getCurrent(), vo.getPageSize());
+        return this.page(page, Wrappers.<SysLog>lambdaQuery()
+                .like(StrUtil.isNotBlank(vo.getKeyWord()), SysLog::getLogContent, vo.getKeyWord())
+        );
     }
 
 }
