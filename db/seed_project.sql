@@ -11,7 +11,7 @@
  Target Server Version : 50734
  File Encoding         : 65001
 
- Date: 13/09/2021 16:27:46
+ Date: 14/09/2021 18:13:44
 */
 
 SET NAMES utf8mb4;
@@ -36,6 +36,10 @@ CREATE TABLE `sys_dept`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of sys_dept
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for sys_dict
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_dict`;
@@ -53,6 +57,10 @@ CREATE TABLE `sys_dict`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `indextable_dict_code`(`dict_code`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of sys_dict
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for sys_dict_item
@@ -77,6 +85,10 @@ CREATE TABLE `sys_dict_item`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of sys_dict_item
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for sys_log
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_log`;
@@ -85,7 +97,7 @@ CREATE TABLE `sys_log`  (
   `log_type` int(2) NULL DEFAULT NULL COMMENT '日志类型（1登录日志，2操作日志）',
   `log_content` varchar(1000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志内容',
   `operate_type` int(2) NULL DEFAULT NULL COMMENT '操作类型',
-  `userid` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作用户账号',
+  `user_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作用户账号',
   `username` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '操作用户名称',
   `ip` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'IP',
   `method` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '请求java方法',
@@ -98,11 +110,18 @@ CREATE TABLE `sys_log`  (
   `update_by` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新人',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `index_table_userid`(`userid`) USING BTREE,
+  INDEX `index_table_userid`(`user_id`) USING BTREE,
   INDEX `index_logt_ype`(`log_type`) USING BTREE,
   INDEX `index_operate_type`(`operate_type`) USING BTREE,
   INDEX `index_log_type`(`log_type`) USING BTREE
 ) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统操作日志表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of sys_log
+-- ----------------------------
+INSERT INTO `sys_log` VALUES (1437257228793516033, 2, '添加用户', 2, 'admin', 'admin', '127.0.0.1', 'com.cody.seed.modules.system.controller.SysUserController.addUser()', NULL, '[{\"enabled\":true,\"nickName\":\"1\",\"password\":\"1\",\"roleIds\":\"6\",\"sex\":\"1\",\"userName\":\"1\"}]', NULL, 240, 'admin', '2021-09-13 11:30:01', NULL, NULL);
+INSERT INTO `sys_log` VALUES (1437260430163099650, 2, '添加用户', 2, 'admin', 'admin', '127.0.0.1', 'com.cody.seed.modules.system.controller.SysUserController.addUser()', NULL, '[{\"enabled\":true,\"nickName\":\"2\",\"password\":\"2\",\"roleIds\":\"6\",\"sex\":\"1\",\"userName\":\"2\"}]', 'POST', 227, 'admin', '2021-09-13 11:42:44', NULL, NULL);
+INSERT INTO `sys_log` VALUES (1437317336932151298, 2, '删除用户', 4, 'admin', 'admin', '127.0.0.1', 'com.cody.seed.modules.system.controller.SysUserController.deleteUser()', NULL, '  object: {\"ids\":\"1437260429844332546,1437257228403445762\"}', 'DELETE', 17, 'admin', '2021-09-13 15:28:52', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for sys_login_log
@@ -120,6 +139,18 @@ CREATE TABLE `sys_login_log`  (
   `login_time` datetime(0) NOT NULL COMMENT '访问时间',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统访问记录' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of sys_login_log
+-- ----------------------------
+INSERT INTO `sys_login_log` VALUES (1437667108310310913, 'admin', '127.0.0.1', '内网IP', 'Chrome 9', 'Windows 10', 0, '', '2021-09-14 14:38:44');
+INSERT INTO `sys_login_log` VALUES (1437668664522952705, 'admin', '127.0.0.1', '内网IP', 'Chrome 9', 'Windows 10', 0, '', '2021-09-14 14:44:55');
+INSERT INTO `sys_login_log` VALUES (1437669484932911105, 'admin', '127.0.0.1', '内网IP', 'Chrome 9', 'Windows 10', 0, '', '2021-09-14 14:48:10');
+INSERT INTO `sys_login_log` VALUES (1437670738979475458, 'admin', '127.0.0.1', '内网IP', 'Chrome 9', 'Windows 10', 0, '', '2021-09-14 14:53:09');
+INSERT INTO `sys_login_log` VALUES (1437670814833463298, 'admin', '127.0.0.1', '内网IP', 'Chrome 9', 'Windows 10', 0, '', '2021-09-14 14:53:28');
+INSERT INTO `sys_login_log` VALUES (1437672554748203010, 'admin', '127.0.0.1', '内网IP', 'Chrome 9', 'Windows 10', 0, '', '2021-09-14 15:00:22');
+INSERT INTO `sys_login_log` VALUES (1437676378669993985, 'admin', '127.0.0.1', '内网IP', 'Chrome 9', 'Windows 10', 0, '', '2021-09-14 15:15:34');
+INSERT INTO `sys_login_log` VALUES (1437712367132143618, 'admin', '127.0.0.1', '内网IP', 'Chrome 9', 'Windows 10', 0, '', '2021-09-14 17:38:34');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -150,6 +181,24 @@ CREATE TABLE `sys_menu`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单权限表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of sys_menu
+-- ----------------------------
+INSERT INTO `sys_menu` VALUES (1318547064467148801, '查询表格', b'0', NULL, 'list.table-list', '/list', '', 0, 1, b'1', '', NULL, 'SmileOutlined', 1, 'admin', '2020-10-20 21:38:12', '', NULL, NULL);
+INSERT INTO `sys_menu` VALUES (1318547678320316418, '管理页', b'0', NULL, 'admin', '/admin', '', 0, 1, b'1', '', NULL, 'StarOutlined', 3, 'admin', '2020-10-20 21:40:39', '', NULL, NULL);
+INSERT INTO `sys_menu` VALUES (1318549151200501762, '二级管理页', b'0', NULL, 'sub-page', '/admin/sub-page', '', 1318547678320316418, 2, b'1', '', NULL, '', 1, 'admin', '2020-10-20 21:46:30', '', NULL, NULL);
+INSERT INTO `sys_menu` VALUES (1318550685359407106, '测试页面', b'0', NULL, 'test', '/test', '', 0, 1, b'1', '', NULL, 'WarningOutlined', 2, 'admin', '2020-10-20 21:52:35', '', NULL, NULL);
+INSERT INTO `sys_menu` VALUES (1318550824027291649, '测试子页面', b'0', NULL, 'sub-test', '/test/sub-test', '', 1318550685359407106, 2, b'1', '', NULL, '', 1, 'admin', '2020-10-20 21:53:09', '', NULL, NULL);
+INSERT INTO `sys_menu` VALUES (1318550980101537794, '系统管理', b'0', NULL, 'system', '/system', '', 0, 1, b'1', '', NULL, 'SettingOutlined', 5, 'admin', '2020-10-20 21:53:46', '', NULL, NULL);
+INSERT INTO `sys_menu` VALUES (1318551098947141633, '用户管理', b'0', NULL, 'system-user', '/system/user', '', 1318550980101537794, 2, b'1', '', NULL, '', 1, 'admin', '2020-10-20 21:54:14', '', NULL, NULL);
+INSERT INTO `sys_menu` VALUES (1318551201015529473, '角色管理', b'0', NULL, 'system-role', '/system/role', '', 1318550980101537794, 2, b'1', '', NULL, '', 2, 'admin', '2020-10-20 21:54:38', '', NULL, NULL);
+INSERT INTO `sys_menu` VALUES (1318551300202430466, '菜单管理', b'0', NULL, 'system-menu', '/system/menu', '', 1318550980101537794, 2, b'1', '', NULL, '', 3, 'admin', '2020-10-20 21:55:02', '', NULL, NULL);
+INSERT INTO `sys_menu` VALUES (1318551489143242754, '系统设置', b'0', NULL, 'system-globle', '/system/globle', '', 1318550980101537794, 2, b'1', '', NULL, '', 4, 'admin', '2020-10-20 21:55:47', '', NULL, NULL);
+INSERT INTO `sys_menu` VALUES (1318813923990671361, '网页链接', b'1', NULL, '网页链接', '/', '', 0, 1, b'1', '', NULL, 'IeOutlined', 4, 'admin', '2020-10-21 15:18:36', '', NULL, NULL);
+INSERT INTO `sys_menu` VALUES (1318814244045426690, 'swagger接口文档', b'1', NULL, 'swagger接口文档', 'http://localhost:8081/seed-project/swagger-ui.html', '', 1318813923990671361, 2, b'1', '', NULL, '', 1, 'admin', '2020-10-21 15:19:53', '', NULL, NULL);
+INSERT INTO `sys_menu` VALUES (1318814544424701954, 'bootstrap接口文档', b'1', NULL, 'bootstrap接口文档', 'http://localhost:8081/seed-project/doc.html', '', 1318813923990671361, 2, b'1', '', NULL, '', 2, 'admin', '2020-10-21 15:21:04', '', NULL, NULL);
+INSERT INTO `sys_menu` VALUES (1437687160203923457, '日志管理', b'0', NULL, 'system-log', '/system/log', '', 1318550980101537794, 2, b'1', '', NULL, '', 5, 'admin', NULL, NULL, NULL, NULL);
+
+-- ----------------------------
 -- Table structure for sys_role
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role`;
@@ -170,6 +219,13 @@ CREATE TABLE `sys_role`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of sys_role
+-- ----------------------------
+INSERT INTO `sys_role` VALUES (1, 'admin', '管理员角色', 'all', 1, NULL, '系统创建', '2020-02-07 14:36:37', NULL, NULL, '这是管理员角色');
+INSERT INTO `sys_role` VALUES (6, 'test', '测试角色', NULL, NULL, NULL, 'admin', '2020-02-17 21:40:10', NULL, NULL, '测试角色');
+INSERT INTO `sys_role` VALUES (7, '1', '测试角色2', NULL, NULL, NULL, 'guest', '2020-04-06 17:52:57', NULL, NULL, '1');
+
+-- ----------------------------
 -- Table structure for sys_role_dept
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role_dept`;
@@ -180,6 +236,10 @@ CREATE TABLE `sys_role_dept`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色和部门关联表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of sys_role_dept
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for sys_role_menu
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role_menu`;
@@ -188,6 +248,29 @@ CREATE TABLE `sys_role_menu`  (
   `menu_id` bigint(19) NOT NULL COMMENT '菜单ID',
   PRIMARY KEY (`role_id`, `menu_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色和菜单关联表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of sys_role_menu
+-- ----------------------------
+INSERT INTO `sys_role_menu` VALUES (1, 1318547064467148801);
+INSERT INTO `sys_role_menu` VALUES (1, 1318547678320316418);
+INSERT INTO `sys_role_menu` VALUES (1, 1318549151200501762);
+INSERT INTO `sys_role_menu` VALUES (1, 1318550685359407106);
+INSERT INTO `sys_role_menu` VALUES (1, 1318550824027291649);
+INSERT INTO `sys_role_menu` VALUES (1, 1318550980101537794);
+INSERT INTO `sys_role_menu` VALUES (1, 1318551098947141633);
+INSERT INTO `sys_role_menu` VALUES (1, 1318551201015529473);
+INSERT INTO `sys_role_menu` VALUES (1, 1318551300202430466);
+INSERT INTO `sys_role_menu` VALUES (1, 1318551489143242754);
+INSERT INTO `sys_role_menu` VALUES (1, 1318813923990671361);
+INSERT INTO `sys_role_menu` VALUES (1, 1318814244045426690);
+INSERT INTO `sys_role_menu` VALUES (1, 1318814544424701954);
+INSERT INTO `sys_role_menu` VALUES (1, 1437687160203923457);
+INSERT INTO `sys_role_menu` VALUES (6, 1318547064467148801);
+INSERT INTO `sys_role_menu` VALUES (6, 1318550685359407106);
+INSERT INTO `sys_role_menu` VALUES (6, 1318550824027291649);
+INSERT INTO `sys_role_menu` VALUES (7, 1318547678320316418);
+INSERT INTO `sys_role_menu` VALUES (7, 1318549151200501762);
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -218,6 +301,12 @@ CREATE TABLE `sys_user`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '系统用户信息表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
+-- Records of sys_user
+-- ----------------------------
+INSERT INTO `sys_user` VALUES (1, 'admin', '管理员', 'admin', 'admin', '2020-06-30 22:44:40', '1', NULL, '$2a$10$doq0XR1.fKVkldSgiu9TXuBpZ9gXweX.dzD46aOr4vofs1DI5gznK', b'1', '1', NULL, 'admin', '2020-06-20 22:54:19', NULL, NULL, NULL, 0, '', NULL);
+INSERT INTO `sys_user` VALUES (1318551822766571522, 'test', '测试角色', 'test@163.com', '', NULL, '1', NULL, '$2a$10$6wWM5LgxzIFSnZNgBh0Ps..shr7f1ApQ.LWKskAh5KIY0QniDPqDa', b'1', NULL, NULL, 'admin', '2020-10-20 21:57:07', NULL, NULL, NULL, 0, '', NULL);
+
+-- ----------------------------
 -- Table structure for sys_user_role
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user_role`;
@@ -226,5 +315,11 @@ CREATE TABLE `sys_user_role`  (
   `role_id` bigint(19) NOT NULL COMMENT '角色ID',
   PRIMARY KEY (`user_id`, `role_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '用户和角色关联表' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of sys_user_role
+-- ----------------------------
+INSERT INTO `sys_user_role` VALUES (1, 1);
+INSERT INTO `sys_user_role` VALUES (1318551822766571522, 6);
 
 SET FOREIGN_KEY_CHECKS = 1;
