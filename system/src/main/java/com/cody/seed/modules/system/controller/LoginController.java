@@ -32,7 +32,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -112,13 +111,13 @@ public class LoginController {
      * @param loginRequestVO SysUserInfoResponseVO
      * @param request        SysUserInfoResponseVO
      */
-    private void insertLoginLog(LoginRequestVO loginRequestVO, HttpServletRequest request) throws IOException {
+    private void insertLoginLog(LoginRequestVO loginRequestVO, HttpServletRequest request) {
         //记录登录日志
         SysLoginLog loginLog = new SysLoginLog();
         loginLog.setLoginName(loginRequestVO.getUsername());
         String ip = IPUtilsPro.getIpAddr(request);
         loginLog.setIp(ip);
-        loginLog.setLoginLocation(IPUtilsPro.getCityInfo2(ip));
+        loginLog.setLoginLocation(IPUtilsPro.getCityInfo(ip));
         loginLog.setBrowser(IPUtilsPro.getBrowser(request));
         loginLog.setOs(IPUtilsPro.getOperatingSystem(request));
         loginLog.setStatus(0);
@@ -126,7 +125,6 @@ public class LoginController {
 
         loginLogService.save(loginLog);
     }
-
 
     /**
      * 验证码
@@ -190,7 +188,7 @@ public class LoginController {
     public Map<String, Object> getUserNav() {
         Map<String, Object> result = new HashMap<>(2);
         List<SysMenu> list = sysUserService.getUserNav(SecurityUtils.getUsername());
-        List<MenuResponseVO> menuPid = getByPid(list, "0");
+        List<MenuResponseVO> menuPid = getByPid(list, Long.valueOf("0"));
 
         if (menuPid.size() > 0) {
             for (MenuResponseVO menu : menuPid) {
@@ -203,9 +201,9 @@ public class LoginController {
     }
 
     @SuppressWarnings("EqualsBetweenInconvertibleTypes")
-    private List<MenuResponseVO> getByPid(List<SysMenu> list, String pid) {
+    private List<MenuResponseVO> getByPid(List<SysMenu> list, Long pid) {
         return list.stream().filter(item -> pid.equals(item.getPid())).map(item -> MenuResponseVO.builder()
-                .id(item.getId().toString())
+                .id(item.getId())
                 .name(item.getMenu())
                 .path(item.getPath())
                 .redirect(item.getRedirect())
