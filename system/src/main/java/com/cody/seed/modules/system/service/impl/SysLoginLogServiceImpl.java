@@ -29,9 +29,9 @@ public class SysLoginLogServiceImpl extends ServiceImpl<SysLoginLogMapper, SysLo
         return BasicPageVo.ofPages(this.page(new Page<>(vo.getCurrent(), vo.getPageSize()),
                 Wrappers.<SysLoginLog>lambdaQuery()
                         .like(StrUtil.isNotBlank(vo.getLoginName()), SysLoginLog::getLoginName, vo.getLoginName())
-                        .between(Objects.nonNull(vo.getLoginTime()), SysLoginLog::getLoginTime,
-                                Objects.nonNull(vo.getLoginTime()) ? vo.getLoginTime()[0] + " 00:00:00" : "",
-                                Objects.nonNull(vo.getLoginTime()) ? vo.getLoginTime()[1] + " 23:59:59" : "")
+                        .between(Objects.nonNull(vo.getTimes()), SysLoginLog::getLoginTime,
+                                Objects.nonNull(vo.getTimes()) ? vo.getTimes()[0] + " 00:00:00" : "",
+                                Objects.nonNull(vo.getTimes()) ? vo.getTimes()[1] + " 23:59:59" : "")
                 )
         );
 
