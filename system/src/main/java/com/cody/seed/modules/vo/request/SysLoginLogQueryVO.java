@@ -21,7 +21,7 @@ public class SysLoginLogQueryVO implements Serializable {
      * 创建时间
      */
     @ApiModelProperty("创建时间")
-    private String[] times;
+    private String[] loginTime;
 
     /**
      * 当前页
