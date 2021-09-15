@@ -7,17 +7,17 @@ import com.cody.common.util.IPUtils;
 import com.cody.common.util.SpringContextUtils;
 import com.cody.seed.modules.system.entity.SysLog;
 import com.cody.seed.modules.system.service.ISysLogService;
-import com.cody.seed.modules.util.SecurityUtils;
+import com.cody.seed.modules.system.service.ISysUserService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.time.LocalDateTime;
@@ -31,8 +31,10 @@ import java.time.LocalDateTime;
 @Component
 public class AutoLogAspect {
 
-    @Autowired
+    @Resource
     private ISysLogService sysLogService;
+    @Resource
+    private ISysUserService userService;
 
     @Pointcut("@annotation(com.cody.common.aspect.annotation.AutoLog)")
     public void logPointCut() {
@@ -84,8 +86,8 @@ public class AutoLogAspect {
         //设置IP地址
         sysLog.setIp(IPUtils.getIpAddr(request));
         //获取登录用户信息
-        sysLog.setUserId(SecurityUtils.getUsername());
-        sysLog.setUsername(SecurityUtils.getUsername());
+        sysLog.setUserId(request.getAttribute("userId").toString());
+        sysLog.setUsername(request.getAttribute("nickName").toString());
         //耗时
         sysLog.setCostTime(time);
         sysLog.setCreateTime(LocalDateTime.now());

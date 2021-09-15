@@ -55,6 +55,7 @@ public class DefaultAuthenticationInterceptor extends HandlerInterceptorAdapter 
 
             request.setAttribute("token", token);
             request.setAttribute("username", username);
+            request.setAttribute("nickName", user.getNickName());
             request.setAttribute("userId", user.getId());
         }
 

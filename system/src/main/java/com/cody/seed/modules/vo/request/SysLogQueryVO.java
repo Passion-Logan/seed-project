@@ -12,10 +12,28 @@ import java.io.Serializable;
 public class SysLogQueryVO implements Serializable {
 
     /**
-     * 关键字
+     * 日志内容
      */
-    @ApiModelProperty("关键字")
-    private String keyWord;
+    @ApiModelProperty("日志内容")
+    private String logContent;
+
+    /**
+     * 操作人用户名称
+     */
+    @ApiModelProperty("操作人用户名称")
+    private String username;
+
+    /**
+     * 操作类型
+     */
+    @ApiModelProperty("操作类型")
+    private String operateType;
+
+    /**
+     * 创建时间
+     */
+    @ApiModelProperty("创建时间")
+    private String[] createTime;
 
     /**
      * 当前页

@@ -1,7 +1,7 @@
 package com.cody.seed.modules.system.service;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cody.common.system.vo.BasicPageVo;
 import com.cody.seed.modules.system.entity.SysLog;
 import com.cody.seed.modules.vo.request.SysLogQueryVO;
 
@@ -62,7 +62,7 @@ public interface ISysLogService extends IService<SysLog> {
      * @param vo
      * @return
      */
-    IPage<SysLog> getByPage(SysLogQueryVO vo);
+    BasicPageVo<SysLog> getByPage(SysLogQueryVO vo);
 
 
 }

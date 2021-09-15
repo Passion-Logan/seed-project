@@ -6,9 +6,11 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cody.common.system.api.ISysBaseAPI;
+import com.cody.common.system.vo.BasicPageVo;
 import com.cody.seed.modules.system.entity.SysLog;
 import com.cody.seed.modules.system.mapper.SysLogMapper;
 import com.cody.seed.modules.system.service.ISysLogService;
+import com.cody.seed.modules.system.service.ISysUserService;
 import com.cody.seed.modules.vo.request.SysLogQueryVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Administrator
@@ -34,6 +37,8 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
     private SysLogMapper sysLogMapper;
     @Resource
     private ISysBaseAPI sysBaseApi;
+    @Resource
+    private ISysUserService userService;
 
     /**
      * 清空所有日志记录
@@ -70,11 +75,18 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
     }
 
     @Override
-    public IPage<SysLog> getByPage(SysLogQueryVO vo) {
+    public BasicPageVo<SysLog> getByPage(SysLogQueryVO vo) {
         Page<SysLog> page = new Page<>(vo.getCurrent(), vo.getPageSize());
-        return this.page(page, Wrappers.<SysLog>lambdaQuery()
-                .like(StrUtil.isNotBlank(vo.getKeyWord()), SysLog::getLogContent, vo.getKeyWord())
+        System.out.println(Objects.nonNull(vo.getCreateTime()));
+        IPage<SysLog> data = this.page(page, Wrappers.<SysLog>lambdaQuery()
+                .like(StrUtil.isNotBlank(vo.getLogContent()), SysLog::getLogContent, vo.getLogContent())
+                .like(StrUtil.isNotBlank(vo.getUsername()), SysLog::getUsername, vo.getUsername())
+                .eq(StrUtil.isNotBlank(vo.getOperateType()), SysLog::getOperateType, vo.getOperateType())
+                .between(Objects.nonNull(vo.getCreateTime()),
+                        SysLog::getCreateTime, Objects.nonNull(vo.getCreateTime()) ? vo.getCreateTime()[0] + " 00:00:00" : "",
+                        Objects.nonNull(vo.getCreateTime()) ? vo.getCreateTime()[1] + " 23:59:59" : "")
         );
+        return BasicPageVo.ofPages(data);
     }
 
 }

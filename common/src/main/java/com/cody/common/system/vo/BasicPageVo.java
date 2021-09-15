@@ -2,12 +2,11 @@ package com.cody.common.system.vo;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
-import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.cody.common.constant.CommonConstant;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
@@ -47,7 +46,7 @@ public class BasicPageVo<T> extends BasicVo {
     /**
      * 查询数据列表
      */
-    private List<T> records = Collections.emptyList();
+    private List<T> data = Collections.emptyList();
 
     /**
      * @param page page
@@ -56,7 +55,7 @@ public class BasicPageVo<T> extends BasicVo {
      */
     public static <T> BasicPageVo<T> ofPages(IPage<T> page) {
         BasicPageVo<T> response = getBasicPageVo(page);
-        response.setRecords(page.getRecords());
+        response.setData(page.getRecords());
         return response;
     }
 
@@ -68,7 +67,7 @@ public class BasicPageVo<T> extends BasicVo {
      */
     public static <T> BasicPageVo<T> ofPages(IPage<?> page, List<T> results) {
         BasicPageVo<T> response = getBasicPageVo(page);
-        response.setRecords(results);
+        response.setData(results);
         return response;
     }
 
@@ -80,7 +79,7 @@ public class BasicPageVo<T> extends BasicVo {
      */
     public static <T, R> BasicPageVo<R> ofPages(IPage<T> page, Function<T, R> results) {
         BasicPageVo<R> response = getBasicPageVo(page);
-        response.setRecords(page.getRecords().stream().map(results).collect(Collectors.toList()));
+        response.setData(page.getRecords().stream().map(results).collect(Collectors.toList()));
         return response;
     }
 
@@ -93,18 +92,7 @@ public class BasicPageVo<T> extends BasicVo {
      */
     public static <T> BasicPageVo<T> ofPages(IPage<?> page, Class<T> tClass, CopyOptions copyOptions) {
         BasicPageVo<T> response = getBasicPageVo(page);
-        response.setRecords(page.getRecords().stream().map(item -> BeanUtil.toBean(item, tClass, copyOptions)).collect(Collectors.toList()));
-        return response;
-    }
-
-
-    /**
-     * @param page page
-     * @return com.zxj.auth.api.vo.basic.BasicPageVo<T>
-     */
-    public static <T> BasicPageVo<T> empty(IPage<?> page) {
-        BasicPageVo<T> response = getBasicPageVo(page);
-        response.setRecords(CollectionUtil.empty(ArrayList.class));
+        response.setData(page.getRecords().stream().map(item -> BeanUtil.toBean(item, tClass, copyOptions)).collect(Collectors.toList()));
         return response;
     }
 
@@ -121,6 +109,10 @@ public class BasicPageVo<T> extends BasicVo {
         response.setCurrent(page.getCurrent());
         response.setTotalPage(page.getPages());
         response.setTotal(page.getTotal());
+        response.setMessage("操作成功！");
+        response.setCode(CommonConstant.SC_OK_200);
+        response.setSuccess(true);
+        response.setTimestamp(System.currentTimeMillis());
         return response;
     }
 
