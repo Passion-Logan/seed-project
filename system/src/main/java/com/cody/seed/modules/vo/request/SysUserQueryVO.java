@@ -1,11 +1,15 @@
 package com.cody.seed.modules.vo.request;
 
+import com.cody.common.aspect.annotation.Stringify;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Min;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @ApiModel
@@ -15,8 +19,9 @@ public class SysUserQueryVO implements Serializable {
     /**
      * 用户ID
      */
+    @Stringify
     @ApiModelProperty("用户ID")
-    private String id;
+    private Long id;
 
     /**
      * 用户昵称
@@ -36,8 +41,13 @@ public class SysUserQueryVO implements Serializable {
     @ApiModelProperty("用户邮箱")
     private String email;
 
+    /**
+     * 出生日期
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @ApiModelProperty("出生日期")
-    private Date birthday;
+    private LocalDateTime birthday;
 
     /**
      * 手机号码
@@ -46,10 +56,10 @@ public class SysUserQueryVO implements Serializable {
     private String phone;
 
     /**
-     *
+     * 性别
      */
-    @ApiModelProperty("")
-    private String sex;
+    @ApiModelProperty("性别")
+    private Integer sex;
 
     /**
      * 用户头像

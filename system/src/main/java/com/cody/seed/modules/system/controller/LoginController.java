@@ -19,6 +19,7 @@ import com.cody.seed.modules.vo.LoginRequestVO;
 import com.cody.seed.modules.vo.response.MenuResponseVO;
 import com.cody.seed.modules.vo.response.SysRoleResponseVO;
 import com.cody.seed.modules.vo.response.SysUserInfoResponseVO;
+import com.cody.seed.modules.vo.response.UserInfoResponseVO;
 import com.wf.captcha.ArithmeticCaptcha;
 import com.zengtengpeng.operation.RedissonObject;
 import io.swagger.annotations.Api;
@@ -176,6 +177,23 @@ public class LoginController {
         responseVo.setPermissions(permissions);
 
         return responseVo;
+    }
+
+    @ApiOperation("获取用户信息")
+    @GetMapping(value = "/user/getInfo")
+    public Result<UserInfoResponseVO> getInfo(@RequestAttribute Long userId) {
+        //查询用户信息
+        SysUser userDTO = new SysUser();
+        userDTO.setUserName(SecurityUtils.getUsername());
+        SysUser user = sysUserService.getById(userId);
+        UserInfoResponseVO responseVo = BeanUtil.convert(user, UserInfoResponseVO.class);
+
+        //查询角色信息
+        List<SysRole> roles = roleService.getRolesByUserId(user.getId());
+        List<String> collect = roles.stream().map(SysRole::getRoleName).collect(Collectors.toList());
+        Objects.requireNonNull(responseVo).setRoles(collect);
+
+        return Result.ok(responseVo);
     }
 
     /**
