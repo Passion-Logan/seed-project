@@ -20,6 +20,7 @@ import com.cody.seed.modules.vo.response.MenuResponseVO;
 import com.cody.seed.modules.vo.response.SysRoleResponseVO;
 import com.cody.seed.modules.vo.response.SysUserInfoResponseVO;
 import com.cody.seed.modules.vo.response.UserInfoResponseVO;
+import com.google.common.base.Joiner;
 import com.wf.captcha.ArithmeticCaptcha;
 import com.zengtengpeng.operation.RedissonObject;
 import io.swagger.annotations.Api;
@@ -191,7 +192,7 @@ public class LoginController {
         //查询角色信息
         List<SysRole> roles = roleService.getRolesByUserId(user.getId());
         List<String> collect = roles.stream().map(SysRole::getRoleName).collect(Collectors.toList());
-        Objects.requireNonNull(responseVo).setRoles(collect);
+        Objects.requireNonNull(responseVo).setRoles(Joiner.on(",").join(collect));
 
         return Result.ok(responseVo);
     }

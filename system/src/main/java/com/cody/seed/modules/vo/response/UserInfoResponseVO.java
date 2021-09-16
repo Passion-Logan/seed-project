@@ -11,7 +11,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * 用户详情信息
@@ -74,9 +73,9 @@ public class UserInfoResponseVO implements Serializable {
     private String avatar;
 
     /**
-     * 角色信息
+     * 角色信息 todo:改为数组
      */
     @ApiModelProperty("角色信息")
-    private List<String> roles;
+    private String roles;
 
 }
