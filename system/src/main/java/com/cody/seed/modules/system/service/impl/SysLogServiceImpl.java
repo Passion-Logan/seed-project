@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cody.common.entity.SysBaseModel;
 import com.cody.common.system.api.ISysBaseAPI;
 import com.cody.common.system.vo.BasicPageVo;
 import com.cody.seed.modules.system.entity.SysLog;
@@ -85,6 +86,7 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
                 .between(Objects.nonNull(vo.getCreateTime()),
                         SysLog::getCreateTime, Objects.nonNull(vo.getCreateTime()) ? vo.getCreateTime()[0] + " 00:00:00" : "",
                         Objects.nonNull(vo.getCreateTime()) ? vo.getCreateTime()[1] + " 23:59:59" : "")
+                .orderByDesc(SysBaseModel::getCreateTime)
         );
         return BasicPageVo.ofPages(data);
     }

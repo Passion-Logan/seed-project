@@ -32,6 +32,7 @@ public class SysLoginLogServiceImpl extends ServiceImpl<SysLoginLogMapper, SysLo
                         .between(Objects.nonNull(vo.getLoginTime()), SysLoginLog::getLoginTime,
                                 Objects.nonNull(vo.getLoginTime()) ? vo.getLoginTime()[0] + " 00:00:00" : "",
                                 Objects.nonNull(vo.getLoginTime()) ? vo.getLoginTime()[1] + " 23:59:59" : "")
+                        .orderByDesc(SysLoginLog::getLoginTime)
                 )
         );
 
