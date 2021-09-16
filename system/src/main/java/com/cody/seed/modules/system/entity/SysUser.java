@@ -91,7 +91,9 @@ public class SysUser extends SysLogicDeleteModel<SysUser> implements Serializabl
     /**
      * 最后登录时间
      */
-    private Date loginTime;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime loginTime;
 
     /**
      * 备注
