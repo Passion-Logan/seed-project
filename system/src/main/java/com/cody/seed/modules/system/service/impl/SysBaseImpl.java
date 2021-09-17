@@ -1,9 +1,11 @@
 package com.cody.seed.modules.system.service.impl;
 
+import com.cody.common.constant.CommonConstant;
 import com.cody.common.constant.DataBaseConstant;
 import com.cody.common.system.api.ISysBaseAPI;
 import com.cody.common.util.SpringContextUtils;
 import com.cody.common.util.oConvertUtils;
+import com.cody.common.util.oss.OssBootUtil;
 import com.cody.seed.modules.system.execption.CustomExecption;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -39,7 +41,13 @@ public class SysBaseImpl implements ISysBaseAPI {
 
     @Override
     public String upload(MultipartFile file, String bizPath, String uploadType) {
-        return null;
+        String url = "";
+        if (CommonConstant.UPLOAD_TYPE_MINIO.equals(uploadType)) {
+            //url = MinioUtil.upload(file,bizPath);
+        } else {
+            url = OssBootUtil.upload(file, bizPath);
+        }
+        return url;
     }
 
     @Override

@@ -1,8 +1,12 @@
 package com.cody.seed.modules.system.controller;
 
+import cn.hutool.core.util.StrUtil;
 import com.cody.common.api.vo.Result;
 import com.cody.common.aspect.annotation.NoRepeatSubmit;
+import com.cody.common.constant.CommonConstant;
+import com.cody.common.system.api.ISysBaseAPI;
 import com.cody.common.util.IPUtilsPro;
+import com.cody.common.util.oConvertUtils;
 import com.cody.seed.modules.security.JwtAuthenticatioToken;
 import com.cody.seed.modules.system.entity.SysLoginLog;
 import com.cody.seed.modules.system.entity.SysMenu;
@@ -29,12 +33,19 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -69,6 +80,18 @@ public class LoginController {
     private ISysLoginLogService loginLogService;
     @Resource
     private RedissonObject redissonObject;
+
+    /**
+     * 本地：local minio：minio 阿里：alioss
+     */
+    @Value(value = "${seed.uploadType}")
+    private String uploadType;
+
+    @Value(value = "${seed.path.upload}")
+    private String uploadPath;
+
+    @Resource
+    private ISysBaseAPI sysBaseAPI;
 
     /**
      * 登录接口
@@ -208,6 +231,29 @@ public class LoginController {
         return Result.ok("更新成功");
     }
 
+    @PostMapping("/user/uploadAvatar")
+    public Result<Void> uploadAvatar(HttpServletRequest request, HttpServletResponse response) {
+        String savePath = "";
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        MultipartFile file = multipartRequest.getFile("file");// 获取上传文件对象
+
+        String bizPath = request.getParameter("biz");
+        if (oConvertUtils.isEmpty(bizPath)) {
+            bizPath = CommonConstant.UPLOAD_TYPE_OSS.equals(uploadType) ? "upload" : "";
+        }
+
+        if (CommonConstant.UPLOAD_TYPE_LOCAL.equals(uploadType)) {
+            savePath = this.uploadLocal(file, bizPath);
+        } else {
+            savePath = sysBaseAPI.upload(file, bizPath, uploadType);
+        }
+
+        if (StrUtil.isNotBlank(savePath)) {
+            return Result.ok(savePath);
+        }
+        return Result.error("上传失败!");
+    }
+
     /**
      * 登录查询用户菜单
      *
@@ -242,6 +288,46 @@ public class LoginController {
                 .sort(item.getSort())
                 .isFrame(item.getIsFrame())
                 .build()).sorted(Comparator.comparing(MenuResponseVO::getSort)).collect(Collectors.toList());
+    }
+
+    /**
+     * 本地文件上传
+     *
+     * @param mf      文件
+     * @param bizPath 自定义路径
+     * @return
+     */
+    private String uploadLocal(MultipartFile mf, String bizPath) {
+        try {
+            String ctxPath = uploadPath;
+            String fileName = null;
+            File file = new File(ctxPath + File.separator + bizPath + File.separator);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+            String orgName = mf.getOriginalFilename();
+            if (orgName.indexOf(".") != -1) {
+                fileName = orgName.substring(0, orgName.lastIndexOf(".")) + "_" + System.currentTimeMillis() + orgName.substring(orgName.indexOf("."));
+            } else {
+                fileName = orgName + "_" + System.currentTimeMillis();
+            }
+            String savePath = file.getPath() + File.separator + fileName;
+            File savefile = new File(savePath);
+            FileCopyUtils.copy(mf.getBytes(), savefile);
+            String dbpath = null;
+            if (oConvertUtils.isNotEmpty(bizPath)) {
+                dbpath = bizPath + File.separator + fileName;
+            } else {
+                dbpath = fileName;
+            }
+            if (dbpath.contains("\\")) {
+                dbpath = dbpath.replace("\\", "/");
+            }
+            return dbpath;
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+        }
+        return "";
     }
 
 }
