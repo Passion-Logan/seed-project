@@ -2,7 +2,7 @@ package com.cody.seed.modules.system.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.cody.common.system.api.ISysBaseAPI;
+import com.cody.common.system.api.SysBaseAPI;
 import com.cody.common.system.vo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ import java.util.Map;
  */
 @Slf4j
 @Service
-public class SysBaseApiImpl implements ISysBaseAPI {
+public class SysBaseApiImpl implements SysBaseAPI {
     @Override
     public void addLog(String LogContent, Integer logType, Integer operatetype) {
 
