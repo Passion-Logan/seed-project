@@ -20,7 +20,6 @@ import com.cody.seed.modules.vo.response.MenuResponseVO;
 import com.cody.seed.modules.vo.response.SysRoleResponseVO;
 import com.cody.seed.modules.vo.response.SysUserInfoResponseVO;
 import com.cody.seed.modules.vo.response.UserInfoResponseVO;
-import com.google.common.base.Joiner;
 import com.wf.captcha.ArithmeticCaptcha;
 import com.zengtengpeng.operation.RedissonObject;
 import io.swagger.annotations.Api;
@@ -29,7 +28,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -191,11 +192,22 @@ public class LoginController {
 
         //查询角色信息
         List<SysRole> roles = roleService.getRolesByUserId(user.getId());
-        List<String> collect = roles.stream().map(SysRole::getRoleName).collect(Collectors.toList());
-        Objects.requireNonNull(responseVo).setRoles(Joiner.on(",").join(collect));
+        String[] role = roles.stream().map(SysRole::getRoleName).toArray(String[]::new);
+        Objects.requireNonNull(responseVo).setRoles(role);
 
         return Result.ok(responseVo);
     }
+
+    @ApiOperation("更新用户信息")
+    @PostMapping(value = "/user/updateUser")
+    public Result<Void> updateUser(@RequestBody @Validated UserInfoResponseVO vo) {
+        SysUser byId = sysUserService.getById(vo.getId());
+        BeanUtils.copyProperties(vo, byId, "roles", "id");
+        sysUserService.updateById(byId);
+
+        return Result.ok("更新成功");
+    }
+
 
     /**
      * 登录查询用户菜单
@@ -219,7 +231,6 @@ public class LoginController {
         return result;
     }
 
-    @SuppressWarnings("EqualsBetweenInconvertibleTypes")
     private List<MenuResponseVO> getByPid(List<SysMenu> list, Long pid) {
         return list.stream().filter(item -> pid.equals(item.getPid())).map(item -> MenuResponseVO.builder()
                 .id(item.getId())

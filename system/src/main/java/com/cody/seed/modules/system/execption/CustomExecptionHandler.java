@@ -1,12 +1,25 @@
 package com.cody.seed.modules.system.execption;
 
+import cn.hutool.core.collection.CollectionUtil;
+import cn.hutool.core.util.StrUtil;
 import com.cody.common.api.vo.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
+
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Path;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author Administrator
@@ -39,6 +52,51 @@ public class CustomExecptionHandler {
     public Result<?> handleException(Exception e) {
         log.error(e.getMessage(), e);
         return Result.error("操作失败，" + e.getMessage());
+    }
+
+    /**
+     * 处理 json 请求体调用接口对象参数校验失败抛出的异常
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Result<?> jsonParamsException(MethodArgumentNotValidException e) {
+        BindingResult bindingResult = e.getBindingResult();
+        List<String> errorList = CollectionUtil.newArrayList();
+
+        for (FieldError fieldError : bindingResult.getFieldErrors()) {
+            String msg = String.format("%s；", fieldError.getDefaultMessage());
+            errorList.add(msg);
+        }
+        return Result.error("操作失败，" + errorList);
+    }
+
+    /**
+     * 处理单个参数校验失败抛出的异常
+     */
+    @ExceptionHandler(ConstraintViolationException.class)
+    public Result<?> ParamsException(ConstraintViolationException e) {
+        List<String> errorList = CollectionUtil.newArrayList();
+        Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
+        for (ConstraintViolation<?> violation : violations) {
+            StringBuilder message = new StringBuilder();
+            Path path = violation.getPropertyPath();
+            String[] pathArr = StrUtil.splitToArray(path.toString(), '.');
+            String msg = message.append(pathArr[1]).append(violation.getMessage()).toString();
+            errorList.add(msg);
+        }
+        return Result.error("操作失败，" + errorList);
+    }
+
+    /**
+     * @param e
+     * @return 处理 form data方式调用接口对象参数校验失败抛出的异常
+     */
+    @ExceptionHandler(BindException.class)
+    public Result<?> formDaraParamsException(BindException e) {
+        List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
+        List<String> collect = fieldErrors.stream()
+                .map(o -> o.getField() + o.getDefaultMessage())
+                .collect(Collectors.toList());
+        return Result.error("操作失败，" + collect);
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)

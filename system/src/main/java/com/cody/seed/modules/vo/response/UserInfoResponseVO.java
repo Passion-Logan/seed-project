@@ -9,6 +9,8 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -24,6 +26,7 @@ public class UserInfoResponseVO implements Serializable {
     /**
      * 用户ID
      */
+    @NotNull(message = "用户ID不能为空")
     @Stringify
     @ApiModelProperty("用户ID")
     private Long id;
@@ -31,12 +34,14 @@ public class UserInfoResponseVO implements Serializable {
     /**
      * 用户昵称
      */
+    @NotBlank(message = "登录账号不能为空")
     @ApiModelProperty("用户昵称")
     private String userName;
 
     /**
      * 昵称
      */
+    @NotBlank(message = "用户昵称不能为空")
     @ApiModelProperty("昵称")
     private String nickName;
 
@@ -76,6 +81,6 @@ public class UserInfoResponseVO implements Serializable {
      * 角色信息 todo:改为数组
      */
     @ApiModelProperty("角色信息")
-    private String roles;
+    private String[] roles;
 
 }
