@@ -29,6 +29,7 @@
         <mybatis-plus.version>3.3.2</mybatis-plus.version>
         <pagehelper.version>5.1.2</pagehelper.version>
         <mysql.connector.java.version>5.1.47</mysql.connector.java.version>
+        <aliyun.oss.version>3.6.0</aliyun.oss.version>
     </properties>
 
     <dependencies>
@@ -235,6 +236,12 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
             <version>5.4.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>${aliyun.oss.version}</version>
         </dependency>
 
     </dependencies>
