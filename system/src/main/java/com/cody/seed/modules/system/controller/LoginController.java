@@ -20,6 +20,7 @@ import com.cody.seed.modules.system.service.ISysUserService;
 import com.cody.seed.modules.util.BeanUtil;
 import com.cody.seed.modules.util.SecurityUtils;
 import com.cody.seed.modules.vo.LoginRequestVO;
+import com.cody.seed.modules.vo.request.SysUserPwdVO;
 import com.cody.seed.modules.vo.response.MenuResponseVO;
 import com.cody.seed.modules.vo.response.SysRoleResponseVO;
 import com.cody.seed.modules.vo.response.SysUserInfoResponseVO;
@@ -30,8 +31,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -43,7 +42,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
@@ -65,8 +63,6 @@ import java.util.stream.Collectors;
 @RestController
 @Slf4j
 public class LoginController {
-
-    private static Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @Resource
     private AuthenticationManager authenticationManager;
@@ -108,11 +104,11 @@ public class LoginController {
         // 清除验证码
         redissonObject.delete(loginRequestVO.getUuid());
         if (StringUtils.isBlank(code)) {
-            logger.error("验证码不存在或已过期");
+            log.error("验证码不存在或已过期");
             throw new CustomExecption("验证码不存在或已过期");
         }
         if (StringUtils.isBlank(loginRequestVO.getImgCode()) || !loginRequestVO.getImgCode().equalsIgnoreCase(code)) {
-            logger.error("验证码错误");
+            log.error("验证码错误");
             throw new CustomExecption("验证码错误");
         }
         String username = loginRequestVO.getUsername();
@@ -231,9 +227,16 @@ public class LoginController {
         return Result.ok("更新成功");
     }
 
+    @ApiOperation("用户修改密码")
+    @PostMapping(value = "/user/updatePwd")
+    public Result<Void> updatePwd(@RequestBody @Validated SysUserPwdVO vo, @RequestAttribute Long userId) {
+        sysUserService.verifyPassword(vo, userId);
+        return Result.ok("修改成功");
+    }
+
     @PostMapping("/user/uploadAvatar")
-    public Result<Void> uploadAvatar(HttpServletRequest request, HttpServletResponse response) {
-        String savePath = "";
+    public Result<Void> uploadAvatar(HttpServletRequest request) {
+        String savePath;
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         MultipartFile file = multipartRequest.getFile("file");// 获取上传文件对象
 
@@ -295,18 +298,19 @@ public class LoginController {
      *
      * @param mf      文件
      * @param bizPath 自定义路径
-     * @return
+     * @return String
      */
     private String uploadLocal(MultipartFile mf, String bizPath) {
         try {
             String ctxPath = uploadPath;
-            String fileName = null;
+            String fileName;
             File file = new File(ctxPath + File.separator + bizPath + File.separator);
             if (!file.exists()) {
+                //noinspection ResultOfMethodCallIgnored
                 file.mkdirs();
             }
             String orgName = mf.getOriginalFilename();
-            if (orgName.indexOf(".") != -1) {
+            if (Objects.requireNonNull(orgName).contains(".")) {
                 fileName = orgName.substring(0, orgName.lastIndexOf(".")) + "_" + System.currentTimeMillis() + orgName.substring(orgName.indexOf("."));
             } else {
                 fileName = orgName + "_" + System.currentTimeMillis();
@@ -314,7 +318,7 @@ public class LoginController {
             String savePath = file.getPath() + File.separator + fileName;
             File savefile = new File(savePath);
             FileCopyUtils.copy(mf.getBytes(), savefile);
-            String dbpath = null;
+            String dbpath;
             if (oConvertUtils.isNotEmpty(bizPath)) {
                 dbpath = bizPath + File.separator + fileName;
             } else {

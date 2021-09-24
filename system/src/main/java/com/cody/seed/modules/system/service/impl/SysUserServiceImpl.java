@@ -14,6 +14,7 @@ import com.cody.seed.modules.system.service.ISysMenuService;
 import com.cody.seed.modules.system.service.ISysUserRoleService;
 import com.cody.seed.modules.system.service.ISysUserService;
 import com.cody.seed.modules.util.BeanUtil;
+import com.cody.seed.modules.vo.request.SysUserPwdVO;
 import com.cody.seed.modules.vo.request.SysUserQueryVO;
 import com.cody.seed.modules.vo.response.SysUserResponseVO;
 import lombok.extern.slf4j.Slf4j;
@@ -200,6 +201,17 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         String encrypt = new BCryptPasswordEncoder().encode(password);
         userDO.setPassword(encrypt);
         return sysUserMapper.updateById(userDO) > 0;
+    }
+
+    @Override
+    public Boolean verifyPassword(SysUserPwdVO vo, Long userId) {
+        SysUser byId = this.getById(userId);
+        BCryptPasswordEncoder encode = new BCryptPasswordEncoder();
+        if (!encode.matches(vo.getOldPwd(), byId.getPassword())) {
+            throw new CustomExecption("旧密码错误");
+        }
+        byId.setPassword(encode.encode(vo.getNewPwd()));
+        return this.updateById(byId);
     }
 
     private void insertUserRole(String[] roleId, SysUser user, List<SysUserRole> list) {

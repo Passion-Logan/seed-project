@@ -1,6 +1,6 @@
 package com.cody.seed.modules.vo.request;
 
-import com.cody.seed.modules.system.entity.SysUser;
+import com.cody.common.aspect.annotation.Stringify;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,8 +10,23 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @Builder
-public class SysUserRoleRequestVO extends SysUser {
+public class SysUserRoleRequestVO {
 
-    String roleIds;
+    @Stringify
+    private Long id;
+
+    private String userName;
+
+    private String nickName;
+
+    private String password;
+
+    private String email;
+
+    private Integer sex;
+
+    private Boolean enabled;
+
+    private String roleIds;
 
 }

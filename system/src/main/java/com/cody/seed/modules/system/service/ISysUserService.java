@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cody.seed.modules.system.entity.SysMenu;
 import com.cody.seed.modules.system.entity.SysUser;
+import com.cody.seed.modules.vo.request.SysUserPwdVO;
 import com.cody.seed.modules.vo.request.SysUserQueryVO;
 import com.cody.seed.modules.vo.response.SysUserResponseVO;
 
@@ -104,5 +105,14 @@ public interface ISysUserService extends IService<SysUser> {
      * @return Boolean
      */
     Boolean changePassword(String userName, String password);
+
+    /**
+     * 校验修改密码
+     *
+     * @param vo     密码
+     * @param userId userId
+     * @return
+     */
+    Boolean verifyPassword(SysUserPwdVO vo, Long userId);
 
 }
