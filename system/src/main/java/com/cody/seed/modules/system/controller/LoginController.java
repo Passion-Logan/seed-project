@@ -200,6 +200,11 @@ public class LoginController {
         return responseVo;
     }
 
+    @GetMapping("test")
+    public Result<Void> test() {
+        return Result.ok();
+    }
+
     @ApiOperation("获取用户信息")
     @GetMapping(value = "/user/getInfo")
     public Result<UserInfoResponseVO> getInfo(@RequestAttribute Long userId) {
