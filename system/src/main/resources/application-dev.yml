@@ -154,12 +154,12 @@ seed:
     #webapp文件路径
     webapp: D://upload//webapp
   #阿里云oss存储配置
-#  oss:
-#    endpoint: oss-cn-beijing.aliyuncs.com
-#    accessKey: ??
-#    secretKey: ??
-#    bucketName: test
-#    staticDomain: https://static.test.com
+  oss:
+    endpoint: oss-cn-beijing.aliyuncs.com
+    accessKey: ??
+    secretKey: ??
+    bucketName: test
+    staticDomain: https://static.test.com
 #Mybatis输出sql日志
 logging:
   level:
