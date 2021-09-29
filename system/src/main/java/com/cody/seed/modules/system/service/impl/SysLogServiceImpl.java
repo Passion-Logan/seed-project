@@ -11,7 +11,6 @@ import com.cody.common.system.vo.BasicPageVo;
 import com.cody.seed.modules.system.entity.SysLog;
 import com.cody.seed.modules.system.mapper.SysLogMapper;
 import com.cody.seed.modules.system.service.ISysLogService;
-import com.cody.seed.modules.system.service.ISysUserService;
 import com.cody.seed.modules.vo.request.SysLogQueryVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -38,8 +37,6 @@ public class SysLogServiceImpl extends ServiceImpl<SysLogMapper, SysLog> impleme
     private SysLogMapper sysLogMapper;
     @Resource
     private ISysBaseAPI sysBaseApi;
-    @Resource
-    private ISysUserService userService;
 
     /**
      * 清空所有日志记录
