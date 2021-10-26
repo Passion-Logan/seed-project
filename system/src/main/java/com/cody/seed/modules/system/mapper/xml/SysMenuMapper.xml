@@ -85,7 +85,6 @@
 
 
     <select id="getPermissionsByUserId" resultType="java.lang.String">
-
       select
       distinct m.permission
       from sys_menu m
@@ -95,7 +94,6 @@
       where
       m.type = 3
       and ur.user_id = #{userId}
-
     </select>
 
     <select id="checkPermission" resultType="java.lang.Integer">

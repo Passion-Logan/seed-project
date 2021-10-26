@@ -78,7 +78,6 @@ public class SysMenu extends SysBaseModel<SysMenu> implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(getMenu());
-
     }
 
 }

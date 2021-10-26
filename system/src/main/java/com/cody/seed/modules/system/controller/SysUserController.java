@@ -90,22 +90,23 @@ public class SysUserController {
         SysUser entity = new SysUser();
         BeanUtils.copyProperties(user, entity);
 
-        if (StrUtil.isNotEmpty(user.getRoleIds())) {
-            Long userId = user.getId();
-            sysUserRoleService.remove(Wrappers.<SysUserRole>lambdaQuery().eq(SysUserRole::getUserId, userId));
-            updateUserRole(user.getRoleIds(), userId);
-        }
+        Long userId = user.getId();
+        sysUserRoleService.remove(Wrappers.<SysUserRole>lambdaQuery().eq(SysUserRole::getUserId, userId));
+        updateUserRole(user.getRoleIds(), userId);
+
         sysUserService.updateById(entity);
         return Result.ok();
     }
 
     private void updateUserRole(String roleIds, Long userId) {
-        String[] ids = roleIds.split(",");
-        List<SysUserRole> userRoles = new ArrayList<>(ids.length);
-        for (String id : ids) {
-            userRoles.add(SysUserRole.builder().userId(userId).roleId(Long.parseLong(id)).build());
+        if (StrUtil.isNotEmpty(roleIds)) {
+            String[] ids = roleIds.split(",");
+            List<SysUserRole> userRoles = new ArrayList<>(ids.length);
+            for (String id : ids) {
+                userRoles.add(SysUserRole.builder().userId(userId).roleId(Long.parseLong(id)).build());
+            }
+            sysUserRoleService.saveBatch(userRoles);
         }
-        sysUserRoleService.saveBatch(userRoles);
     }
 
     @ApiOperation(value = "修改密码")
