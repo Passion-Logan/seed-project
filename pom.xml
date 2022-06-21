@@ -28,7 +28,7 @@
         <commons.version>2.6</commons.version>
         <mybatis-plus.version>3.3.2</mybatis-plus.version>
         <pagehelper.version>5.1.2</pagehelper.version>
-        <mysql.connector.java.version>5.1.47</mysql.connector.java.version>
+        <mysql.connector.java.version>8.0.28</mysql.connector.java.version>
         <aliyun.oss.version>3.6.0</aliyun.oss.version>
     </properties>
 
